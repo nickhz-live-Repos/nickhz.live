@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <base href="../" />
+        <link rel="shortcut icon" type="image/x-icon" href="./img/nh-cursive-icon.png" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+        <!-- Page properties -->
+        <title>Nick Hernandez - Work In Progress</title>
+
+        <!-- Opengraph properties, for giving a site preview if the link is posted anywhere. Makes the link look less sketchy. -->
+        <meta property="og:title" content="Nick Hernandez - Work in Progress" />
+        <meta property="og:description" content="The Web is an open canvas. Here will be my creations." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://nickhz.live/img/built-from-scratch.png" />
+        <meta property="og:image:alt" content="built from scratch" />
+        <meta property="og:url" content="https://nickhz.live/" />
+        <meta property="og:site_name" content="The Personal Site of Nick Hernandez" />
+
+        <!-- Style properties -->
+        <link href="css/style.css" rel="stylesheet" />
+        <link href="css/blot-bg.css" rel="stylesheet" />
+        <style>
+            :root {
+                --primary-accent: hsl(180, 80%, 50%);
+                --secondary-accent: hsl(285, 100%, 70%);
+            }
+
+            body {
+                position: relative;
+                background: hsla(213, 84%, 24.5%);
+
+                font-family: 'Courier New', Courier, monospace;
+                color: var(--primary-accent);
+                text-shadow:
+                    0 0 8px black,
+                    0 0 8px black,
+                    0 0 8px black,
+                    0 0 8px black,
+                    0 0 8px var(--primary-accent), 
+                    0 0 8px var(--primary-accent)
+                ;
+            }
+
+            #wip-display {
+                position: absolute;
+                width: 100%;
+                height: 80%;
+                box-sizing: border-box;
+                padding: 10%;
+                text-align: center;
+            }
+
+            .preview-pane {
+                height: 100%;
+            }
+
+            .preview {
+                position: relative;
+                width: 50%;
+                height: 50%;
+                left: 25%;
+                border: 1px solid var(--primary-accent);
+                border-radius: 10px;
+
+                box-shadow: 0 0 12px 2px var(--primary-accent);
+            }
+
+            .preview > span {
+                position: relative;
+            }
+
+            .preview-frame {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+                border: none;
+                pointer-events: none;
+                opacity: 0.35;
+                zoom: 0.25;
+                overflow: hidden;
+            }
+
+            a {
+                color: var(--primary-accent);
+            }
+
+            #wip-selector {
+                position: fixed;
+                width: 100%;
+                height: 20%;
+                bottom: 0;
+                text-align: center;
+                background: rgba(128, 0, 128, 0.1);
+                overflow-x: scroll;
+                white-space: nowrap;
+            }
+
+            #wip-selector > h1 {
+                text-align: left;
+                font-size: 1em;
+                margin-left: 1em;
+            }
+
+            .wip-item {
+                height: calc(100% - 3em);
+                padding: 0 2em;
+                border: 1px solid var(--primary-accent);
+                border-radius: 10px;
+                transition-duration: 0.3s;
+                box-sizing: border-box;
+                display: inline-block;
+            }
+
+            .wip-item > div {
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .wip-item:hover {
+                border: 1px solid var(--secondary-accent);
+                color: var(--secondary-accent);
+                text-shadow:
+                    0 0 8px black,
+                    0 0 8px black,
+                    0 0 8px black,
+                    0 0 8px black,
+                    0 0 8px var(--secondary-accent), 
+                    0 0 8px var(--secondary-accent)
+                ;
+            }
+
+            input[name=previews] {
+                display: none;
+            }
+
+            input:checked + .preview-pane {
+                display: block;
+            }
+
+            .preview-pane {
+                display: none;
+            }
+
+            @media only screen and (min-width: 768px) {
+                #wip-display {
+                    width: 80%;
+                    height: 100%;
+                }
+
+                #wip-selector {
+                    width: 20%;
+                    height: 100%;
+                    right: 0;
+                    bottom: auto;
+                    overflow-x: visible;
+                    white-space: normal;
+                }
+
+                #wip-selector > h1 {
+                    text-align: center;
+                    font-size: 2em;
+                    margin-left: 0;
+                }
+
+                .wip-item {
+                    height: auto;
+                    width: 80%;
+                    margin: auto;
+                    margin-top: 1em;
+                    padding: 3em 1em;
+                    display: block;
+                    box-sizing: content-box;
+                }
+
+                .wip-item > div {
+                    transform: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="blot-bg">
+            <div class="blot-frame">
+                <div class="blot-rotor">
+                    <div class="main-blot"></div>
+                </div>
+                <div class="blot-rotor">
+                    <div class="main-blot"></div>
+                </div>
+                <div class="blot-rotor">
+                    <div class="main-blot"></div>
+                </div>
+                <div class="blot-rotor">
+                    <div class="main-blot"></div>
+                </div>
+                <div class="blot-rotor">
+                    <div class="main-blot"></div>
+                </div>
+            </div>
+
+            <div class="blot-frame">
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="small-blot"></div>
+                </div>
+            </div>
+
+            <div class="blot-frame">
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+                <div class="blot-angulator">
+                    <div class="tiny-blot"></div>
+                </div>
+            </div>
+
+            <div id="bg-filter-frame"></div>
+        </div>
+
+        <div id="wip-display">
+            <input type="radio" name="previews"  id="wip-item-0" checked />
+            <div class="preview-pane">
+                <div class="preview">
+                    Preview
+                </div>
+
+                <h1>
+                    WIP
+                </h1>
+    
+                <p>
+                    Click a button on the <span class="desktop-only">right</span><span class="mobile-only">bottom</span> panel to preview a page in progress.
+                </p>
+            </div>
+
+            <input type="radio" name="previews"  id="wip-item-1" />
+            <div class="preview-pane">
+                <div class="preview">
+                    <iframe class="preview-frame" src="./wip/index.html"></iframe>
+
+                    <span>
+                        Preview
+                    </span>
+                </div>
+
+                <h1>
+                    WIP
+                </h1>
+    
+                <p>
+                    This work-in-progress page is currently a work in progress.
+                </p>
+            </div>
+
+            <input type="radio" name="previews"  id="wip-item-2" />
+            <div class="preview-pane">
+                <div class="preview">
+                    <iframe class="preview-frame" src="./career/index.html"></iframe>
+
+                    <span>
+                        Preview
+                    </span>
+                </div>
+
+                <h1>
+                    Career Index
+                </h1>
+    
+                <p>
+                    My career index is currently a work in progress.
+                </p>
+
+                <a href="./career/">
+                    Career Index
+                </a>
+            </div>
+
+            <a href="./">Home</a>
+        </div>
+
+        <div id="wip-selector">
+            <h1>
+                Work In Progress <span class="mobile-only">--&gt;</span>
+            </h1>
+
+            <label for="wip-item-1" class="wip-item">
+                <div>
+                    This Page
+                </div>
+            </label>
+
+            <label for="wip-item-2" class="wip-item">
+                <div>
+                    Career Index
+                </div>
+            </label>
+        </div>
+    </body>
+</html>

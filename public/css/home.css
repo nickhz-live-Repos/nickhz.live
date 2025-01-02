@@ -1,0 +1,33 @@
+
+:root {
+    --primary-accent: white;
+    --link-accent: hsl(180, 80%, 70%);
+    --contrast-accent: hsl(39, 70%, 70%);
+}
+
+* {
+    scrollbar-color: rgb(33, 34, 66) rgb(120, 146, 163) white;
+    overflow-wrap: break-word;
+}
+
+body {
+    color: var(--primary-accent);
+    margin: 0;
+    text-align: center;
+    text-shadow: 0 0 8px var(--primary-accent);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+a {
+    color: var(--link-accent);
+}
+
+body > main {
+    position: relative;
+    text-align: left;
+}
+
+#foot-spacer {
+    position: relative;
+    height: 15vh;
+}

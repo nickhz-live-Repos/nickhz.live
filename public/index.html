@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="shortcut icon" type="image/x-icon" href="./img/nh-cursive-icon.png">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+        <!-- Page properties -->
+        <title>Nick Hernandez - Main Page</title>
+
+        <!-- Opengraph properties, for giving a site preview if the link is posted anywhere. Makes the link look less sketchy. -->
+        <meta property="og:title" content="Nick Hernandez - Main Page" />
+        <meta property="og:description" content="The Web is an open canvas. Here will be my creations." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://nickhz.live/img/built-from-scratch.png" />
+        <meta property="og:image:alt" content="built from scratch" />
+        <meta property="og:url" content="https://nickhz.live/" />
+        <meta property="og:site_name" content="The Personal Site of Nick Hernandez" />
+        
+        <!-- Style properties -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/home.css" rel="stylesheet">
+        <style>
+            body {
+                position: relative;
+                background: #212242;
+            }
+
+            #bg-pane {
+                position: absolute;
+                width: 100%;
+                height: 100dvh;
+                background: linear-gradient(#7892a3 0%, #212242 100%);
+                z-index: -2;
+            }
+
+            #bg-transition-frame {
+                /* exists to prevent CSS3 white-flash bug when transitioning background color */
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: transparent;
+                z-index: -1;
+                transition: 0.5s;
+            }
+
+            #overhead-rays {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background:
+                    conic-gradient(
+                        at 0% -100vh, 
+                        transparent 162deg, 
+                        rgba(255, 255, 255, 0.12) 164.2deg 164.5deg, 
+                        transparent 165deg 169.4deg, 
+                        rgba(255, 255, 255, 0.1) 170.8deg 171deg, 
+                        transparent 171.5deg 175.6deg,
+                        rgba(255, 255, 255, 0.1) 176.3deg 176.5deg,
+                        transparent 176.9deg
+                    )
+                ;
+                pointer-events: none;
+            }
+
+            #name {
+                margin-top: 0;
+                padding-top: 0.5em;
+            }
+
+            #motd-container {
+                position: relative;
+                width: 60%;
+                margin: auto;
+                
+                animation-name: wipers-open;
+                animation-duration: 2s;
+                animation-fill-mode: forwards;
+                animation-timing-function: ease-out;
+
+                overflow: hidden;
+                text-align: center;
+            }
+
+            @keyframes wipers-open {
+                from {
+                    width: 0;
+                }
+
+                to {
+                    width: 100%;
+                }
+            }
+
+            .wiper {
+                position: absolute;
+                height: 100%;
+                width: 1px;
+                box-shadow: 0 0 2px 1px var(--primary-accent);
+                background-color: var(--primary-accent);
+            }
+
+            #left-wiper {
+                left: 0;
+            }
+
+            #right-wiper {
+                right: 0;
+            }
+
+            #motd {
+                width: 100vw;
+                position: relative;
+                white-space: nowrap;
+                text-align: center;
+
+                animation-name: wipers-counterweight;
+                animation-duration: 2s;
+                animation-timing-function: ease-out;
+            }
+
+            @keyframes wipers-counterweight {
+                from {
+                    translate: -50% 0;
+                }
+
+                to {
+                    translate: 0 0;
+                }
+            }
+
+            #rotary-menu {
+                position: relative;
+                perspective: 700px;
+            }
+
+            #rotary-menu > a {
+                position: absolute;
+                width: 15vw;
+                height: 15vw;
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.6) inset;
+                border-radius: 50%;
+                left: calc(50% - 2.5vw);
+                backdrop-filter: blur(2px);
+            }
+
+            #rotary-menu > a:first-of-type {
+                top: 22dvh;
+            }
+
+            #rotary-menu > a:nth-of-type(2) {
+                top: 17dvh;
+
+                background:
+                    radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.25) 0% 55%, rgba(255, 255, 255, 0.25) 55%)
+                ;
+            }
+
+            #rotary-menu > a:nth-of-type(3) {
+                top: 37dvh;
+            }
+
+            #rotary-menu > a:nth-of-type(4) {
+                top: 17dvh;
+            }
+
+            #rotary-menu > a:nth-of-type(5) {
+                top: 22dvh;
+
+                
+                background:
+                    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.25) 0%, rgba(0, 0, 255, 0.25) 10%, rgba(0, 0, 27, 0.251) 15%)
+                ;
+            }
+
+            #rotary-menu > a:nth-of-type(6) {
+                top: 37dvh;
+            }
+
+            #rotary-menu > a:nth-of-type(7) {
+                top: 22dvh;
+            }
+
+            #rotary-menu > a:nth-of-type(8) {
+                top: 32dvh;
+            }
+
+            .menu-bracket {
+                position: relative;
+                height: 15vh;
+                width: 100%;
+                left: 0;
+                border-radius: 50%;
+                filter: blur(1.5px);
+            }
+
+            .menu-frame-item {
+                pointer-events: none;
+            }
+
+            #menu-upper-bracket {
+                border-top: solid var(--primary-accent) 5px;
+            }
+
+            #menu-spacer {
+                height: 23dvh;
+            }
+
+            #menu-lower-bracket {
+                border-bottom: solid var(--primary-accent) 5px;
+            }
+
+            /* foot-nav */
+
+            #foot-nav {
+                position: fixed;
+                bottom: -35vh;
+                height: 50vh;
+                width: 100%;
+                left: 0;
+            }
+
+            #foot-nav-bg {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                transform: perspective(50px) rotateX(1deg);
+                box-shadow: 0 0 20px var(--primary-accent) inset,
+                    0 0 20px var(--primary-accent) inset,
+                    0 0 10px var(--primary-accent)
+                ;
+                border-radius: 20% 20% 0 0;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+            }
+
+            #foot-nav-content {
+                position: absolute;
+                width: 95%;
+                height: 100%;
+                top: 5%;
+                left: 2.5%;
+                border-radius: 20% 20% 0 0;
+            }
+
+            #foot-nav-overground {
+                position: relative;
+                width: 100%;
+                height: 25%;
+            }
+
+            #foot-nav-overground > h3:first-child {
+                position: absolute;
+                width: 100%;
+                color: hsl(0, 0%, 80%);
+                text-shadow: 0 0 3px grey, 0 0 5px black, 0 0 5px black;
+                margin: 0;
+                top: 5%;
+            }
+
+            .foot-nav-button {
+                position: absolute;
+                width: 7.5dvh;
+                height: 7.5dvh;
+                top: calc(55% - 3.75dvh);
+                border-radius: 50%;
+                box-shadow: 
+                    0 0 1.5dvh var(--primary-accent) inset,
+                    0 0 0.3dvh var(--primary-accent)
+                ;
+                background: transparent;
+                border: 0;
+                color: hsl(180, 80%, 70%);
+                text-shadow: 0 0 3px grey, 0 0 5px black, 0 0 5px black;
+                text-decoration: none;
+            }
+
+            .foot-nav-button:hover {
+                box-shadow: 
+                    0 0 1.5dvh lightgrey inset,
+                    0 0 0.3dvh lightgrey
+                ;
+            }
+
+            .foot-nav-button:active {
+                box-shadow: 
+                    0 0 1.5dvh var(--link-accent) inset,
+                    0 0 0.3dvh var(--link-accent)
+                ;
+            }
+
+            #rotary-menu-stop {
+                left: 7%;
+            }
+
+            #nav-divider {
+                position: absolute;
+                width: 1px;
+                height: 9.5dvh;
+                left: 27%;
+                top: calc(52% - 4.75dvh);
+                background-color: var(--primary-accent);
+                box-shadow:
+                    0 0 8px 3px var(--primary-accent)
+                ;
+                opacity: 0.7;
+            }
+
+            #about-button {
+                left: 30%;
+            }
+
+            #sitemap-button {
+                left: 50%;
+            }
+
+            #device-info-button {
+                left: 70%;
+            }
+
+            iframe {
+                border: none;
+                min-height: 50dvh;
+            }
+
+            footer {
+                font-style: italic;
+                padding-top: 15dvh;
+            }
+
+            input[name=tabcontent] {
+                display: none;
+            }
+
+            .tab-content {
+                display: none;
+                min-height: 50dvh;
+                text-align: left;
+                width: 60%;
+                margin: auto;
+            }
+
+            .tab-content > h1 {
+                text-align: center;
+            }
+
+            input:checked + .tab-content {
+                display: block;
+            }
+
+            /* 
+
+            desktop css overrides 
+
+            */
+            @media only screen and (min-width: 768px) {
+                #overhead-rays {
+                    background:
+                        conic-gradient(
+                            at 0% -500vh, 
+                            transparent 162deg, 
+                            rgba(255, 255, 255, 0.12) 164.2deg 164.5deg, 
+                            transparent 165deg 169.4deg, 
+                            rgba(255, 255, 255, 0.1) 170.8deg 171deg, 
+                            transparent 171.5deg 175.6deg,
+                            rgba(255, 255, 255, 0.1) 176.3deg 176.5deg,
+                            transparent 176.9deg
+                        )
+                    ;
+                }
+
+                @keyframes wipers-open {
+                    from {
+                        width: 0;
+                    }
+
+                    to {
+                        width: 60%;
+                    }
+                }
+
+                @keyframes wipers-counterweight {
+                    from {
+                        translate: -50% 0;
+                    }
+
+                    to {
+                        translate: 0 0;
+                    }
+                }
+                
+                #motd {
+                    width: 60vw;
+                }
+
+                body > iframe {
+                    width: 60%;
+                    left: 20%;
+                }
+
+                #rotary-menu {
+                    perspective: 500px;
+                }
+
+                #rotary-menu > a {
+                    width: 5vw;
+                    height: 5vw;
+                }
+
+                #rotary-menu > a:first-of-type {
+                    top: 16dvh;
+                }
+
+                #rotary-menu > a:nth-of-type(2) {
+                    top: 11dvh;
+                }
+
+                #rotary-menu > a:nth-of-type(3) {
+                    top: 31dvh;
+                }
+
+                #rotary-menu > a:nth-of-type(4) {
+                    top: 11dvh;
+                }
+
+                #rotary-menu > a:nth-of-type(5) {
+                    top: 16dvh;
+                }
+
+                #rotary-menu > a:nth-of-type(6) {
+                    top: 31dvh;
+                }
+
+                #rotary-menu > a:nth-of-type(7) {
+                    top: 16dvh;
+                }
+
+                #rotary-menu > a:nth-of-type(8) {
+                    top: 26dvh;
+                }
+
+                .menu-bracket {
+                    width: 60vw;
+                    left: 20vw;
+                }
+
+                #menu-spacer {
+                    height: 15dvh;
+                }
+
+                #foot-nav {
+                    width: 70vw;
+                    left: 15vw;
+                }
+
+                .foot-nav-link {
+                    width: 7.5dvh;
+                    height: 7.5dvh;
+                    top: calc(55% - 3.75dvh);
+                }
+
+                #rotary-menu-stop {
+                    left: 9%;
+                }
+
+                #nav-divider {
+                    left: 18%;
+                    top: calc(52% - 4.75dvh);
+                }
+
+                #about-button {
+                    left: 21.5%;
+                }
+
+                #sitemap-button {
+                    left: 30%;
+                }
+
+                #device-info-button {
+                    left: 38.5%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="bg-transition-frame"></div>
+
+        <div id="bg-pane"></div>
+
+        <div id="overhead-rays"></div>
+
+        <!-- HEADER -->
+        <h1 id="name">
+            Nick Hernandez
+        </h1>
+
+        <h3>
+            built from scratch
+        </h3>
+
+        <div id="motd-container">
+            <div id="left-wiper" class="wiper"></div>
+            <div id="right-wiper" class="wiper"></div>
+            
+            <div id="motd">
+                <!-- Hackneyed for now, since doing it another way messes with the opening animation. -->
+                <p>
+                    Every experience begets knowledge,<span class="desktop-only"> and curiosity is my constant.</span>
+                </p>
+
+                <p class="mobile-only">
+                    and curiosity is my constant.
+                </p>
+
+                <p>
+                    The Web is an open canvas.<span class="desktop-only"> Here will be my creations.</span>
+                </p>
+
+                <p class="mobile-only">
+                    Here will be my creations.
+                </p>
+            </div>
+        </div>
+
+        <!-- ROTARY MENU -->
+
+        <div id="rotary-menu">
+            <a class="menu-item" href>
+                <div class="centered">
+                    Web Tools
+                </div>
+            </a>
+
+            <a class="menu-item" href="./career">
+                <div class="centered">
+                    Career
+                </div>
+            </a>
+
+            <a class="menu-item" href>
+                <div class="centered">
+                    Experiments
+                </div>
+            </a>
+
+            <a class="menu-item" href>
+                <div class="centered">
+                    Fun
+                </div>
+            </a>
+
+            <a class="menu-item" href="./wip">
+                <div class="rotary-link-bg"></div>
+
+                <div class="centered">
+                    WIP
+                </div>
+            </a>
+
+            <a class="menu-item" href>
+                <div class="centered">
+                    Journal
+                </div>
+            </a>
+
+            <a class="menu-item" href>
+                <div class="centered">
+                    Links
+                </div>
+            </a>
+
+            <a class="menu-item" href>
+                <div class="centered">
+                    Files
+                </div>
+            </a>
+
+            <br />
+
+            <div id="menu-upper-bracket" class="menu-bracket menu-frame-item"></div>
+
+            <div id="menu-spacer" class="menu-frame-item"></div>
+
+            <div id="menu-lower-bracket" class="menu-bracket menu-frame-item"></div>
+
+            <br />
+        </div>
+
+        <!-- CONTENT AREA -->
+
+        <input type="radio" name="tabcontent"  id="about-tab" checked />
+        <div class="tab-content">
+            <p style="text-align: center;">
+                SITE STATUS: new.
+            </p>
+    
+            <h1>
+                About
+            </h1>
+    
+            <p>
+                I'm Nick, and this is a space of my own creation.
+            </p>
+    
+            <p>
+                The Web can be whatever you want it to be, and I'll make this 
+                into my collection of examples.
+            </p>
+    
+            <p>
+                I am an American lifelong learner, a mechanical engineering 
+                graduate from the Georgia Institute of Technology, who has 
+                worn many hats & explored many interests. As the tagline says, 
+                I'm building this from scratch. It may look like nothing else 
+                and provide things that don't exist elsewhere, as this is 
+                a product of my own mind.
+            </p>
+    
+            <p>
+                I've begun this while employed full-time, making this with 
+                some of my free time. The desire to learn and the desire to 
+                create drive me. It's the love of the craft. Of many crafts. 
+                I'm lucky enough to have passion for it, and this site will be 
+                a growing proof of that. My capabilities will grow a little 
+                more with each creation, and each new creation may be a little 
+                better done than the last.
+            </p>
+    
+            <p>
+                There is still much to learn. Much to explore. And much to 
+                create.
+            </p>
+        </div>
+
+        <input type="radio" name="tabcontent" id="sitemap-tab" />
+        <div class="tab-content" style="text-align: center;">
+            <h1>
+                Sitemap
+            </h1>
+    
+            <p>
+                You are here :)
+            </p>
+    
+            <p>
+                Glad you could stop by
+            </p>
+    
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+    
+            <p style="opacity: 0.4">
+                No other pages on the site are completed yet!
+            </p>
+        </div>
+
+        <input type="radio" name="tabcontent"  id="device-info-tab" />
+        <main class="tab-content">
+            <h1>
+                Device Info
+            </h1>
+            
+            <p>
+                <i>
+                    These some standard things your Web browser can see about 
+                    your device. This data isn't being collected, I'm just 
+                    using it to see what'll work for my different devices.
+                </i>
+            </p>
+    
+            <hr />
+    
+            <p>
+                Your screen width: <span id="window-width" class="yellow">(page script loading...)</span> px.
+            </p>
+    
+            <p>
+                Your screen height: <span id="window-height" class="yellow">(page script loading...)</span> px.
+            </p>
+    
+            <p id="navigator-output">
+                (page script loading...)
+            </p>
+    
+            <script>
+                { // resize events
+                    const widthDisplay = document.getElementById('window-width');
+                    const heightDisplay = document.getElementById('window-height');
+    
+                    const updateDimensionsDisplay = (event) => {
+                        widthDisplay.innerText = window.screen.width;
+                        heightDisplay.innerText = window.screen.height;
+                    };
+    
+                    window.addEventListener('resize', updateDimensionsDisplay);
+                    updateDimensionsDisplay();
+                }
+    
+                { // navigator elements
+                    const br = () => { return document.createElement('br'); };
+                    const text = (s) => { return document.createTextNode(s); };
+                    const metric = (s) => {
+                        const element = document.createElement('span');
+    
+                        element.className = 'yellow';
+    
+                        if(!s) {
+                            element.innerText = '(not loaded...)';
+                        } else {
+                            element.innerText = s;
+                        }
+    
+                        return element;
+                    };
+                    const span = (s) => {
+                        const element = document.createElement('span');
+    
+                        element.innerText = s;
+    
+                        return element;
+                    };
+    
+                    const nav = document.getElementById('navigator-output');
+    
+                    nav.innerHTML = '<u>Navigator Properties<u><br /><br />';
+    
+                    if(navigator.bluetooth) {
+                        nav.append(metric('Browser supports Bluetooth.'));
+                        nav.append(br());
+                        nav.append(text('Bluetooth availability detected? '));
+    
+                        const avail = metric();
+                        nav.append(avail);
+                        navigator.bluetooth.getAvailability().then((result) => {
+                            if(result) {
+                                avail.innerText = 'Yes';
+                            } else {
+                                avail.innerText = 'No';
+                            }
+                        });
+                    } else {
+                        nav.append(metric('Browser does not support Bluetooth.'));
+                    }
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.clipboard) {
+                        nav.append(metric('Clipboard detected! Browser can read from and write to your clipboard!'));
+                        nav.append(br(), br());
+    
+                        const clipbtn = document.createElement('button');
+                        clipbtn.innerText = 'Click here to copy a random message to your clipboard!';
+                        clipbtn.addEventListener('click', (event) => {
+                            const msg = ['We\'re in ur base', 'There\'s no rock like Norse rock', 'Clippin yr boards', 'Never gonna give you up'];
+    
+                            navigator.clipboard.writeText(msg[Math.floor(Math.random() * msg.length)]).then(() => {});
+    
+                            alert('Random message copied!');
+                        });
+                        nav.append(clipbtn);
+                        nav.append(br(), br());
+    
+                        const clipbtn2 = document.createElement('button');
+                        clipbtn2.innerText = 'DOUBLE-click here to display some of your clipboard content below!';
+    
+                        const clipContents = span('');
+                        clipbtn2.addEventListener('dblclick', (event) => {
+                            navigator.clipboard.read().then((result) => {
+                                clipContents.innerHTML = '';
+    
+                                for(const clip of result) {
+                                    for(const clipType of clip.types) {
+                                        clip.getType(clipType)
+                                            .then((res) => { return res.text(); })
+                                            .then((clipText) => {
+                                                clipContents.append(span(clipText), br(), br());
+                                            })
+                                        ;
+                                    }
+                                }
+                            })
+                        });
+    
+                        nav.append(clipbtn2, br(), br(), span('(if your clipboard has something other than text, the result can be unpredictable)'), br(), br(), clipContents);
+                    } else {
+                        nav.append(metric('Clipboard not detected!'));
+                    }
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.connection) {
+                        const info = navigator.connection;
+    
+                        nav.append(metric('Connection info detected!'), br(), br());
+                        nav.append(text('Bandwidth (estimated): '), metric(`${info.downlink} megabits per second`), br());
+                        nav.append(text('Connection Type (guessed from network speed): '), metric(info.effectiveType), br());
+                        nav.append(text('Round-trip ping (estimated): '), metric(`${info.rtt} milliseconds`), br());
+                        nav.append(text('Bandwidth (estimated): '), metric(`${info.downlink} megabits per second`), br());
+                        nav.append(text('Data saver detected?: '));
+    
+                        if(info.saveData) {
+                            nav.append(metric('Yes'));
+                        } else {
+                            nav.append(metric('No'));
+                        }
+                    } else {
+                        nav.append(metric('Connection info not detected!'));
+                    }
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.cookieEnabled) {
+                        nav.append(metric('Cookie-setting capability is currently enabled on this page.'));
+                    } else {
+                        nav.append(metric('Cookie-setting capability is currently disabled on this page.'));
+                    }
+                    nav.append(br(), text('Cookies are not being used here.'));
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.credentials) {
+                        nav.append(metric('Credentials manager detected.'));
+                    } else {
+                        nav.append(metric('Credentials manager not detected.'));
+                    }
+                    nav.append(br(), text('Used to manage login needs, wherever they\'re used.'));
+    
+                    nav.append(br(), br());
+    
+                    nav.append(text('Device memory available to the page (approx.): '), metric(`${navigator.deviceMemory} gigabytes`));
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.geolocation) {
+                        nav.append(metric('Location capability detected.'));
+                    } else {
+                        nav.append(metric('Location capability not detected.'));
+                    }
+                    nav.append(br(), text('If location is enabled, the browser can ask for permission to access your location, ' + 
+                        'which includes your latitude, longitude, altitude, direction & speed of travel, estimated accuracy for your location, ' + 
+                        'and the exact time at which your location was retrieved.')
+                    );
+    
+                    nav.append(br(), br());
+    
+                    nav.append(text('Processor cores available: '), metric(navigator.hardwareConcurrency));
+    
+                    nav.append(br(), br());
+    
+                    nav.append(text('Detected user language: '), metric(navigator.language));
+    
+                    nav.append(br(), br());
+    
+                    nav.append(text('Detected user languages, in order of preference:'));
+                    const langs = navigator.languages;
+                    for(const lang of langs) {
+                        nav.append(br(), metric(lang));
+                    }
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.locks) {
+                        nav.append(metric('Web locks detected.'));
+                    } else {
+                        nav.append(metric('Web locks not detected.'));
+                    }
+                    nav.append(br(), text('Web locks are used to lock down Web page processes so that other processes can\'t interrupt while they\'re at work, unless the user intervenes.'));
+    
+                    nav.append(br(), br());
+    
+                    nav.append(text('Number of touch inputs that this device can detect at any one time: '), metric(navigator.maxTouchPoints));
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.mediaCapabilities) {
+                        nav.append(metric('Media capabilities interface detected.'));
+                    } else {
+                        nav.append(metric('Media capabilities interface  not detected.'));
+                    }
+                    nav.append(br(), text('The media capabilities interface is used to determine whether the browser can handle playing a piece of media.'));
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.mediaDevices) {
+                        nav.append(metric('Media devices capability detected.'));
+    
+                        const devicesReadout = span('');
+                        navigator.mediaDevices.enumerateDevices().then((deviceInfo) => {
+                            devicesReadout.innerHTML = '';
+    
+                            for(const device of deviceInfo) {
+                                devicesReadout.append(br(), br());
+                                devicesReadout.append(text('Device ID: '), metric(device.deviceId));
+                                devicesReadout.append(br(), text('Physical device: '), metric(device.groupId));
+                                devicesReadout.append(br(), text('Device type: '), metric(device.kind));
+                                devicesReadout.append(br(), text('Detected device label: '), metric(device.label));
+                            }
+                        });
+    
+                        nav.append(devicesReadout);
+                    } else {
+                        nav.append(metric('Media devices capability not detected.'));
+                    }
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.mediaSession) {
+                        nav.append(metric('Media session interface detected.'));
+                    } else {
+                        nav.append(metric('Media session interface not detected.'));
+                    }
+                    nav.append(br(), text('The media session interface is used to retrieve information about a playing piece of media, such as a title or artist name.'));
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.onLine) {
+                        nav.append(metric('Online browsing detected.'));
+                    } else {
+                        nav.append(metric('Offline browsing detected.'));
+                    }
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.pdfViewerEnabled) {
+                        nav.append(metric('PDF viewer is enabled for this browser.'));
+                    } else {
+                        nav.append(metric('There is no PDF viewer enabled for this browser.'));
+                    }
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.permissions) {
+                        nav.append(metric('Permissions interface detected.'));
+                    } else {
+                        nav.append(metric('Permissions interface not detected.'));
+                    }
+                    nav.append(br(), text('The permissions interface is used to keep track of permissions that have been granted by the user, such as location, camera, and microphone.'));
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.presentation) {
+                        nav.append(metric('Presentation interface detected.'));
+                    } else {
+                        nav.append(metric('Presentation interface not detected.'));
+                    }
+                    nav.append(br(), text('The presentation interface handles receiving & controlling presentation materials across browsers & devices.'));
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.serviceWorker) {
+                        nav.append(metric('Service workers enabled.'));
+                    } else {
+                        nav.append(metric('Service worker not enabled.'));
+                    }
+                    nav.append(br(), text('A service worker is a bit of software that sits between the front end and the server, so that when they load a Web resource, ' + 
+                        'the service worker can control if that resource comes from the back end server, from a resource that\'s saved to local memory, or elsewhere. ' +
+                        'Usually used to allow a page to function while offline. Can also carry out some other script functions. Only runs over HTTPS.'))
+                    ;
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.storage) {
+                        nav.append(metric('Storage manager enabled.'));
+    
+                        nav.append(br(), br(), text('Device storage available to the site (approx.): '));
+    
+                        const quota = metric();
+                        const usage = metric();
+    
+                        navigator.storage.estimate().then((estimate) => {
+                            quota.innerText = estimate.quota + ' bytes';
+                            usage.innerText = estimate.usage + ' bytes';
+                        });
+    
+                        nav.append(quota);
+    
+                        nav.append(br(), text('Device storage being used by the site (approx.): ', usage));
+    
+                        nav.append(br(), text('Site is able to use persistent navigator storage across visits?: '));
+    
+                        const persist = metric();
+                        navigator.storage.persist().then((res) => {
+                            if(res) {
+                                persist.innerText = 'Yes';
+                            } else {
+                                persist.innerText = 'No';
+                            }
+                        });
+                        nav.append(persist);
+    
+                        nav.append(br(), text('Site has permission to use persistent navigator storage?: '));
+    
+                        const persisted = metric();
+                        navigator.storage.persisted().then((res) => {
+                            if(res) {
+                                persisted.innerText = 'Yes';
+                            } else {
+                                persisted.innerText = 'No';
+                            }
+                        });
+                        nav.append(persisted);
+                    } else {
+                        nav.append(metric('Storage manager not enabled.'));
+                    }
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.usb) {
+                        nav.append(metric('USB capability detected.'));
+                    } else {
+                        nav.append(metric('USB capability not detected.'));
+                    }
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.userActivation) {
+                        nav.append(metric('User activation capability detected.'));
+                    } else {
+                        nav.append(metric('User activation capability not detected.'));
+                    }
+                    nav.append(br(), text('User activation allows the site to detect whether the user has interacted with or is interacting with the page, ' + 
+                        'such as by clicking a button or checking a box.'))
+                    ;
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.userAgent) {
+                        nav.append(metric('User agent detected.'));
+    
+                        nav.append(br(), br(), text('User agent given by the browser: '), metric(navigator.userAgent));
+                    } else {
+                        nav.append(metric('User agent not detected.'));
+                    }
+                    nav.append(br(), text('User agent is a basic bit of text that can be given from the browser, and its default value may identify the type of browser.'));
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.wakeLock) {
+                        nav.append(metric('Wake lock capability detected.'));
+                    } else {
+                        nav.append(metric('Wake lock capability not detected.'));
+                    }
+                    nav.append(br(), text('Wake lock allows the site to request that the screen doesn\'t turn off or dim. Site requests to use this feature may be ' + 
+                        'rejected by the local system, such as when device battery is low.'))
+                    ;
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.webdriver) {
+                        nav.append(metric('Webdriver detected.'));
+                    } else if(navigator.webdriver === false) {
+                        nav.append(metric('Webdriver capability is on, but webdriver is not detected.'));
+                    } else {
+                        nav.append(metric('Webdriver capability not detected.'));
+                    }
+                    nav.append(br(), text('Webdriver is a flag from the browser indicating whether it is being controlled through automation tools (i.e., by a bot).'));
+    
+                    nav.append(br(), br());
+    
+                    if(navigator.windowControlsOverlay) {
+                        nav.append(metric('Window controls overlay interface detected.'));
+                    } else {
+                        nav.append(metric('Window controls overlay interface not detected.'));
+                    }
+                    nav.append(br(), text('The window controls overlay interface allows only a Progressive Web App, not a regular website, to detect and modify the ' + 
+                        'presentation of the basic window controls such as the maximize and close buttons.'))
+                    ;
+                }
+            </script>
+        </main>
+
+        <!-- CREDITS FOOTER -->
+
+        <footer style="opacity: 0.4; width: 80%; margin: auto;">
+            <p>
+                © Copyright 2024+ Nicolas Hernandez. All rights reserved.
+            </p>
+    
+            <p>
+                Site written in HTML, CSS, and JavaScript.
+            </p>
+    
+            <p>
+                Hosting services provided by AWS.
+            </p>
+    
+            <p>
+                The base site is created with no site-building tool, design 
+                firm, AI, frontend library/framework, site template, pre-made 
+                component, nor outside script. Subdomains may be built with 
+                these tools as learning exercises, and if they are, they'll 
+                be noted as such.
+            </p>
+        </footer>
+
+        <div id="foot-spacer"></div>
+
+        <!-- FOOT NAV -->
+        <div id="foot-nav">
+            <div id="foot-nav-bg">
+
+            </div>
+
+            <div id="foot-nav-content">
+                <div id="foot-nav-overground">
+
+                    <button id="rotary-menu-stop" class="foot-nav-button">
+                        STOP
+                    </button>
+
+                    <div id="nav-divider"></div>
+
+                    <label for="about-tab" id="about-button" class="foot-nav-button">
+                        <div class="centered">
+                            ABOUT
+                        </div>
+                    </label>
+
+                    <label for="sitemap-tab" id="sitemap-button" class="foot-nav-button">
+                        <div class="centered">
+                            SITEMAP
+                        </div>
+                    </label>
+
+                    <label for="device-info-tab" id="device-info-button" class="foot-nav-button">
+                        <div class="centered">
+                            DEVICE INFO
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <script title="Stoppable Rotary Menu">
+            // TODO implement no-JS rotation, for the giggles.
+            // JS would have to disable this for its stoppable rotation.
+            {
+                const menuItems = document.getElementsByClassName('menu-item');
+                const transitionFrame = document.getElementById('bg-transition-frame');
+                const menuItemBgs = [
+                    null,
+                    'black',
+                    null,
+                    null,
+                    'rgb(0, 0, 27)',
+                    null,
+                    null,
+                    null
+                ];
+                const count = menuItems.length;
+
+                const angles = new Array(count);
+
+                for(let i = 0; i < count; i++) {
+                    angles[i] = 2 * i * Math.PI / count;
+                }
+                
+                let motionRadius = 15;
+                let last;
+                let paused = false;
+                let hardpaused = false;
+                const rotate = (now) => {
+                    if(last === undefined) {
+                        last = now;
+                        requestAnimationFrame(rotate);
+                    } else {
+                        const delta = now  - last;
+                        last = now;
+
+                        for(let r = 0; r < angles.length; r++) {
+                            angles[r] += 0.0005 * delta;
+                        }
+
+                        for(let i = 0; i < menuItems.length; i++) {
+                            const zCoord = 10 * motionRadius * Math.cos(angles[i]);
+
+                            menuItems[i].style.translate = `${motionRadius * Math.sin(angles[i])}vw 0 ${zCoord}px`;
+
+                            menuItems[i].style.zIndex = Math.round(zCoord);
+                        }
+
+                        if(!paused && !hardpaused) {
+                            requestAnimationFrame(rotate);
+                        }
+                    }
+                }
+
+                for(let index = 0; index < count; index++) {
+                    item = menuItems[index];
+
+                    item.addEventListener('mouseenter', (event) => {
+                        paused = true;
+
+                        if(menuItemBgs[index]) {
+                            transitionFrame.style.background = menuItemBgs[index];
+                        }
+                    });
+                    item.addEventListener('mouseleave', (event) => {
+                        last = performance.now();
+                        paused = false;
+                        transitionFrame.style.background = 'transparent';
+                        requestAnimationFrame(rotate);
+                    })
+                }
+
+                const updateRotaryParams = (event) => {
+                    for(const item of menuItems) {
+                        item.style.left = `calc(50% - ${parseFloat(getComputedStyle(item).width) / 2}px)`;
+                    }
+
+                    if(window.innerWidth < 768) {
+                        motionRadius = 30;
+                    } else {
+                        motionRadius = 15;
+                    }
+                };
+
+                updateRotaryParams();
+                requestAnimationFrame(rotate);
+
+                addEventListener('resize', updateRotaryParams);
+
+                document.getElementById('rotary-menu-stop').addEventListener(
+                    'click',
+                    (event) => {
+                        hardpaused = !hardpaused;
+
+                        if(!hardpaused) {
+                            event.target.innerHTML = 'STOP';
+                            last = performance.now();
+                            requestAnimationFrame(rotate);
+                        } else {
+                            event.target.innerHTML = 'GO';
+                        }
+                    }
+                );
+            };
+        </script>
+    </body>
+</html>

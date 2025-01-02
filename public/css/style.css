@@ -1,0 +1,71 @@
+
+body {
+    margin: 0;
+    min-height: 100dvh;
+}
+
+.fully-occupies-parent {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.y-centered {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.centered {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.table-of-contents-entry {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 
+
+desktop css overrides 
+
+*/
+@media only screen and (min-width: 768px) {
+    .mobile-only {
+        display: none;
+    }
+}
+
+/* 
+
+mobile css overrides 
+
+*/
+@media only screen and (max-width: 768px) {
+    .desktop-only {
+        display: none;
+    }
+}
+
+/*
+
+dev utility classes
+
+*/
+.yellow {
+    color: yellow;
+    text-shadow: 0 0 8px yellow ;
+}
+
+.see {
+    box-shadow: 0 0 0 8px red inset;
+}
+.see-2 {
+    box-shadow: 0 0 0 5px blue inset;
+}
+.see-3 {
+    box-shadow: 0 0 0 3px limegreen inset;
+}
