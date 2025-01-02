@@ -1,5 +1,0 @@
-Permissions test for CI/CD pipeline to AWS.
-
-This file has been modified and will be deleted to ensure that the permissions I've granted to the deployment pipeline are the minimum possible while remaining viable for continuous automated deployment.
-
-[this line is a modification]
