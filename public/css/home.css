@@ -11,6 +11,8 @@
 }
 
 body {
+    position: relative;
+    background: #212242;
     color: var(--primary-accent);
     margin: 0;
     text-align: center;
@@ -30,4 +32,459 @@ body > main {
 #foot-spacer {
     position: relative;
     height: 15vh;
+}
+
+#bg-pane {
+    position: absolute;
+    width: 100%;
+    height: 100dvh;
+    background: linear-gradient(#7892a3 0%, #212242 100%);
+    z-index: -2;
+}
+
+#bg-transition-frame {
+    /* exists to prevent CSS3 white-flash bug when transitioning background color */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: -1;
+    transition: 0.5s;
+}
+
+#overhead-rays {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:
+        conic-gradient(
+            at 0% -100vh, 
+            transparent 162deg, 
+            rgba(255, 255, 255, 0.12) 164.2deg 164.5deg, 
+            transparent 165deg 169.4deg, 
+            rgba(255, 255, 255, 0.1) 170.8deg 171deg, 
+            transparent 171.5deg 175.6deg,
+            rgba(255, 255, 255, 0.1) 176.3deg 176.5deg,
+            transparent 176.9deg
+        )
+    ;
+    pointer-events: none;
+}
+
+#name {
+    margin-top: 0;
+    padding-top: 0.5em;
+}
+
+#motd-container {
+    position: relative;
+    width: 60%;
+    margin: auto;
+    
+    animation-name: wipers-open;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
+
+    overflow: hidden;
+    text-align: center;
+}
+
+@keyframes wipers-open {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+.wiper {
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    box-shadow: 0 0 2px 1px var(--primary-accent);
+    background-color: var(--primary-accent);
+}
+
+#left-wiper {
+    left: 0;
+}
+
+#right-wiper {
+    right: 0;
+}
+
+#motd {
+    width: 100vw;
+    position: relative;
+    white-space: nowrap;
+    text-align: center;
+
+    animation-name: wipers-counterweight;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+}
+
+@keyframes wipers-counterweight {
+    from {
+        translate: -50% 0;
+    }
+
+    to {
+        translate: 0 0;
+    }
+}
+
+#rotary-menu {
+    position: relative;
+    perspective: 700px;
+}
+
+#rotary-menu > a {
+    position: absolute;
+    width: 15vw;
+    height: 15vw;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6) inset;
+    border-radius: 50%;
+    left: calc(50% - 2.5vw);
+    backdrop-filter: blur(2px);
+}
+
+#rotary-menu > a:first-of-type {
+    top: 22dvh;
+}
+
+#rotary-menu > a:nth-of-type(2) {
+    top: 17dvh;
+
+    background:
+        radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.25) 0% 55%, rgba(255, 255, 255, 0.25) 55%)
+    ;
+}
+
+#rotary-menu > a:nth-of-type(3) {
+    top: 37dvh;
+}
+
+#rotary-menu > a:nth-of-type(4) {
+    top: 17dvh;
+}
+
+#rotary-menu > a:nth-of-type(5) {
+    top: 22dvh;
+
+    
+    background:
+        radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.25) 0%, rgba(0, 0, 255, 0.25) 10%, rgba(0, 0, 27, 0.251) 15%)
+    ;
+}
+
+#rotary-menu > a:nth-of-type(6) {
+    top: 37dvh;
+}
+
+#rotary-menu > a:nth-of-type(7) {
+    top: 22dvh;
+}
+
+#rotary-menu > a:nth-of-type(8) {
+    top: 32dvh;
+}
+
+.menu-bracket {
+    position: relative;
+    height: 15vh;
+    width: 100%;
+    left: 0;
+    border-radius: 50%;
+    filter: blur(1.5px);
+}
+
+.menu-frame-item {
+    pointer-events: none;
+}
+
+#menu-upper-bracket {
+    border-top: solid var(--primary-accent) 5px;
+}
+
+#menu-spacer {
+    height: 23dvh;
+}
+
+#menu-lower-bracket {
+    border-bottom: solid var(--primary-accent) 5px;
+}
+
+/* foot-nav */
+
+#foot-nav {
+    position: fixed;
+    bottom: -35vh;
+    height: 50vh;
+    width: 100%;
+    left: 0;
+}
+
+#foot-nav-bg {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transform: perspective(50px) rotateX(1deg);
+    box-shadow: 0 0 20px var(--primary-accent) inset,
+        0 0 20px var(--primary-accent) inset,
+        0 0 10px var(--primary-accent)
+    ;
+    border-radius: 20% 20% 0 0;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+#foot-nav-content {
+    position: absolute;
+    width: 95%;
+    height: 100%;
+    top: 5%;
+    left: 2.5%;
+    border-radius: 20% 20% 0 0;
+}
+
+#foot-nav-overground {
+    position: relative;
+    width: 100%;
+    height: 25%;
+}
+
+#foot-nav-overground > h3:first-child {
+    position: absolute;
+    width: 100%;
+    color: hsl(0, 0%, 80%);
+    text-shadow: 0 0 3px grey, 0 0 5px black, 0 0 5px black;
+    margin: 0;
+    top: 5%;
+}
+
+.foot-nav-button {
+    position: absolute;
+    width: 7.5dvh;
+    height: 7.5dvh;
+    top: calc(55% - 3.75dvh);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 1.5dvh var(--primary-accent) inset,
+        0 0 0.3dvh var(--primary-accent)
+    ;
+    background: transparent;
+    border: 0;
+    color: hsl(180, 80%, 70%);
+    text-shadow: 0 0 3px grey, 0 0 5px black, 0 0 5px black;
+    text-decoration: none;
+}
+
+.foot-nav-button:hover {
+    box-shadow: 
+        0 0 1.5dvh lightgrey inset,
+        0 0 0.3dvh lightgrey
+    ;
+}
+
+.foot-nav-button:active {
+    box-shadow: 
+        0 0 1.5dvh var(--link-accent) inset,
+        0 0 0.3dvh var(--link-accent)
+    ;
+}
+
+#rotary-menu-stop {
+    left: 7%;
+}
+
+#nav-divider {
+    position: absolute;
+    width: 1px;
+    height: 9.5dvh;
+    left: 27%;
+    top: calc(52% - 4.75dvh);
+    background-color: var(--primary-accent);
+    box-shadow:
+        0 0 8px 3px var(--primary-accent)
+    ;
+    opacity: 0.7;
+}
+
+#about-button {
+    left: 30%;
+}
+
+#sitemap-button {
+    left: 50%;
+}
+
+#device-info-button {
+    left: 70%;
+}
+
+iframe {
+    border: none;
+    min-height: 50dvh;
+}
+
+footer {
+    font-style: italic;
+    padding-top: 15dvh;
+}
+
+input[name=tabcontent] {
+    display: none;
+}
+
+.tab-content {
+    display: none;
+    min-height: 50dvh;
+    text-align: left;
+    width: 60%;
+    margin: auto;
+}
+
+.tab-content > h1 {
+    text-align: center;
+}
+
+input:checked + .tab-content {
+    display: block;
+}
+
+/* 
+
+desktop css overrides 
+
+*/
+@media only screen and (min-width: 768px) {
+    #overhead-rays {
+        background:
+            conic-gradient(
+                at 0% -500vh, 
+                transparent 162deg, 
+                rgba(255, 255, 255, 0.12) 164.2deg 164.5deg, 
+                transparent 165deg 169.4deg, 
+                rgba(255, 255, 255, 0.1) 170.8deg 171deg, 
+                transparent 171.5deg 175.6deg,
+                rgba(255, 255, 255, 0.1) 176.3deg 176.5deg,
+                transparent 176.9deg
+            )
+        ;
+    }
+
+    @keyframes wipers-open {
+        from {
+            width: 0;
+        }
+
+        to {
+            width: 60%;
+        }
+    }
+
+    @keyframes wipers-counterweight {
+        from {
+            translate: -50% 0;
+        }
+
+        to {
+            translate: 0 0;
+        }
+    }
+    
+    #motd {
+        width: 60vw;
+    }
+
+    body > iframe {
+        width: 60%;
+        left: 20%;
+    }
+
+    #rotary-menu {
+        perspective: 500px;
+    }
+
+    #rotary-menu > a {
+        width: 5vw;
+        height: 5vw;
+    }
+
+    #rotary-menu > a:first-of-type {
+        top: 16dvh;
+    }
+
+    #rotary-menu > a:nth-of-type(2) {
+        top: 11dvh;
+    }
+
+    #rotary-menu > a:nth-of-type(3) {
+        top: 31dvh;
+    }
+
+    #rotary-menu > a:nth-of-type(4) {
+        top: 11dvh;
+    }
+
+    #rotary-menu > a:nth-of-type(5) {
+        top: 16dvh;
+    }
+
+    #rotary-menu > a:nth-of-type(6) {
+        top: 31dvh;
+    }
+
+    #rotary-menu > a:nth-of-type(7) {
+        top: 16dvh;
+    }
+
+    #rotary-menu > a:nth-of-type(8) {
+        top: 26dvh;
+    }
+
+    .menu-bracket {
+        width: 60vw;
+        left: 20vw;
+    }
+
+    #menu-spacer {
+        height: 15dvh;
+    }
+
+    #foot-nav {
+        width: 70vw;
+        left: 15vw;
+    }
+
+    .foot-nav-link {
+        width: 7.5dvh;
+        height: 7.5dvh;
+        top: calc(55% - 3.75dvh);
+    }
+
+    #rotary-menu-stop {
+        left: 9%;
+    }
+
+    #nav-divider {
+        left: 18%;
+        top: calc(52% - 4.75dvh);
+    }
+
+    #about-button {
+        left: 21.5%;
+    }
+
+    #sitemap-button {
+        left: 30%;
+    }
+
+    #device-info-button {
+        left: 38.5%;
+    }
 }
