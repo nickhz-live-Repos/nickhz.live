@@ -5,6 +5,10 @@
     color: white;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 #home-button {
     position: fixed;
     bottom: 0;

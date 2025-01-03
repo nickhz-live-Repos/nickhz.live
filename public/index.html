@@ -128,7 +128,8 @@
 
         <!-- CONTENT AREA -->
 
-        <input type="radio" name="tabcontent"  id="about-tab" checked />
+        <!-- about -->
+        <input type="radio" name="tabcontent"  id="about-tab" />
         <div class="tab-content">
             <p style="text-align: center;">
                 SITE STATUS: new.
@@ -172,33 +173,68 @@
             </p>
         </div>
 
-        <input type="radio" name="tabcontent" id="sitemap-tab" />
-        <div class="tab-content" style="text-align: center;">
-            <h1>
+        <!-- sitemap -->
+        <input type="radio" name="tabcontent" id="sitemap-tab" checked />
+        <div class="tab-content">
+            <h1 style="text-align: center">
                 Sitemap
             </h1>
-    
-            <p>
-                You are here :)
-            </p>
-    
-            <p>
-                Glad you could stop by
-            </p>
-    
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-    
-            <p style="opacity: 0.4">
-                No other pages on the site are completed yet!
-            </p>
-        </div>
 
+            <!-- layer 0 -->
+            <div style="text-align: center">
+                <div class="small-orb" style="margin: auto;">
+                    <div class="centered">
+                        Home
+                    </div>
+                </div>
+                You are here :)
+            </div>
+
+            <br />
+
+            <!-- layer n -->
+            <div class="sitemap-entry">
+                <a href="./wip" id="sitemap-wip" class="small-orb">
+                    <div class="centered">
+                        WIP
+                    </div>
+                </a>
+                <div>
+                    <div>
+                        Work-in-Progress Pages
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <a href="./wip">WIP Index</a>
+                </li>
+            </ul>
+            <div class="sitemap-entry">
+                <a href="./career" id="sitemap-career" class="small-orb">
+                    <div class="centered">
+                        Career
+                    </div>
+                </a>
+                <div>
+                    <div>
+                        My Career Pages
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <a href="./career">Career Index</a>
+                </li>
+            </ul>
+
+            <hr />
+
+            <p class="yellow">
+                More pages will be in the works!
+            </p>
+
+        <!-- device info -->
         <input type="radio" name="tabcontent"  id="device-info-tab" />
         <main class="tab-content">
             <h1>
@@ -227,12 +263,13 @@
                 (page script loading...)
             </p>
     
+            <!-- script content -->
             <script src="scripts/homepage-device-info.js"></script>
         </main>
 
         <!-- CREDITS FOOTER -->
 
-        <footer style="opacity: 0.4; width: 80%; margin: auto;">
+        <footer>
             <p>
                 © Copyright 2024+ Nicolas Hernandez. All rights reserved.
             </p>
@@ -246,11 +283,15 @@
             </p>
     
             <p>
-                The base site is created with no site-building tool, design 
-                firm, AI, frontend library/framework, site template, pre-made 
-                component, nor outside script. Subdomains may be built with 
-                these tools as learning exercises, and if they are, they'll 
-                be noted as such.
+                The base site is created without the use of any site-building 
+                tool, design firm, AI, frontend library/framework, site 
+                template, pre-made component, or outside script. Subdomains 
+                may be built with these tools as learning exercises or proofs 
+                of concept, and if they are, they'll be noted as such.
+            </p>
+
+            <p>
+                This site's source code is in <a href="https://github.com/Hernandezn/nickhz.live" target="_blank">this GitHub repo</a>!
             </p>
         </footer>
 
@@ -265,25 +306,25 @@
             <div id="foot-nav-content">
                 <div id="foot-nav-overground">
 
-                    <button id="rotary-menu-stop" class="foot-nav-button">
+                    <button id="rotary-menu-stop" class="small-orb foot-nav-button">
                         STOP
                     </button>
 
                     <div id="nav-divider"></div>
 
-                    <label for="about-tab" id="about-button" class="foot-nav-button">
+                    <label for="about-tab" id="about-button" class="small-orb foot-nav-button">
                         <div class="centered">
                             ABOUT
                         </div>
                     </label>
 
-                    <label for="sitemap-tab" id="sitemap-button" class="foot-nav-button">
+                    <label for="sitemap-tab" id="sitemap-button" class="small-orb foot-nav-button">
                         <div class="centered">
                             SITEMAP
                         </div>
                     </label>
 
-                    <label for="device-info-tab" id="device-info-button" class="foot-nav-button">
+                    <label for="device-info-tab" id="device-info-button" class="small-orb foot-nav-button">
                         <div class="centered">
                             DEVICE INFO
                         </div>

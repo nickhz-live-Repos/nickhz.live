@@ -266,17 +266,21 @@ body > main {
     top: 5%;
 }
 
-.foot-nav-button {
-    position: absolute;
+.small-orb {
     width: 7.5dvh;
     height: 7.5dvh;
-    top: calc(55% - 3.75dvh);
     border-radius: 50%;
     box-shadow: 
         0 0 1.5dvh var(--primary-accent) inset,
         0 0 0.3dvh var(--primary-accent)
     ;
     background: transparent;
+}
+
+.foot-nav-button {
+    position: absolute;
+    text-align: center;
+    top: calc(55% - 3.75dvh);
     border: 0;
     color: hsl(180, 80%, 70%);
     text-shadow: 0 0 3px grey, 0 0 5px black, 0 0 5px black;
@@ -344,7 +348,7 @@ input[name=tabcontent] {
     display: none;
     min-height: 50dvh;
     text-align: left;
-    width: 60%;
+    width: 95%;
     margin: auto;
 }
 
@@ -354,6 +358,58 @@ input[name=tabcontent] {
 
 input:checked + .tab-content {
     display: block;
+}
+
+.sitemap-entry {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#sitemap-wip {
+    box-shadow: none;
+
+    background:
+        radial-gradient(rgb(255, 255, 255) 0%, rgb(0, 0, 255) 25%, rgb(0, 0, 27) 75%)
+    ;
+
+    text-shadow:
+        0 0 8px black,
+        0 0 8px black,
+        0 0 4px black,
+        0 0 4px black
+    ;
+}
+
+#sitemap-career {
+    box-shadow: none;
+
+    background:
+        radial-gradient(black 0% 60%, white 60% 65%, black 65%)
+    ;
+
+    text-shadow:
+        0 0 8px black,
+        0 0 8px black,
+        0 0 4px black,
+        0 0 4px black
+    ;
+}
+
+.sitemap-entry > a {
+    display: inline-block;
+    text-align: center;
+}
+
+.yellow {
+    text-shadow: 0 0 8px yellow;
+}
+
+footer {
+    opacity: 0.4;
+    width: 95%;
+    margin: auto;
 }
 
 /* 
@@ -486,5 +542,13 @@ desktop css overrides
 
     #device-info-button {
         left: 38.5%;
+    }
+
+    .tab-content {
+        width: 60%;
+    }
+
+    footer {
+        width: 80%;
     }
 }
