@@ -67,7 +67,7 @@ header {
 }
 
 main {
-    position: relative;
+    position: absolute;
     background: hsl(23, 39%, 20%);
     top: calc(8em + 16px);
     height: calc(100dvh - 10em - 32px);
@@ -81,11 +81,6 @@ main {
     white-space: nowrap;
 }
 
-main > div {
-    display: inline-block;
-    height: 100%;
-}
-
 .journal-entry {
     display: inline-flex;
     width: 150px;
@@ -97,12 +92,24 @@ main > div {
     padding-top: calc(10px + 1em);
     margin-right: 3px;
     white-space: initial;
+    font-size: 1.5em;
+    text-decoration: none;
+    background-color: hsl(0, 0%, 40%);
 }
 
-#devlog-entries > .journal-entry {
+.journal-entry.devlog {
     background-color: hsl(240, 60%, 25%);
     color: hsl(180, 60%, 50%);
-    font-size: 1.5em;
+}
+
+.journal-entry.tutorial {
+    background-color: hsl(120, 40%, 20%);
+    color: hsl(60, 70%, 50%);
+}
+
+.journal-entry.thoughts {
+    background-color: hsl(0, 40%, 20%);
+    color: hsl(45, 70%, 50%);
 }
 
 aside {
@@ -160,7 +167,7 @@ aside > .sticky-note,
     top: 10px;
     left: 10px;
     width: auto;
-    font-family: 'Ink Free', sans-serif;
+    font-family: 'Ink Free', 'Comic Sans MS', sans-serif;
     font-size: 2em;
     font-weight: 1000;
     color: hsl(22, 40%, 20%);
