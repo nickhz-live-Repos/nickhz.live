@@ -401,6 +401,22 @@ input:checked + .tab-content {
     ;
 }
 
+#sitemap-journal {
+    box-shadow: none;
+
+    background:
+        linear-gradient(90deg, hsl(22, 41%, 53%) 10%, transparent 10%),
+        linear-gradient(hsl(22, 41%, 53%) 20%, hsl(22, 40%, 20%) 20% 80%, hsl(22, 41%, 53%) 80%)
+    ;
+
+    text-shadow:
+        0 0 8px black,
+        0 0 8px black,
+        0 0 4px black,
+        0 0 4px black
+    ;
+}
+
 .sitemap-entry > a {
     display: inline-block;
     text-align: center;
