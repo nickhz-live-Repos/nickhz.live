@@ -1,7 +1,7 @@
 
 
 :root {
-    --journal-bg: #B87B57
+    --journal-bg: #b87b57
 }
 
 body {
@@ -66,7 +66,7 @@ header {
 
 main {
     position: relative;
-    background: hsl(22, 40%, 20%);
+    background: hsl(23, 39%, 20%);
     top: calc(8em + 16px);
     height: calc(100dvh - 10em - 32px);
     border: 1px solid black;
