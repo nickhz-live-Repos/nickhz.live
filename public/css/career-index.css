@@ -19,6 +19,11 @@ body {
     background-color: black;
     border-style: double;
     border-color: white;
+    transition: 0.5s;
+}
+
+#home-button:hover {
+    filter: invert(1);
 }
 
 #house-graphic {
