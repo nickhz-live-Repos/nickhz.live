@@ -7,7 +7,7 @@
 
 ### Why Plain HTML/CSS/JS?
 
- The base frontend technologies are not only framework-agnostic but supplementary to all technologies built upon them. Being better with HTML, CSS, and JavaScript also makes you better with React, Angular, PHP, SCSS, Bootstrap, Svelte, Vue, JSP, and any number of other Web UI technologies (including future ones!). This is also not an enterprise application meant to be maintained by multiple developers; this is an independent passion project that I'm using to experiment, to learn, to showcase, to build off of, and to simply enjoy.
+ The base frontend technologies are not only framework-agnostic but supplementary to all technologies built upon them. Being better with HTML, CSS, and JavaScript also makes you better with React, Angular, PHP, SCSS, Bootstrap, Svelte, Vue, JSP, and any number of other Web UI technologies (including future ones!).
  
- I like to create and to try things out in a freeform environment, and no medium that runs in a browser is more freeform than the base HTML, CSS, and JavaScript.
+ I also just creating and trying things out in a freeform environment, and no medium that runs in a browser is more freeform than the base HTML, CSS, and JavaScript.
 
