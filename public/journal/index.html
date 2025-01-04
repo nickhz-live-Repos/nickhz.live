@@ -20,8 +20,8 @@
         <meta property="og:site_name" content="The Personal Site of Nick Hernandez" />
         
         <!-- Style properties -->
-        <link href="css/style.css" rel="stylesheet" />
         <link href="css/journal-index.css" rel="stylesheet" />
+        <link href="css/style.css" rel="stylesheet" />
     </head>
     <body>
         <!-- nameplate -->
@@ -50,117 +50,70 @@
                 </div>
                 <div class="journal-entry" style="color: hsl(60, 70%, 50%); background-color: hsl(120, 40%, 20%)">
                     Lorem Ipsum
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
                 <div class="journal-entry" style="color: hsl(60, 70%, 50%); background-color: hsl(120, 40%, 20%)">
                     Lorem Ipsum
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
                 <div class="journal-entry">
                     Lorem Ipsum
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
                 <div class="journal-entry" style="color: hsl(45, 70%, 50%); background-color: hsl(0, 40%, 20%)">
                     Lorem Ipsum
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
                 <div class="journal-entry" style="color: hsl(60, 70%, 50%); background-color: hsl(120, 40%, 20%)">
                     Lorem Ipsum
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
                 <div class="journal-entry" style="color: hsl(45, 70%, 50%); background-color: hsl(0, 40%, 20%)">
                     Lorem Ipsum
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
                 <div class="journal-entry">
                     Lorem Ipsum
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
                 <div class="journal-entry" style="color: hsl(45, 70%, 50%); background-color: hsl(0, 40%, 20%)">
                     Lorem Ipsum
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
                 <div class="journal-entry">
                     Lorem Ipsum
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
                 <div class="journal-entry">
                     Lorem Ipsum
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
                 <div class="journal-entry">
                     Lorem Ipsum
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
             </div>
         </main>
 
         <!-- tag panel -->
         <aside>
-            <div id="tag-panel-label" class="sticky-note">
-                (WIP) Click a note below to filter the volumes by tag!
+            <label for="show-tag-panel-info" class="sticky-note pale-green-bg">
+                (Click here for page info)
+            </label>
+
+            <input id="show-tag-panel-info" type="checkbox" />
+            <div id="tag-panel-info">
+                <div class="sticky-note" style="background-color: hsl(26, 100%, 70%);">
+                    This page is a <a href="./wip">work in progress</a>!
+                </div>
+                <div class="sticky-note">
+                    Each book is a journal/blog entry. Click one to read it!
+                </div>
+                <div class="desktop-only sticky-note">
+                    Shift + scroll to scroll horizontally.
+                </div>
+                <div class="sticky-note">
+                    When more entries are made, tags will be added below to filter them.
+
+                    <!-- Click a note below to filter the volumes by tag! -->
+                </div>
             </div>
-            <div class="sticky-note">
+
+            <!-- <div class="sticky-note">
                 All
             </div>
-            <label class="sticky-note">
+            <div class="sticky-note">
                 Development Logs
-            </label>
+            </div> -->
         </aside>
 
         <!-- home link -->

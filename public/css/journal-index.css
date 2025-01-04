@@ -126,9 +126,28 @@ aside {
     padding: 5px;
 }
 
-aside > .sticky-note {
+#show-tag-panel-info,
+#tag-panel-info {
+    display: none;
+}
+
+#show-tag-panel-info:checked + #tag-panel-info {
+    display: inline-block;
+}
+
+label[for=show-tag-panel-info],
+#tag-panel-info > .sticky-note {
+    background-color: hsl(120, 70%, 60%);
+}
+
+aside > .sticky-note,
+#tag-panel-info {
     position: relative;
     left: 50%;
+    margin-bottom: 8px;
+}
+
+#tag-panel-info > .sticky-note {
     margin-bottom: 8px;
 }
 
