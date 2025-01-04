@@ -183,6 +183,10 @@ body > main {
 
 #rotary-menu > a:nth-of-type(6) {
     top: 37dvh;
+
+    background:
+        linear-gradient(hsla(22, 41%, 53%, 0.25) 20%, hsla(22, 40%, 20%, 0.25) 20% 80%, hsla(22, 41%, 53%, 0.25) 80%)
+    ;
 }
 
 #rotary-menu > a:nth-of-type(7) {

@@ -10,7 +10,7 @@
         null,
         null,
         'rgb(0, 0, 27)',
-        null,
+        '#B87B57',
         null,
         null
     ];
