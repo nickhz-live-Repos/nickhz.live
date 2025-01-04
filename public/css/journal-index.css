@@ -8,6 +8,8 @@ body {
     background-color: 
         var(--journal-bg)
     ;
+    overflow-y: hidden;
+    overflow-x: scroll;
 }
 
 header {
@@ -74,11 +76,33 @@ main {
     padding-left: calc(6em + 218px);
     padding-top: 2em;
     min-width: 100%;
+    width: fit-content;
     box-sizing: border-box;
+    white-space: nowrap;
 }
 
 main > div {
     display: inline-block;
+    height: 100%;
+}
+
+.journal-entry {
+    display: inline-flex;
+    width: 150px;
+    height: 100%;
+    border-radius: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 10px;
+    padding-top: calc(10px + 1em);
+    margin-right: 3px;
+    white-space: initial;
+}
+
+#devlog-entries > .journal-entry {
+    background-color: hsl(240, 60%, 25%);
+    color: hsl(180, 60%, 50%);
+    font-size: 1.5em;
 }
 
 aside {
