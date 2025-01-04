@@ -33,6 +33,30 @@ body {
     height: 100%;
 }
 
+.preview-pane a {
+    color: var(--secondary-accent);
+    text-shadow:
+        0 0 8px black,
+        0 0 8px black,
+        0 0 8px black,
+        0 0 8px black,
+        0 0 8px var(--secondary-accent), 
+        0 0 8px var(--secondary-accent)
+    ;
+}
+
+.preview-pane a:hover {
+    color: hsl(285, 100%, 85%);
+    text-shadow:
+        0 0 8px black,
+        0 0 8px black,
+        0 0 8px black,
+        0 0 8px black,
+        0 0 8px var(--secondary-accent), 
+        0 0 8px var(--secondary-accent)
+    ;
+}
+
 .preview {
     position: relative;
     width: 50%;

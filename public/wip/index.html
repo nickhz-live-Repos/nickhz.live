@@ -207,6 +207,51 @@
             <input type="radio" name="previews"  id="wip-item-1" />
             <div class="preview-pane">
                 <div class="preview">
+                    <iframe class="preview-frame" src="./career/index.html"></iframe>
+
+                    <span>
+                        Preview
+                    </span>
+                </div>
+
+                <h1>
+                    <a href="./career/">
+                        Career Index
+                    </a>
+                </h1>
+    
+                <p>
+                    TODO: add portfolio projects.
+                </p>
+            </div>
+
+            <input type="radio" name="previews"  id="wip-item-2" />
+            <div class="preview-pane">
+                <div class="preview">
+                    <iframe class="preview-frame" src="./journal/index.html"></iframe>
+
+                    <span>
+                        Preview
+                    </span>
+                </div>
+
+                <h1>
+                    <a href="./journal/">
+                        Journal Index
+                    </a>
+                </h1>
+    
+                <p>
+                    Journal index (or blog) page is under construction. I want 
+                    it to look like a bookshelf and be oriented with a 
+                    horizontal instead of vertical scroll when it overflows 
+                    with entries.
+                </p>
+            </div>
+
+            <input type="radio" name="previews"  id="wip-item-3" />
+            <div class="preview-pane">
+                <div class="preview">
                     <iframe class="preview-frame" src="./wip/index.html"></iframe>
 
                     <span>
@@ -217,36 +262,24 @@
                 <h1>
                     WIP
                 </h1>
+
+                <p>
+                    This page!
+                </p>
     
                 <p>
-                    This work-in-progress page is currently a work in progress.
+                    TODO: Keep watch for undesired behavior, especially when the button panel overflows with distinct entries.
+                </p>
+
+                <p>
+                    May rework the code to make it easier to add entries. If 
+                    that requires JavaScript, I'd rather keep the code as is, 
+                    because I think this page is pretty cool-looking for a 
+                    page with no JavaScript and no images.
                 </p>
             </div>
 
-            <input type="radio" name="previews"  id="wip-item-2" />
-            <div class="preview-pane">
-                <div class="preview">
-                    <iframe class="preview-frame" src="./career/index.html"></iframe>
-
-                    <span>
-                        Preview
-                    </span>
-                </div>
-
-                <h1>
-                    Career Index
-                </h1>
-    
-                <p>
-                    My career index is currently a work in progress.
-                </p>
-
-                <a href="./career/">
-                    Career Index
-                </a>
-            </div>
-
-            <a href="./">Home</a>
+            <a href="./" style="font-size: larger;">Home</a>
         </div>
 
         <div id="wip-selector">
@@ -256,13 +289,19 @@
 
             <label for="wip-item-1" class="wip-item">
                 <div>
-                    This Page
+                    Career Index
                 </div>
             </label>
 
             <label for="wip-item-2" class="wip-item">
                 <div>
-                    Career Index
+                    Journal Index
+                </div>
+            </label>
+
+            <label for="wip-item-3" class="wip-item">
+                <div>
+                    This WIP Page
                 </div>
             </label>
         </div>

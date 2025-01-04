@@ -1,0 +1,143 @@
+
+
+:root {
+    --journal-bg: #B87B57
+}
+
+body {
+    background-color: 
+        var(--journal-bg)
+    ;
+}
+
+header {
+    position: fixed;
+    text-align: center;
+    left: 50%;
+    top: 8px;
+    translate: -50% 0;
+    font-size: 5em;
+    background: 
+        linear-gradient(120deg, #c0c0c0 60%, #eee 65% 70%, #c0c0c0 75%)
+    ;
+    padding: 5px 0.5em;
+    border: 5px outset grey;
+    box-sizing: border-box;
+}
+
+#header-screws {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+}
+
+#header-fasteners > div {
+    position: absolute;
+    width: 0.1em;
+    height: 0.1em;
+    background: 
+        hsl(0, 0%, 55%)
+    ;
+    border-radius: 50%;
+}
+
+#header-fasteners > div:first-of-type {
+    left: 0.1em;
+    top: 0.1em;
+}
+
+#header-fasteners > div:nth-of-type(2) {
+    right: 0.1em;
+    top: 0.1em;
+}
+
+#header-fasteners > div:nth-of-type(3) {
+    left: 0.1em;
+    bottom: 0.1em;
+}
+
+#header-fasteners > div:nth-of-type(4) {
+    right: 0.1em;
+    bottom: 0.1em;
+}
+
+main {
+    position: relative;
+    background: hsl(22, 40%, 20%);
+    top: calc(8em + 16px);
+    height: calc(100dvh - 10em - 32px);
+    border: 1px solid black;
+    border-right: none;
+    padding-left: calc(6em + 218px);
+    padding-top: 2em;
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+main > div {
+    display: inline-block;
+}
+
+aside {
+    position: fixed;
+    background: var(--journal-bg);
+    border-right: 1px solid black;
+    left: 0;
+    top: calc(8em + 16px);
+    height: calc(100dvh - 10em - 32px);
+    width: calc(8em + 16px);
+    overflow-x: visible;
+    box-sizing: border-box;
+    padding-top: 10px;
+}
+
+.sticky-note {
+    display: inline-block;
+    background-color: #ff8;
+    font-family: 'Comic Sans', 'Comic Sans MS', 'Brush Script MT', 'Lucida Handwriting', sans-serif;
+    width: 200px;
+    padding: 5px;
+}
+
+aside > .sticky-note {
+    position: relative;
+    left: 50%;
+    margin-bottom: 8px;
+}
+
+#tag-panel-label {
+    margin-bottom: 12px;
+}
+
+#journal-to-home-link {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: auto;
+    font-family: 'Ink Free', sans-serif;
+    font-size: 2em;
+    font-weight: 1000;
+    color: hsl(22, 40%, 20%);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    text-decoration: none;
+}
+
+#journal-to-home-link:hover {
+    color: orange;
+}
+
+/* 
+
+desktop css overrides 
+
+*/
+@media only screen and (min-width: 768px) {
+    #journal-to-home-link {
+        writing-mode: unset;
+        padding: 8px;
+    }
+}
