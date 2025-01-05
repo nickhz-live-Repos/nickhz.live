@@ -97,6 +97,10 @@ main {
     background-color: hsl(0, 0%, 40%);
 }
 
+.journal-entry > span {
+    width: 100%;
+}
+
 .journal-entry.devlog {
     background-color: hsl(240, 60%, 25%);
     color: hsl(180, 60%, 50%);

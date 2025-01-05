@@ -1,0 +1,59 @@
+
+body {
+    background-color: hsl(0, 0%, 2%);
+    color: hsl(0, 0%, 90%);
+    overflow: auto;
+    text-align: center;
+}
+
+body > h1:first-child {
+    margin-top: 0;
+    padding-top: 1em;
+}
+
+main {
+    position: relative;
+    color: black;
+    background: 
+        linear-gradient(90deg, hsl(60, 56%, 80%) 49.9%, hsl(60, 55%, 10%) 49.9% 50.1%, hsl(60, 56%, 80%) 50.1%)
+    ;
+    width: 95%;
+    margin: auto;
+    height: calc(100dvh - 10em);
+}
+
+main > div {
+    display: inline-block;
+    width: 49%;
+    height: 100%;
+}
+
+#left-page {
+    background:
+        linear-gradient(270deg, hsla(0, 0%, 0%, 0.25), transparent 10%)
+    ;
+}
+
+#right-page {
+    background:
+        linear-gradient(90deg, hsla(0, 0%, 0%, 0.25), transparent 10%)
+    ;
+}
+
+#back-link {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: auto;
+    font-family: 'Ink Free', 'Comic Sans MS', sans-serif;
+    font-size: 2em;
+    font-weight: 1000;
+    color: white;
+    /* writing-mode: vertical-rl; */
+    text-orientation: upright;
+    text-decoration: none;
+}
+
+#back-link:hover {
+    color: red;
+}
