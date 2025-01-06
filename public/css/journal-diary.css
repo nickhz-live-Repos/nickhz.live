@@ -15,30 +15,117 @@ main {
     position: relative;
     color: black;
     background: 
-        linear-gradient(90deg, hsl(60, 56%, 80%) 49.9%, hsl(60, 55%, 10%) 49.9% 50.1%, hsl(60, 56%, 80%) 50.1%)
+        hsl(60, 56%, 80%)
     ;
-    width: 95%;
+    width: 95vw;
     margin: auto;
     height: calc(100dvh - 10em);
 }
 
-main > div {
+input[name=page-selector] {
+    display: none;
+}
+
+.page-set {
+    position: absolute;
+    width: 0;
+    height: 100%;
+    right: 0;
+    overflow: hidden;
+    transition: 1s;
+    background-color: hsl(60, 56%, 80%);
+}
+
+.page-set > div {
+    position: relative;
     display: inline-block;
     width: 49%;
     height: 100%;
+    box-sizing: border-box;
+    text-align: left;
 }
 
-#left-page {
+.left-page {
+}
+
+.left-page > div {
     background:
-        linear-gradient(270deg, hsla(0, 0%, 0%, 0.25), transparent 10%)
+        linear-gradient(90deg, transparent 41vw, hsla(0, 0%, 0%, 0.25) 100%)
     ;
 }
 
-#right-page {
+.right-page {
+    overflow: hidden;
+}
+
+.right-page > div {
+    left: -46.5vw;
+    transition: 1s;
     background:
-        linear-gradient(90deg, hsla(0, 0%, 0%, 0.25), transparent 10%)
+        linear-gradient(90deg, black 1px, hsla(0, 0%, 0%, 0.25) 1px, transparent 12%)
     ;
 }
+
+input[name=page-selector]:checked + .page-set {
+    width: 100%;
+}
+
+input[name=page-selector]:checked + .page-set > .right-page > div {
+    left: 0;
+}
+
+.page-content {
+    box-sizing: border-box;
+    padding: 1.2vw 5%;
+}
+
+label {
+    background-color: black;
+}
+
+.left-paginator,
+.right-paginator {
+    position: absolute;
+    top: 50%;
+    translate: 0 50%;
+    width: 2vw;
+    height: 2vw;
+}
+
+.left-paginator {
+    left: 0;
+    background: conic-gradient(at 0% 50%, transparent 18.75%, black 18.75% 30.75%, transparent 30.75%);
+}
+
+.right-paginator {
+    right: 0;
+    background: conic-gradient(from 180deg at 100% 50%, transparent 18.75%, black 18.75% 30.75%, transparent 30.75%);
+}
+
+/* #pages > div {
+    display: inline-block;
+    width: 49%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 3% 5%;
+    text-align: left;
+} */
+
+/* main > div:first-child {
+    width: 100%;
+} */
+
+/* .left-page {
+    background:
+        linear-gradient(270deg, black 1px, hsla(0, 0%, 0%, 0.25) 1px, transparent 12%)
+    ;
+}
+
+.right-page {
+    background:
+        linear-gradient(90deg, black 1px, hsla(0, 0%, 0%, 0.25) 1px, transparent 12%)
+    ;
+} */
 
 #back-link {
     position: fixed;

@@ -8,11 +8,11 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
         <!-- Page properties -->
-        <title>Nick Hernandez - Journal</title>
+        <title>Nick Hernandez - Diary</title>
 
         <!-- Opengraph properties, for giving a site preview if the link is posted anywhere. Makes the link look less sketchy. -->
-        <meta property="og:title" content="Nick Hernandez - Journal" />
-        <meta property="og:description" content="The Web is an open canvas. Here will be my creations." />
+        <meta property="og:title" content="Diary" />
+        <meta property="og:description" content="My Diary Page." />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://nickhz.live/img/built-from-scratch.png" />
         <meta property="og:image:alt" content="built from scratch" />
@@ -29,16 +29,86 @@
         </h1>
 
         <main>
-            <div id="left-page">
-                left
+            <!-- pages -->
+            <div class="fully-occupies-parent">
+                <input type="checkbox" name="page-selector" checked>
+                <div class="page-set">
+                    <div class="left-page">
+                        <div class="fully-occupies-parent">
+                            <div class="page-content">
+                                first page
+                            </div>
+                        </div>
+                    </div><div class="right-page">
+                        <div class="fully-occupies-parent">
+                            <div class="page-content">
+                                second page
+                            </div>
+
+                            <label for="page-2" class="right-paginator"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="checkbox" name="page-selector" id="page-2">
+                <div class="page-set">
+                    <div class="left-page">
+                        <div class="fully-occupies-parent">
+                            <div class="page-content">
+                                third page
+                            </div>
+                        </div>
+
+                        <label for="page-2" class="left-paginator"></label>
+                    </div><div class="right-page">
+                        <div class="fully-occupies-parent">
+                            <div class="page-content">
+                                fourth page
+                            </div>
+                        </div>
+
+                        <label for="page-3" class="right-paginator"></label>
+                    </div>
+                </div>
+
+                <input type="checkbox" name="page-selector" id="page-3">
+                <div class="page-set">
+                    <div class="left-page">
+                        <div class="fully-occupies-parent">
+                            <div class="page-content">
+                                fifth page
+                            </div>
+
+                            <label for="page-3" class="left-paginator"></label>
+                        </div>
+                    </div><div class="right-page">
+                        <div class="fully-occupies-parent">
+                            <div class="page-content">
+                                final page
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="left-page">
+                    left
+                </div><div class="right-page">
+                    right
+                </div> -->
             </div>
-            <div id="right-page">
-                right
+
+            <!-- paginator controls -->
+            <!-- <div class="left-paginator">
+                    
             </div>
+
+            <div class="right-paginator">
+                
+            </div> -->
         </main>
 
         <a href="./journal" id="back-link">
-            <- Back
+            ^ Journal
         </a>
     </body>
 </html>
