@@ -1,4 +1,6 @@
 
+
+
 body {
     background-color: hsl(0, 0%, 2%);
     color: hsl(0, 0%, 90%);
@@ -55,11 +57,12 @@ input[name=page-selector] {
 }
 
 .right-page {
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .right-page > div {
-    left: -46.5vw;
+    right: 0;
+    /* left: -46.5vw; */
     transition: 1s;
     background:
         linear-gradient(90deg, black 1px, hsla(0, 0%, 0%, 0.25) 1px, transparent 12%)
@@ -71,12 +74,17 @@ input[name=page-selector]:checked + .page-set {
 }
 
 input[name=page-selector]:checked + .page-set > .right-page > div {
-    left: 0;
+    right: 0;
 }
 
 .page-content {
     box-sizing: border-box;
     padding: 1.2vw 5%;
+    font-family: 'Ink Free', 'Comic Sans MS', sans-serif;
+    font-size: 1.1em;
+    overflow-y: scroll;
+    max-height: 100%;
+    scrollbar-width: none;
 }
 
 label {
@@ -87,9 +95,9 @@ label {
 .right-paginator {
     position: absolute;
     top: 50%;
-    translate: 0 50%;
+    translate: 0 -50%;
     width: 2vw;
-    height: 2vw;
+    height: 30dvh;
 }
 
 .left-paginator {
