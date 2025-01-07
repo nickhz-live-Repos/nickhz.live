@@ -19,8 +19,8 @@ main {
     background: 
         hsl(60, 56%, 80%)
     ;
-    width: 95vw;
-    margin: auto;
+    width: 190vw;
+    margin-left: 2.5vw;
     height: calc(100dvh - 10em);
 }
 
@@ -96,7 +96,7 @@ label {
     position: absolute;
     top: 50%;
     translate: 0 -50%;
-    width: 2vw;
+    width: 5vw;
     height: 30dvh;
 }
 
@@ -112,7 +112,7 @@ label {
 
 #back-link {
     position: fixed;
-    top: 10px;
+    bottom: 10px;
     left: 10px;
     width: auto;
     font-family: 'Ink Free', 'Comic Sans MS', sans-serif;
@@ -126,4 +126,37 @@ label {
 
 #back-link:hover {
     color: red;
+}
+
+aside {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 50%;
+    font-family: 'Ink Free', 'Comic Sans MS', sans-serif;
+}
+
+/* 
+
+desktop css overrides 
+
+*/
+@media only screen and (min-width: 768px) {
+    main {
+        width: 95vw;
+    }
+
+    .left-paginator,
+    .right-paginator {
+        width: 2vw;
+    }
+    
+    #back-link {
+        bottom: unset;
+        top: 10px;
+    }
+
+    aside {
+        display: none;
+    }
 }
