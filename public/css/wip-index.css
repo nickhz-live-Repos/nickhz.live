@@ -31,6 +31,8 @@ body {
 
 .preview-pane {
     height: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 .preview-pane a {
@@ -180,5 +182,9 @@ input:checked + .preview-pane {
 
     .wip-item > div {
         transform: none;
+    }
+
+    .preview-pane {
+        scrollbar-width: none;
     }
 }
