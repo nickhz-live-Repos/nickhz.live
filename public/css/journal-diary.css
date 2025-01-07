@@ -121,7 +121,6 @@ label {
     color: white;
     /* writing-mode: vertical-rl; */
     text-orientation: upright;
-    text-decoration: none;
 }
 
 #back-link:hover {

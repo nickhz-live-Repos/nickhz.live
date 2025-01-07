@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <base href="../../" />
+        <link rel="shortcut icon" type="image/x-icon" href="./img/nh-cursive-icon.png" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+        <!-- Page properties -->
+        <title>Nick Hernandez - Resume</title>
+
+        <!-- Opengraph properties, for giving a site preview if the link is posted anywhere. Makes the link look less sketchy. -->
+        <meta property="og:title" content="Nick Hernandez - Resume" />
+        <meta property="og:description" content="Nick Hernandez, Multidisciplinary Engineer." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://nickhz.live/img/multidisciplinary-engineer.png" />
+        <meta property="og:image:alt" content="Nicolas Hernandez, multidisciplinary engineer" />
+        <meta property="og:url" content="https://nickhz.live/professional/resume/" />
+        <meta property="og:site_name" content="The Personal Site of Nick Hernandez" />
+
+        <!-- Style properties -->
+        <link href="css/style.css" rel="stylesheet" />
+        <link href="css/resume.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="bg-pane" class="fully-occupies-parent">
+            <div id="bg-top">
+                <div class="metaball"></div>
+                <div class="metaball"></div>
+                <div class="metaball"></div>
+                <div class="metaball"></div>
+                <div class="metaball"></div>
+                <div class="metaball"></div>
+                <div class="metaball"></div>
+                <div class="metaball"></div>
+            </div>
+
+            <div id="bg-top-filter"></div>
+        </div>
+
+        <aside id="name-tag">
+            <div class="centered">
+                Nicolas Hernandez
+                <br />
+                <br />
+                Multidisciplinary Engineer
+            </div>
+
+            <div id="name-tag-ring"></div>
+        </aside>
+
+        <div id="mobile-top-spacer" class="mobile-only"></div>
+
+        <aside id="contact-info">
+            <div>
+                <h4>
+                    <label for="show-links-on-mobile">Links<span class="desktop-only">:</span><span class="mobile-only">⏵</span></label>
+                </h4>
+
+                <input type="checkbox" id="show-links-on-mobile" />
+                <div class="desktop-only">
+                    Email - <a href="mailto:hernandezn@live.com?subject=[From nickhz.live/professional/resume]">hernandezn@live.com</a>
+                    <br />
+                    LinkedIn - <a href="https://www.linkedin.com/in/nicolas-hernandez-232a6a13a/" target="_blank">Nicolas Hernandez</a>
+                    <br />
+                    GitHub - <a href="https://github.com/Hernandezn" target="_blank">Hernandezn</a>
+                    <br />
+                    Resumes:
+                    <ul>
+                        <li>
+                            <a href="./files/Nicolas_Hernandez_Software_Resume_2025a.pdf" target="_blank">Software (current)</a>
+                        </li>
+                        <li>
+                            <a href="./files/Nicolas_Hernandez_Revature_Projects_Resume_2021.pdf" target="_blank">Revature Fullstack Software (2021)</a>
+                        </li>
+                        <li>
+                            <a href="./files/Nicolas_Hernandez_Engineering_Resume_2020.pdf" target="_blank">Engineering (up to 2020)</a>
+                        </li>
+                    </ul>
+                    <br />
+                </div>
+            </div>
+        </aside>
+
+        <header id="career-summary">
+            <h1>
+                Summary
+            </h1>
+
+            <p>
+                I am an engineer with a Georgia Tech education, several years 
+                of professional experience, and a skillset that doesn't stop 
+                growing. I'm currently most interested in 
+                Web-engineering-related fields. As some highlights, I have:
+
+                <ul>
+                    <li>
+                        <b>designed & built</b> both software and hardware 
+                        projects for school & work
+                    </li>
+                    <li>
+                        <b>worked with & managed teams</b> of varying sizes to 
+                        meet changing requirements & deadlines
+                    </li>
+                    <li>
+                        <b>expanded my skillset</b> across multiple job 
+                        specializations whenever necessary
+                    </li>
+                    <li>
+                        <b>learned a full-stack suite of modern Web 
+                        development technologies</b> to the point of 
+                        professional viability, allowing me to successfully 
+                        rotate careers from mechanical engineering related 
+                        fields into the software sector
+                    </li>
+                    <li>
+                        <b>years-long continuous reliable software engineering 
+                        experience</b> in creating enterprise-level financial 
+                        software from the ground up
+                    </li>
+                </ul>
+            </p>
+            
+            <p>
+                If I can do it, I will do it. If I can't do it, I will learn.
+            </p>
+        </header>
+
+        <main>
+            <div id="key-skills">
+                <h1>
+                    Key Skills
+                </h1>
+
+                <h3>
+                    Software Technologies
+                </h3>
+
+                <select id="software-skills-filter" onchange="filterBySelector(event, 'software-skills')">
+                    <option value="all" selected>All</option>
+                    <option value="java">Java</option>
+                    <option value="frontend">Frontend</option>
+                    <option value="sql">SQL</option>
+                    <option value="infrastructure">Infrastructure & Deployment</option>
+                    <option value="codemanagement">Code Management</option>
+                    <option value="quality">Testing & Quality</option>
+                    <option value="industrial">Miscellaneous & Industrial</option>
+                </select>
+
+                <br />
+                <br />
+
+                <span id="software-skills">
+                    <div data-java>Java</div>
+                    <div data-frontend>HTML</div>
+                    <div data-frontend>CSS</div>
+                    <div data-frontend>JavaScript</div>
+                    <div data-frontend>React</div>
+                    <div data-frontend>Redux</div>
+                    <div data-frontend>TypeScript</div>
+                    <div data-frontend>SCSS</div>
+                    <div data-frontend>Bootstrap</div>
+                    <div data-sql>SQL</div>
+                    <div data-java data-sql>HQL</div>
+                    <div data-java data-sql>JPQL</div>
+                    <div data-codemanagement>GitHub</div>
+                    <div data-codemanagement>Gitlab</div>
+                    <div data-codemanagement>Git CLI / mingw</div>
+                    <div data-codemanagement>Git UI</div>
+                    <div data-quality>Postman</div>
+                    <div data-java data-frontend>REST APIs</div>
+                    <div data-infrastructure>Amazon Web Services</div>
+                    <div data-infrastructure>RDS</div>
+                    <div data-infrastructure>Jenkins</div>
+                    <div data-infrastructure>OpenShift</div>
+                    <div data-infrastructure>Docker</div>
+                    <div data-java data-sql>Spring</div>
+                    <div data-java data-sql>Hibernate</div>
+                    <div data-java>Maven</div>
+                    <div data-java data-frontend>JSP</div>
+                    <div data-frontend>JSON</div>
+                    <div data-infrastructure>YAML</div>
+                    <div data-frontend>Angular</div>
+                    <div data-java data-quality>JUnit</div>
+                    <div data-frontend data-quality>Jest</div>
+                    <div data-codemanagement data-quality>Veracode</div>
+                    <div data-codemanagement data-quality>Sonar</div>
+                    <div data-frontend data-quality>Swagger UI</div>
+                    <div data-frontend>AJAX</div>
+                    <div data-java data-infrastructure>Apache Tomcat</div>
+                    <div data-java data-quality>Log4J</div>
+                    <div data-sql>Procedural SQL Programming</div>
+                    <div data-sql>PL/pgSQL</div>
+                    <div data-industrial>Excel VBA / Visual Basic for Applications</div>
+                    <div data-industrial>Ladder Logic</div>
+                    <div data-industrial>PLCs & PACs</div>
+                    <div data-infrastructure data-frontend data-sql data-industrial>IoT / Internet of Things</div>
+                    <div data-industrial>MATLAB</div>
+                    <div data-industrial>LabVIEW</div>
+                    <div data-industrial>Hardwired Electrical Circuit Analysis & Design</div>
+                </span>
+                <br />
+                <div style="border-style: dashed;">+Always learning more & willing to learn what's needed</div>
+
+                <h3>
+                    Software Engineering Tools & Practices
+                </h3>
+
+                <select id="development-tools-filter" onchange="filterBySelector(event, 'development-tools')">
+                    <option value="all" selected>All</option>
+                    <option value="tools">Developer Tools</option>
+                    <option value="practices">Design & Workflow Practices</option>
+                </select>
+
+                <br />
+                <br />
+
+                <span id="development-tools">
+                    <div data-practices>Agile Software Development</div>
+                    <div data-practices>Scrum</div>
+                    <div data-tools>Rally by Broadcom</div>
+                    <div data-tools>IntelliJ</div>
+                    <div data-tools>STS / Spring Tool Suite</div>
+                    <div data-tools>VSCode</div>
+                    <div data-tools>DBeaver</div>
+                    <div data-tools>Microsoft SSMS / SQL Server Management Studio</div>
+                    <div data-tools>Postman</div>
+                    <div data-practices>Distributed Systems</div>
+                    <div data-practices>SOA / Service Oriented Architecture</div>
+                    <div data-tools data-practices>CI/CD</div>
+                    <div data-practices>Unit Testing</div>
+                    <div data-practices>SAST Scanning</div>
+                    <div data-practices>Code Linting</div>
+                    <div data-practices>Development Testing</div>
+                    <div data-practices>Troubleshooting Before Delivery</div>
+                    <div data-practices>Development for Deployment / Not Just for Local</div>
+                    <div data-practices>Test Data Fabrication</div>
+                    <div data-practices>Quality Assurance</div>
+                    <div data-practices>Quality Control</div>
+                    <div data-practices>Code Review</div>
+                    <div data-practices>Root Cause Analysis</div>
+                </span>
+
+                <h3>
+                    General Professional Skills
+                </h3>
+
+                <select id="general-skills-filter" onchange="filterBySelector(event, 'general-skills')">
+                    <option value="all" selected>All</option>
+                    <option value="communication">Communication</option>
+                    <option value="delivery">Product Delivery & Design Practices</option>
+                </select>
+
+                <br />
+                <br />
+
+                <span id="general-skills">
+                    <div data-communication>Team Supervision & Management</div>
+                    <div data-communication>Cross-departmental Technical Communication</div>
+                    <div data-delivery>Project Design</div>
+                    <div data-delivery>ROI / Return on Investment Analysis</div>
+                    <div data-delivery>Prototyping / Proofs of Concept</div>
+                    <div data-delivery>Data Acquisition & Analysis</div>
+                    <div data-delivery data-communication>Product & Design Documentation</div>
+                    <div data-delivery data-communication>Process & Instructional Documentation</div>
+                    <div data-delivery data-communication>Market Research</div>
+                    <div data-delivery>Technical Research</div>
+                    <div data-communication>Vendor & End-user Correspondence</div>
+                    <div data-communication>Inter-business Correspondence</div>
+                    <div data-delivery>Creative Problem Solving</div>
+                </span>
+
+                <br />
+                <br />
+
+                <i>
+                    Specialist skills outside of software are excluded. They may be viewed on resume documents linked above.
+                </i>
+
+                <br />
+                <br />
+
+                <i>
+                    Feel free to <a href="mailto:hernandezn@live.com?subject=[From nickhz.live/professional/resume]">ask about any other skills</a>!
+                </i>
+            </div>
+
+            <div id="professional-experience">
+                <h1>
+                    Professional Experience
+                </h1>
+
+                <details>
+                    <summary>
+                        Truist Bank (through Infosys), Software Engineer & Developer - Began February 2021
+                    </summary>
+
+                    <p>
+                        Engineered enterprise software applications from scratch.
+                    </p>
+
+                    <ul>
+                        <li>
+                            Programmed primary functionality for several Java Spring services in a distributed service-oriented system in development.
+                        </li>
+                        <li>
+                            Collaborated in a large development team to deliver on changing requirements.
+                        </li>
+                        <li>
+                            Composed several technologies to meet project delivery needs.
+                        </li>
+                        <li>
+                            Used Agile development practices & extensive work order tracking to help meet deadlines.
+                        </li>
+                        <li>
+                            Learned & used secondary technologies to facilitate application development & interfacing, including Angular front-end Web framework, SQL dialects, and CI/CD through RedHat OpenShift. 
+                        </li>
+                        <li>
+                            Provided application design counsel at the request of leadership, as I became a primary subject matter expert for areas of our overarching application.
+                        </li>
+                        <li>
+                            Self-directed work when features weren't ready for development, such as by providing optimizations, code review support, self-directed research to facilitate future work, and issue callouts & fixes.
+                        </li>
+                    </ul>
+                </details>
+
+                <details>
+                    <summary>
+                        Revature Full Stack Software Engineer - September 2020 - January 2021
+                    </summary>
+
+                    <p>
+                        Created full-stack Web development projects to learn & demonstrate enterprise-level skill in a lightning-fast environment for learning & using modern end-to-end Web development technologies.
+                    </p>
+
+                    <ul>
+                        <li>
+                            Created applications both individually and in teams of varying sizes.
+                        </li>
+                        <li>
+                            Applied self-directed learning of various technologies to meet project requirements effectively.
+                        </li>
+                        <li>
+                            Provisioned cloud infrastructure through Amazon Web Services.
+                        </li>
+                        <li>
+                            Made CI/CD pipelines using Jenkins and Git hooks.
+                        </li>
+                        <li>
+                            Composed technology stacks with varying levels of abstraction, including back ends using Spring MVC, Hibernate ORM, and plain JDBC, with front ends composed using React TypeScript with Redux, React JS with Reactstrap, and plain HTML/CSS/JavaScript.
+                        </li>
+                        <li>
+                            Led part of a large-team project as our front-end lead.
+                        </li>
+                    </ul>
+                </details>
+
+                <details>
+                    <summary>
+                        Gestamp Chattanooga I, Quality Engineer - December 2018 - February 2020
+                    </summary>
+
+                    <p>
+                        Drove quality processes in an automotive manufacturing environment. 
+                    </p>
+
+                    <ul>
+                        <li>
+                            Employed root cause analysis & technical communication across departments to diagnose and rectify the
+                            manufacture of defective products.                         
+                        </li>
+                        <li>
+                            Managed & supported floor-level sort teams for defective product containment, across multiple facilities. 
+                        </li>
+                        <li>
+                            Provided a point of communication for external customer concerns and internal quality criteria. 
+                        </li>
+                    </ul>
+                </details>
+
+                <details>
+                    <summary>
+                        Kobayashi American Manufacturing, Production Engineering Technician - October 2017-December 2018
+                    </summary>
+
+                    <p>
+                        Supported production & maintenance processes while driving continual improvement, using and learning
+                        principles of trades work & process engineering. 
+                    </p>
+
+                    <ul>
+                        <li>
+                            Studied & designed implementation for a working Industrial Internet of Things system.
+                        </li>
+                        <li>
+                            Wired and programmed control electronics for manufacturing systems.
+                        </li>
+                        <li>
+                            Learned manufacturing processes & product needs from multiple levels of analysis.
+                        </li>
+                        <li>
+                            Communicated with vendors and end-user personnel to specify project needs.
+                        </li>
+                        <li>
+                            Performed manual maintenance & otherwise unassigned support tasks for company infrastructure. 
+                        </li>
+                    </ul>
+                </details>
+            </div>
+
+            <div id="education">
+                <h1>
+                    Education
+                </h1>
+
+                <p>
+                    May 2017
+                    <br />
+                    <i>Bachelor of Science in Mechanical Engineering</i>
+                    <br />
+                    <a href="https://www.gatech.edu/" target="_blank"><b>Georgia Institute of Technology</b></a>, Atlanta, GA
+                </p>
+
+                <br />
+
+                <p>
+                    May 2014
+                    <br />
+                    <i>Associate of Science in Physics</i>
+                    <br />
+                    <a href="https://www.daltonstate.edu/" target="_blank"><b>Dalton State College</b></a>, Dalton, GA
+                </p>
+            </div>
+        </main>
+
+        <footer>
+            <div class="y-centered">
+                Professional experience projects I've worked on are the 
+                private property of their respective owners. My portfolio 
+                showcase will include only public-facing projects that are 
+                openly available for viewing. I am the sole creator of all 
+                pages on this website.
+
+                <br />
+                <br />
+
+                Nicolas Hernandez 2025
+            </div>
+        </footer>
+
+        <a href="./" id="home-button">
+            <div id="house-graphic"></div>
+        </a>
+
+        <script src="scripts/filter-by-selector.js"></script>
+    </body>
+</html>
