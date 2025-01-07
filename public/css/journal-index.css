@@ -70,10 +70,11 @@ main {
     position: absolute;
     background: hsl(23, 39%, 20%);
     top: calc(8em + 16px);
-    height: calc(100dvh - 10em - 32px);
+    left: 1em;
+    height: calc(100dvh - 14em - 32px);
     border: 1px solid black;
     border-right: none;
-    padding-left: calc(6em + 218px);
+    padding-left: 6em;
     padding-top: 2em;
     min-width: 100%;
     width: fit-content;
@@ -95,6 +96,8 @@ main {
     font-size: 1.5em;
     text-decoration: none;
     background-color: hsl(0, 0%, 40%);
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 .journal-entry > span {
@@ -119,11 +122,11 @@ main {
 aside {
     position: fixed;
     background: var(--journal-bg);
-    border-right: 1px solid black;
+    /* background: purple; */
     left: 0;
-    top: calc(8em + 16px);
-    height: calc(100dvh - 10em - 32px);
-    width: calc(8em + 16px);
+    bottom: 0;
+    height: 7em;
+    width: 100%;
     overflow-x: visible;
     box-sizing: border-box;
     padding-top: 10px;
@@ -154,12 +157,20 @@ label[for=show-tag-panel-info],
 aside > .sticky-note,
 #tag-panel-info {
     position: relative;
-    left: 50%;
+    left: 0;
     margin-bottom: 8px;
 }
 
 #tag-panel-info > .sticky-note {
     margin-bottom: 8px;
+    pointer-events: all;
+}
+
+#tag-panel-info {
+    position: absolute;
+    bottom: 6em;
+    width: fit-content;
+    pointer-events: none;
 }
 
 #tag-panel-label {
@@ -193,5 +204,28 @@ desktop css overrides
     #journal-to-home-link {
         writing-mode: unset;
         padding: 8px;
+    }
+
+    aside {
+        bottom: unset;
+        top: calc(8em + 16px);
+        height: calc(100dvh - 14em - 32px);
+        width: calc(8em + 16px);
+        border-right: 1px solid black;
+    }
+
+    aside > .sticky-note,
+    #tag-panel-info {
+        left: 50%;
+    }
+
+    #tag-panel-info {
+        position: relative;
+        bottom: unset;
+    }
+
+    main {
+        height: calc(100dvh - 14em - 32px);
+        padding-left: calc(6em + 218px);
     }
 }
