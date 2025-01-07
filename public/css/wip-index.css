@@ -149,6 +149,14 @@ input:checked + .preview-pane {
     display: none;
 }
 
+#home-link {
+    position: relative;
+    bottom: -0.7rem;
+    font-size: larger; 
+    border: 2px outset var(--primary-accent); 
+    border-radius: 5px;
+}
+
 @media only screen and (min-width: 768px) {
     #wip-display {
         width: 80%;
