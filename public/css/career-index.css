@@ -270,13 +270,22 @@ main {
 }
 
 summary {
-    font-size: 1.5em;
+    font-size: 1.2rem;
     font-weight: bold;
-    line-height: 2em;
+    line-height: 1.8rem;
 }
 
 summary:hover {
     cursor: pointer;
+}
+
+details {
+    margin-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+#professional-experience > details:not(:last-of-type) {
+    border-bottom: 1px solid white;
 }
 
 /* 
@@ -286,6 +295,12 @@ desktop css overrides
 */
 
 @media only screen and (min-width: 768px) {
+    summary {
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 2rem;
+    }
+
     #home-button {
         top: 0;
         width: 4dvh;
