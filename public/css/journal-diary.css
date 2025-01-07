@@ -110,31 +110,6 @@ label {
     background: conic-gradient(from 180deg at 100% 50%, transparent 18.75%, black 18.75% 30.75%, transparent 30.75%);
 }
 
-/* #pages > div {
-    display: inline-block;
-    width: 49%;
-    height: 100%;
-    box-sizing: border-box;
-    padding: 3% 5%;
-    text-align: left;
-} */
-
-/* main > div:first-child {
-    width: 100%;
-} */
-
-/* .left-page {
-    background:
-        linear-gradient(270deg, black 1px, hsla(0, 0%, 0%, 0.25) 1px, transparent 12%)
-    ;
-}
-
-.right-page {
-    background:
-        linear-gradient(90deg, black 1px, hsla(0, 0%, 0%, 0.25) 1px, transparent 12%)
-    ;
-} */
-
 #back-link {
     position: fixed;
     top: 10px;
