@@ -1,5 +1,5 @@
 # nickhz.live
- <a href="https://nickhz.live" target="_blank">My personal website</a>'s top-level-domain source code.
+ <a href="https://nickhz.live" target="_blank">My personal website</a>'s root domain source code.
 
  Made from scratch, and includes live CI/CD deployment to AWS.
 
