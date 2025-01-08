@@ -7,23 +7,25 @@
 */
 
 const virtualParticles = (
-    configuration // will get the variable values from here in a future update
+    config
 ) => {
-
+    const safeDefine = (property, defaultValue) => {
+        return property === undefined ? defaultValue : property;
+    };
 
     // these variables make the visual effect easily configurable
     
     // particle spawn amount should vary with screen size
-    const minSecondsPerParticleSpawnPerMpx = 0.01;
-    const maxSecondsPerParticleSpawnPerMpx = 0.1;
+    const minSecondsPerParticleSpawnPerMpx = safeDefine(config.spawnResistance.min, 0.01);
+    const maxSecondsPerParticleSpawnPerMpx = safeDefine(config.spawnResistance.max, 0.1);
 
     // travel speed of particles
-    const minInitialPxPerSecond = 100;
-    const maxInitialPxPerSecond = 1000;
+    const minInitialPxPerSecond = safeDefine(config.initialParticleSpeed.min, 100);
+    const maxInitialPxPerSecond = safeDefine(config.initialParticleSpeed.max, 1000);
 
     // number of seconds for a particle to decay
-    const minParticleDecaySeconds = 0.2;
-    const maxParticleDecaySeconds = 1;
+    const minParticleDecaySeconds = safeDefine(config.lifetime.min, 0.2);
+    const maxParticleDecaySeconds = safeDefine(config.lifetime.max, 1);
     
     // auto-set variables; these just frontload the calculations so the script doesn't repeat them
     const secondsPerParticleSpawnPerMpxVariance = maxSecondsPerParticleSpawnPerMpx - minSecondsPerParticleSpawnPerMpx;
@@ -33,7 +35,7 @@ const virtualParticles = (
     // element where the effect is visible
     const effectFrame = document.createElement('div');
     effectFrame.style.pointerEvents = 'none';
-    effectFrame.style.zIndex = -2;
+    effectFrame.style.zIndex = safeDefine(config.zIndex, -2);
     effectFrame.style.overflow = 'hidden';
     effectFrame.className = 'fully-occupies-parent';
 
