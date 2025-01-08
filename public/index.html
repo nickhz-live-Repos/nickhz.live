@@ -351,5 +351,27 @@
 
         <script src="scripts/homepage-rotary-menu.js"></script>
         <script src="scripts/virtual-particles.js"></script>
+        <script>
+            virtualParticles(
+                {
+                    spawnResistance: // in seconds per particle per megapixel
+                        {
+                            min: 0.01,
+                            max: 0.1
+                        },
+                    initialVelocity: // in pixels per second
+                        {
+                            min: 100,
+                            max: 1000
+                        },
+                    lifetime: // in seconds
+                        {
+                            min: 0.2,
+                            max: 1
+                        },
+                    zIndex: -2
+                }
+            );
+        </script>
     </body>
 </html>

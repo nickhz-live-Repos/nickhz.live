@@ -9,6 +9,8 @@
 const virtualParticles = (
     configuration // will get the variable values from here in a future update
 ) => {
+
+
     // these variables make the visual effect easily configurable
     
     // particle spawn amount should vary with screen size
@@ -28,6 +30,7 @@ const virtualParticles = (
     const initialPxPerSecondVariance = maxInitialPxPerSecond - minInitialPxPerSecond;
     const particleDecaySecondsVariance = maxParticleDecaySeconds - minParticleDecaySeconds;
 
+    // element where the effect is visible
     const effectFrame = document.createElement('div');
     effectFrame.style.pointerEvents = 'none';
     effectFrame.style.zIndex = -2;
@@ -36,10 +39,12 @@ const virtualParticles = (
 
     document.body.append(effectFrame);
 
+    // allows dynamic adjustment of particle spawn count based on screen size, so that smaller screens aren't given huge particle densities
     const getFrameSize = () => {
         return effectFrame.offsetWidth * effectFrame.offsetHeight;
     };
 
+    // determines when the next particle will spawn
     const getNextParticleSpawnTime = (particleSpawnTime) => {
         return particleSpawnTime + 
             1000 * (minSecondsPerParticleSpawnPerMpx + Math.random() * secondsPerParticleSpawnPerMpxVariance) 
