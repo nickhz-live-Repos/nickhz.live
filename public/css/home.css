@@ -39,7 +39,7 @@ body > main {
     width: 100%;
     height: 100dvh;
     background: linear-gradient(#7892a3 0%, #212242 100%);
-    z-index: -2;
+    z-index: -3;
 }
 
 #bg-transition-frame {
