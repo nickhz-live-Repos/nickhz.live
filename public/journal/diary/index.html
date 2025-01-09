@@ -31,7 +31,7 @@
         <main>
             <!-- pages -->
             <div class="fully-occupies-parent">
-                <input type="checkbox" name="page-selector" checked>
+                <input type="checkbox" name="page-selector" class="page-opener" checked>
                 <div class="page-set">
                     <div class="left-page">
                         <div class="fully-occupies-parent">
@@ -80,7 +80,8 @@
                                     And that doesn't just mean 
                                     higher-paying jobs. The way I see it, 
                                     I have three options for how I'll make 
-                                    ends meet:
+                                    ends meet without throwing everything 
+                                    away:
 
                                     <ul>
                                         <li>
@@ -288,7 +289,7 @@
                     </div>
                 </div>
 
-                <input type="checkbox" name="page-selector" id="page-2" checked>
+                <input type="checkbox" name="page-selector" id="page-2" class="page-opener" checked>
                 <div class="page-set">
                     <div class="left-page">
                         <div class="fully-occupies-parent">
@@ -425,7 +426,7 @@
                     </div>
                 </div>
 
-                <input type="checkbox" name="page-selector" id="page-3">
+                <input type="checkbox" name="page-selector" id="page-3" class="page-opener">
                 <div class="page-set">
                     <div class="left-page">
                         <div class="fully-occupies-parent">
@@ -480,5 +481,28 @@
         <aside>
             This book is 2D-Scrollable! ↕↔
         </aside>
+
+        <script title="page link script">
+            // allows the diary to be addressed by a specific page, using url parameters
+            {
+                const pageSelection = 
+                    new URLSearchParams(window.location.search).get('page')
+                ;
+
+                if(parseInt(pageSelection) > 0) {
+                    const pageSelectors = document.getElementsByClassName('page-opener');
+
+                    const limit = Math.min(pageSelection, pageSelectors.length);
+                    let index = 0;
+                    for(; index < limit; index++) {
+                        pageSelectors[index].checked = true;
+                    }
+
+                    for(; index < pageSelectors.length; index++) {
+                        pageSelectors[index].checked = false;
+                    }
+                }
+            };
+        </script>
     </body>
 </html>
