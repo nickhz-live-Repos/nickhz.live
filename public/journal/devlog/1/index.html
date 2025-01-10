@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <base href="../../../" />
+        <link rel="shortcut icon" type="image/x-icon" href="./img/nh-cursive-icon.png" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+        <!-- Page properties -->
+        <title>Devlog 1 - What Is This Site? - Nick Hernandez</title>
+
+        <!-- Opengraph properties, for giving a site preview if the link is posted anywhere. Makes the link look less sketchy. -->
+        <meta property="og:title" content="Devlog 1 - The Beginning of The Site - Nick Hernandez" />
+        <meta property="og:description" content="What this site is and how I made it & put it online." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://nickhz.live/img/built-from-scratch.png" />
+        <meta property="og:image:alt" content="built from scratch" />
+        <meta property="og:url" content="https://nickhz.live/" />
+        <meta property="og:site_name" content="The Personal Site of Nick Hernandez" />
+
+        <!-- Style properties -->
+        <link href="css/style.css" rel="stylesheet" />
+        <style>
+            :root {
+                --primary-accent: hsl(180, 60%, 50%);
+                --secondary-accent: hsl(300, 100%, 80%);
+            }
+
+            body {
+                font-family: 'Courier New', Courier, monospace;
+                background-color: hsl(240, 60%, 10%);
+                color: var(--primary-accent);
+                text-shadow: 0 0 6px var(--primary-accent);
+                font-size: 1.05rem;
+            }
+
+            body > header {
+                text-align: center;
+                font-size: 2.2rem;
+                padding-top: 20dvh;
+                margin-bottom: 1.5rem;
+            }
+
+            body > time {
+                display: block;
+                font-style: italic;
+                text-align: right;
+                width: 90%;
+                margin: auto;
+            }
+
+            main {
+                padding-top: 1rem;
+                text-align: center;
+                width: 90%;
+                margin: auto;
+            }
+
+            article > * {
+                max-width: 100%;
+                text-align: justify;
+            }
+
+            a {
+                color: var(--secondary-accent);
+                text-shadow: 0 0 2px var(--secondary-accent);
+            }
+
+            hr {
+                border-color: var(--primary-accent);
+            }
+
+            #book {
+
+            }
+
+            footer {
+                height: 50dvh;
+                padding-top: 22dvh;
+                text-align: center;
+            }
+
+            #back-link {
+                position: absolute;
+                left: 1rem;
+                top: 1rem;
+                font-size: 1.5rem;
+            }
+
+            @media only screen and (min-width: 768px) {
+                main, 
+                body > time {
+                    width: 60%;
+                }
+
+                body > header {
+                    font-size: 3rem;
+                }
+
+                #back-link {
+                    font-size: 2rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="book"></div>
+
+        <header>
+            Development Log 1: 
+            <br />
+            The Beginning of The Site
+        </header>
+
+        <time datetime="2025-01-09">January 9, 2025</time>
+
+        <main>
+            <img src="./img/built-from-scratch.png" alt="built from scratch" />
+
+            <article>
+                <h1 id="section-1">
+                    What is this site?
+                </h1>
+
+                <p>
+                    This site is a collection of experiments and exercises 
+                    meant to act as my own creative canvas, as a learning & 
+                    brushing-up experience, as a springboard for my next 
+                    projects, and as a personal site that solves personal 
+                    problems. Do I want a Web page resume? Well, 
+                    <a href="professional/resume/">here it is</a>. Do I want 
+                    some easy metrics on my browsing devices to help me 
+                    develop for them? Well, I just go to 
+                    <a href="./?page=device#device-info-tab">my homepage with 
+                    the device info tab open</a>. Do I want to jot down what 
+                    I'm making so I don't lose track of the next steps I want 
+                    to take? That's what I made <a href="wip">the WIP page</a> 
+                    for. 
+                </p>
+
+                <p>
+                    I don't plan for it all to be so utilitarian at the end of 
+                    the day, but I am creating this development log to help me 
+                    document my process & see what I was thinking whenever I 
+                    made things. If anyone else ever reads this, I hope you 
+                    can learn from my experiences!
+                </p>
+
+                <hr />
+
+                <h1 id="section-2">
+                    How I made this site
+                </h1>
+
+                <p>
+                    (in progress)
+                </p>
+            </article>
+        </main>
+
+        <footer>
+            <a href="#back-link">[back to top]</a>
+        </footer>
+
+        <a href="journal" id="back-link">^ Journal Index</a>
+    </body>
+</html>
