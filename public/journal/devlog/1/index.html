@@ -177,9 +177,10 @@
                     Putting this website live on the Web required my use of 
                     an account on 
                     <a href="https://aws.amazon.com/console/" target="_blank">Amazon 
-                    Web Services (AWS)</a>. I followed instructions provided 
-                    by AWS, though my process didn't always happen in the same 
-                    order nor to the letter described by AWS.
+                    Web Services (AWS)</a>. I mostly followed instructions 
+                    provided by AWS, but my process didn't always happen in 
+                    the same order nor to the letter described by AWS, as my 
+                    needs varied from the existing process.
                 </p>
 
                 <p>
@@ -320,6 +321,11 @@
                         Microsoft.
                     </p>
 
+                    <p>
+                        Once logged in, I can go to the top right and select a 
+                        default region. I select the region closest to me.
+                    </p>
+
                 </details>
 
                 <details id="registering-the-domain-name">
@@ -341,7 +347,7 @@
                     </p>
 
                     <p>
-                        Once I'm logged into the console, I go to the 
+                        Logged into the AWS Management Console, I go to the 
                         search bar in the top left and enter "Route 53" before 
                         hitting the favorite star on it and clicking into 
                         it:
@@ -482,7 +488,11 @@
                             <li>
                                 enter "index.html" into the "Index document" 
                                 box; this box and the optional "Error 
-                                document" box both are case sensitive
+                                document" box both are case sensitive 
+                                (creating an error document is left as an 
+                                exercise, 
+                                <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html#configure-error-document-root-domain" target="_blank">details 
+                                outlined here</a>)
                             </li>
                             <li>
                                 save changes
@@ -565,10 +575,10 @@
                     </p>
                 </details>
 
-                <details id="assigning-the-website-name-to-the-aws-s3-site">
+                <details id="assigning-the-website-name">
                     <summary>
                         <h3>
-                            Assigning the website name to the AWS S3 site
+                            Assigning the website name ("http://example.com/")
                         </h3>
                     </summary>
 
@@ -631,7 +641,44 @@
                     <p>
                         After 60 seconds, the website should be available 
                         under its given name with HTTP requests 
-                        (http://example.com). Using HTTPS is not available yet 
+                        (http://example.com). If the site is not available, 
+                        try clearing the browser cache (a quick method to try 
+                        could be ctrl+F5, but also try the long way to see if 
+                        that works).
+                    </p>
+                        
+                    <details>
+                        
+                        <summary>
+                            CLICK FOR TROUBLESHOOTING IF CACHE CLEARING 
+                            DOESN'T WORK
+                        </summary>
+                        
+                        <p>
+                            If cache clearing doesn't work, try going into the 
+                            website's hosted zone entry in Route 53, opening the 
+                            "Hosted zone details" drop-down arrow near the top of 
+                            the entry, and comparing the "Name servers" entries, 
+                            on the right, against the 4 entries that are in the 
+                            "Records" table on the same record, under the 
+                            "Value/Route traffic to" column. If there is no such 
+                            record, a record of type "NS" must be created with 
+                            values matching the name servers of the hosted zone, 
+                            plus a period at the end of each (i.e., name server 
+                            entry "ns-123.awsdns-99.net" means an NS record value 
+                            "ns-123.awsdns-99.net."). If there IS such an entry 
+                            but if those entries (besides the last period) don't 
+                            match the "Name servers" entries in the hosted zone 
+                            details section, select that record (type should be 
+                            "NS") using the check box next to the record, hit 
+                            "Edit record," and correct the values. If this doesn't 
+                            work, the hosted zone may need to be deleted and 
+                            re-created.
+                        </p>
+                    </details>
+
+                    <p>
+                        Using HTTPS is not available yet 
                         and will be set up in another step. Additionally, 
                         using www.example.com is not yet valid, either. This 
                         is a subdomain and will be handled in the next step.
@@ -641,7 +688,7 @@
                 <details id="setting-up-the-www-subdomain">
                     <summary>
                         <h3>
-                            Setting up the "www." subdomain
+                            Setting up the "www." subdomain ("http://www.example.com/")
                         </h3>
                     </summary>
 
@@ -733,6 +780,87 @@
                         http://example.com). Using HTTPS is not available yet 
                         and will be set up in another step. For now, logging 
                         will be set up for the website.
+                    </p>
+                </details>
+
+                <details id="setting-up-s3-logging">
+                    <summary>
+                        <h3>
+                            Setting up S3 site logging
+                        </h3>
+                    </summary>
+
+                    <p>
+                        Go back to S3, in the same region where the website 
+                        buckets are.
+                        <ul>
+                            <li>
+                                Create bucket
+                            </li>
+                            <li>
+                                Under "Bucket name," choose a name that 
+                                describes that it will hold logs for the site; 
+                                this does NOT need a website name, it can be 
+                                "example-com-logs" for instance.
+                            </li>
+                            <li>
+                                Everything else can be default before hitting 
+                                "Create bucket"
+                            </li>
+                            <li>
+                                In the "Objects" tab of the bucket, select 
+                                "Create folder" and give it a descriptive 
+                                name; I chose the folder naming scheme 
+                                "example-com-s3-logs"
+                            </li>
+                            <li>
+                                Go back up to the buckets list
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p>
+                        Now that the logs bucket is set up to receive entries, 
+                        go into the root-domain bucket ("example.com" / NOT 
+                        the logs bucket) and follow these steps:
+                        <ul>
+                            <li>
+                                go the the "Properties" tab
+                            </li>
+                            <li>
+                                scroll down to the "Server access logging" 
+                                section, and hit its "Edit" button                                
+                            </li>
+                            <li>
+                                enable
+                            </li>
+                            <li>
+                                next to the "Destination" text box, hit 
+                                "Browse S3"
+                            </li>
+                            <li>
+                                click INTO the logs bucket, select the circle 
+                                next to the logs folder created above 
+                                ("example-com-s3-logs"), and hit "Choose 
+                                destination"
+                            </li>
+                            <li>
+                                under "Log object key format," I choose the 
+                                second option
+                            </li>
+                            <li>
+                                under "Source of date used in log object key 
+                                format," I choose "S3 event time"
+                            </li>
+                            <li>
+                                hit "Save changes"
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p>
+                        Logs won't appear immediately, even upon accessing the 
+                        site. For now, I move on to setting up HTTPS.
                     </p>
                 </details>
 
