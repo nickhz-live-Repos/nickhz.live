@@ -366,6 +366,12 @@
                     <img src="img/aws-route-53-example-999.png" alt="AWS route 53 showing that example-999.com is available" />
 
                     <p>
+                        If the original name I planned for wasn't available, 
+                        I can simply change the name of the folder I created 
+                        in my local system in the above steps.
+                    </p>
+
+                    <p>
                         Once I select the domain name, I hit "Proceed to 
                         checkout," "Next," and enter my information. This 
                         information is required for the domain name registrar 
@@ -421,7 +427,10 @@
                         <ul>
                             <li>
                                 Bucket name: the name of my website (like 
-                                "example.com")
+                                "example.com"); IF I COULD NOT PURCHASE A 
+                                WEBSITE NAME, I SHOULD NOT GIVE MY BUCKET THE 
+                                NAME OF A WEBSITE, AS THIS MAY CAUSE PROBLEMS 
+                                LATER
                             </li>
                             <li>
                                 Region (if available): some place close to me
@@ -551,8 +560,179 @@
                         Notice the address bar. In order to use the Web 
                         address of my choosing, I need to use a website name 
                         I own. Website name ownership can be accomplished 
-                        through <a href="#registering-the-domain-name">the 
+                        through <a href="./journal/devlog/1/#registering-the-domain-name">the 
                         above section on registering a website name</a>.
+                    </p>
+                </details>
+
+                <details id="assigning-the-website-name-to-the-aws-s3-site">
+                    <summary>
+                        <h3>
+                            Assigning the website name to the AWS S3 site
+                        </h3>
+                    </summary>
+
+                    <p>
+                        Assuming I purchased the domain name in the above 
+                        sections, I head back to Route 53, which should now be 
+                        available in a clickable shortcut on the top left if I 
+                        favorited it:
+                    </p>
+
+                    <img src="img/aws-favorites-s3-route-53.png" alt="AWS S3 & Route 53 in the AWS Management Console favorites bar" />
+
+                    <p>
+                        The domain should be registered by now. I follow these steps:
+                        <ul>
+                            <li>
+                                choose "Hosted zones" in the left-hand menu 
+                                under the top-left hamburger menu icon
+                            </li>
+                            <li>
+                                choose the name that matches the website
+                            </li>
+                            <li>
+                                hit "Create record"
+                            </li>
+                            <li>
+                                under "Record name," leave the subdomain text 
+                                box empty
+                            </li>
+                            <li>
+                                make sure "A" is selected under the "Record 
+                                type" field; this will be referred to as an "A 
+                                Record" or "Alias Record" in other places
+                            </li>
+                            <li>
+                                make sure the "Alias" switch is selected
+                            </li>
+                            <li>
+                                under "Route traffic to," choose the endpoint 
+                                "Alias to S3 website endpoint" along with the 
+                                region selected for by bucket
+                            </li>
+                            <li>
+                                click the "Enter S3 endpoint" text box that 
+                                appears to select the bucket corresponding to 
+                                the website
+                            </li>
+                            <li>
+                                "Routing policy" is Simple routing
+                            </li>
+                            <li>
+                                "Evaluate target health" is "No"
+                            </li>
+                            <li>
+                                hit "Create records"
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p>
+                        After 60 seconds, the website should be available 
+                        under its given name with HTTP requests 
+                        (http://example.com). Using HTTPS is not available yet 
+                        and will be set up in another step. Additionally, 
+                        using www.example.com is not yet valid, either. This 
+                        is a subdomain and will be handled in the next step.
+                    </p>
+                </details>
+
+                <details id="setting-up-the-www-subdomain">
+                    <summary>
+                        <h3>
+                            Setting up the "www." subdomain
+                        </h3>
+                    </summary>
+
+                    <p>
+                        I return to S3 and select the website bucket beginning 
+                        with "www." that I created earlier.
+                        <ul>
+                            <li>
+                                Go to the "Properties" tab
+                            </li>
+                            <li>
+                                Scroll down to "Static website hosting" and 
+                                hit its "Edit" button
+                            </li>
+                            <li>
+                                Hit "Enable"
+                            </li>
+                            <li>
+                                Under "Hosting type," select "Redirect 
+                                requests for an object"
+                            </li>
+                            <li>
+                                In the "Host name" box, use the root domain 
+                                name of the website (like "example.com")
+                            </li>
+                            <li>
+                                under "Protocol," choose "http"
+                            </li>
+                            <li>
+                                Save changes
+                            </li>
+                            <li>
+                                Check for correctness by scrolling back down 
+                                to the "Static website hosting" section and 
+                                clicking the link under the "Bucket website 
+                                endpoint" text
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p>
+                        If clicking the link from the last statement above 
+                        leads to the website ("http://example.com"), the next 
+                        step is to set up an A record for this bucket in Route 
+                        53. I go to Route 53 under Hosted zones and do the 
+                        following:
+                        <ul>
+                            <li>
+                                select the hosted zone with my website name
+                            </li>
+                            <li>
+                                hit "Create record"
+                            </li>
+                            <li>
+                                in the "Record name" text box, enter "www"
+                            </li>
+                            <li>
+                                make sure "A" is selected under the "Record 
+                                type" field
+                            </li>
+                            <li>
+                                make sure the "Alias" switch is selected
+                            </li>
+                            <li>
+                                under "Route traffic to," select "Alias to 
+                                another record in this hosted zone"
+                            </li>
+                            <li>
+                                in the "Choose record" text box that appears, 
+                                select the A record of the root domain 
+                                ("example.com.")
+                            </li>
+                            <li>
+                                "Routing policy" is Simple routing
+                            </li>
+                            <li>
+                                "Evaluate target health" is "No"
+                            </li>
+                            <li>
+                                hit "Create records"
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p>
+                        After 60 seconds, the website should be available 
+                        under its subdomain name with HTTP requests 
+                        (http://www.example.com will automatically direct to 
+                        http://example.com). Using HTTPS is not available yet 
+                        and will be set up in another step. For now, logging 
+                        will be set up for the website.
                     </p>
                 </details>
 
