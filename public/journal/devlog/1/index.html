@@ -59,6 +59,9 @@
 
             article * {
                 max-width: 100%;
+            }
+
+            article > * {
                 text-align: justify;
             }
 
@@ -73,6 +76,10 @@
 
             summary > h3 {
                 display: inline-block;
+            }
+
+            pre {
+                border: 1px solid var(--primary-accent);
             }
 
             /* #book {
@@ -159,9 +166,11 @@
                 </h1>
 
                 <p>
-                    I'm writing this section in the form of a guide, so I'll 
-                    be able to just come back to this page if I want do it 
-                    again in the future.
+                    I'm writing this section in the form of a guide. It's been 
+                    in my plan to document how I made this site, so I'll be 
+                    able to just come back to this page if I want do it again 
+                    in the future or adapt parts of this process for something 
+                    else.
                 </p>
 
                 <p>
@@ -171,6 +180,16 @@
                     Web Services (AWS)</a>. I followed instructions provided 
                     by AWS, though my process didn't always happen in the same 
                     order nor to the letter described by AWS.
+                </p>
+
+                <p>
+                    USING AMAZON WEB SERVICES REQUIRES A MONTHLY 
+                    PAYMENT AFTER THE FIRST YEAR. FOR A SIMPLE STATIC SITE 
+                    LIKE THIS ONE, THE PAYMENT WILL BE ON THE ORDER OF 
+                    UNDER $15 USD PER MONTH IN ADDITION TO THE INITIAL AND 
+                    YEARLY RENEWAL PAYMENT MADE FOR THE WEBSITE NAME 
+                    REGISTRATION. IF THIS PAYMENT CAN'T BE MADE, THE SITE 
+                    SHOULD NOT BE HOSTED ON AWS.
                 </p>
 
                 <details id="creating-the-local-website-files">
@@ -186,7 +205,7 @@
                         <ul>
                             <li>
                                 created a folder on my computer with a descriptive 
-                                name ("nickhz.live" in my case)
+                                name (like "example.com")
                             </li>
                             <li>
                                 entered that folder and created a file in the 
@@ -202,7 +221,7 @@
                             </li>
                         </ul>
 
-                        <pre style="border: 1px solid var(--primary-accent);">
+                        <pre>
 &lt;!DOCTYPE html&gt;
 
 &lt;html&gt;
@@ -217,9 +236,9 @@
         &lt;meta property="og:title" content="The Main Page" /&gt;
         &lt;meta property="og:description" content="This is my website" /&gt;
         &lt;meta property="og:type" content="website" /&gt;
-        &lt;meta property="og:image" content="[fully qualified link to a website image]" /&gt;
+        &lt;meta property="og:image" content="https://example.com/img/example-image.png" /&gt;
         &lt;meta property="og:image:alt" content="my website image" /&gt;
-        &lt;meta property="og:url" content="[fully qualified link to the website]" /&gt;
+        &lt;meta property="og:url" content="https://example.com/" /&gt;
         &lt;meta property="og:site_name" content="My website name" /&gt;
         
         &lt;!-- Style properties --&gt;
@@ -303,14 +322,6 @@
 
                 </details>
 
-                <details id="putting-the-website-files-on-aws">
-                    <summary>
-                        <h3>
-                            Putting the website files on AWS
-                        </h3>
-                    </summary>
-                </details>
-
                 <details id="registering-the-domain-name">
                     <summary>
                         <h3>
@@ -319,16 +330,234 @@
                     </summary>
 
                     <p>
-                        HAVING YOUR OWN WEBSITE NAME REQUIRES A MONETARY PAYMENT. 
-                        IF YOU DO NOT WANT THE SITE TO BE ACCESSED ON THE WEB BY 
-                        OTHER PEOPLE OR IF YOU DON'T HAVE A PAYMENT ON THE ORDER 
-                        OF AROUND $15 USD TO PAY TO AWS, THIS SECTION MAY BE 
-                        SKIPPED.
+                        THIS SECTION IS NECESSARY TO CHECK IF A WEBSITE NAME 
+                        IS AVAILABLE BEFORE ASSIGNING OTHER AWS RESOURCES TO 
+                        IT. HOWEVER, HAVING MY OWN WEBSITE NAME REQUIRES A 
+                        MONETARY PAYMENT. IF I DO NOT WANT THE SITE TO BE 
+                        ACCESSED ON THE WEB BY OTHER PEOPLE OR IF I DON'T HAVE 
+                        A PAYMENT ON THE ORDER OF AROUND $15 USD TO PAY TO 
+                        AWS, I MAY COMPLETE EVERYTHING IN THIS SECTION THAT 
+                        COMES BEFORE HITTING THE "Proceed to checkout" BUTTON. 
+                    </p>
+
+                    <p>
+                        Once I'm logged into the console, I go to the 
+                        search bar in the top left and enter "Route 53" before 
+                        hitting the favorite star on it and clicking into 
+                        it:
+                    </p>
+
+                    <img src="img/aws-route-53-search.png" alt="AWS search for Route 53" />
+
+                    <p>
+                        I then do to the "Dashboard" option under the top-left 
+                        hamburger menu icon.
+                    </p>
+
+                    <img src="img/aws-route-53-dashboard-option.png" alt="AWS route 53 dashboard option" />
+
+                    <p>
+                        In the "Register domain" box, I enter a website name 
+                        to check if it's available. For instance, 
+                        "example.com" won't be available, but at the time of 
+                        writing, "example-999.com" will be available:
+                    </p>
+
+                    <img src="img/aws-route-53-example-999.png" alt="AWS route 53 showing that example-999.com is available" />
+
+                    <p>
+                        Once I select the domain name, I hit "Proceed to 
+                        checkout," "Next," and enter my information. This 
+                        information is required for the domain name registrar 
+                        but is then anonymized as long as I keep the "Privacy 
+                        protection" checkbox at the bottom selected. I can 
+                        just fill out the "Registrant contact" section and 
+                        select "Same as registrant contact" for all the 
+                        others. After this, it's a regular checkout process 
+                        that'll take your payment.
+                    </p>
+
+                    <p>
+                        After paying for the domain name, the registration 
+                        will take some minutes to complete. During this time, 
+                        the next steps can be pursued.
+                    </p>
+                </details>
+
+                <details id="setting-up-aws-static-website-hosting">
+                    <summary>
+                        <h3>
+                            Setting up AWS static website hosting
+                        </h3>
+                    </summary>
+
+                    <p>
+                        In the AWS management console, I go to the same search 
+                        bar that was used to find Route 53 and instead type 
+                        "S3" and favorite & enter that service:
+                    </p>
+
+                    <img src="img/aws-s3-search.png" alt="AWS search for S3" />
+
+                    <p>
+                        From here, I make sure the hamburger menu icon in the 
+                        top left is selected so I can see the menu that has 
+                        "General purpose buckets" as one of its first menu 
+                        items:
+                    </p>
+
+                    <img src="img/aws-s3-general-purpose-buckets.png" alt="AWS general-purpose buckets link" />
+
+                    <p>
+                        After clicking the "General purpose buckets" link, 
+                        there's a button saying "Create bucket," which I 
+                        click:
+                    </p>
+
+                    <img src="img/aws-s3-create-bucket.png" alt="AWS 'create bucket' button" />
+
+                    <p>
+                        I create my bucket with these options:
+                        <ul>
+                            <li>
+                                Bucket name: the name of my website (like 
+                                "example.com")
+                            </li>
+                            <li>
+                                Region (if available): some place close to me
+                            </li>
+                            <li>
+                                Uncheck all boxes under "Block Public 
+                                Access..." to allow the bucket to be used to 
+                                host a website. Also check the box 
+                                acknowledging that the bucket may become 
+                                public.
+                            </li>
+                            <li>
+                                Under Default encryption > Bucket Key, choose 
+                                "Enable"
+                            </li>
+                            <li>
+                                Everything else can be default.
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p>
+                        I repeat the above steps, but with the bucket name 
+                        beginning with "www." (as in "www.example.com"), to 
+                        enable the site to be accessed with or without the 
+                        "www." in its name.
+                    </p>
+
+                    <p>
+                        The page displays the buckets in a list, so I then:
+                        <ul>
+                            <li>
+                                click into the bucket WITHOUT "www." in its 
+                                name ("example.com")
+                            </li>
+                            <li>
+                                go to the "Properties" tab
+                            </li>
+                            <li>
+                                scroll to the "Static website hosting" section 
+                                and hit its corresponding "Edit" button
+                            </li>
+                            <li>
+                                hit "Enable"
+                            </li>
+                            <li>
+                                choose "Host a static website"
+                            </li>
+                            <li>
+                                enter "index.html" into the "Index document" 
+                                box; this box and the optional "Error 
+                                document" box both are case sensitive
+                            </li>
+                            <li>
+                                save changes
+                            </li>
+                            <li>
+                                go to the "Permissions" tab
+                            </li>
+                            <li>
+                                scroll to the "Bucket policy" section and hit 
+                                its corresponding "Edit" button
+                            </li>
+                            <li>
+                                Enter the following into the Bucket policy editor:
+                                <pre>
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::example.com/*"
+        }
+    ]
+}
+
+</pre>
+                            </li>
+                            <li>
+                                replace "example.com" above with the actual 
+                                name of the website
+                            </li>
+                            <li>
+                                save changes
+                            </li>
+                        </ul>
+                    </p>
+                </details>
+
+                <details id="putting-the-website-files-on-aws">
+                    <summary>
+                        <h3>
+                            Putting the website files on AWS
+                        </h3>
+                    </summary>
+
+                    <p>
+                        After all of the above setup, I went into the 
+                        "Objects" tab of my root domain bucket ("example.com") 
+                        and simply dragged the website files from my local 
+                        system's folder (also named "example.com") onto that Web 
+                        page. Once this is done, the screen should look 
+                        something like the below:
+                    </p>
+
+                    <img src="img/aws-s3-upload.png" alt="AWS S3 upload interface" />
+
+                    <p>
+                        I hit the "Upload" button at the bottom right. After 
+                        this, I hit the "Close" button at the top right of the 
+                        following page.
+                    </p>
+
+                    <p>
+                        I go to the "Properties" tab, scroll down to the 
+                        "Static website hosting" section, and click the link 
+                        that's under the "Bucket website endpoint" text. This 
+                        takes me to the web page:
+                    </p>
+
+                    <img src="img/aws-s3-default-bucket-site.png" alt="AWS S3 default bucket site" />
+
+                    <p>
+                        Notice the address bar. In order to use the Web 
+                        address of my choosing, I need to use a website name 
+                        I own. Website name ownership can be accomplished 
+                        through <a href="#registering-the-domain-name">the 
+                        above section on registering a website name</a>.
                     </p>
                 </details>
 
                 <p>
-                    (in progress)
+                    (the rest of this is in progress)
                 </p>
 
                 <br />
