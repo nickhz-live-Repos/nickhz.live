@@ -31,7 +31,7 @@
                 font-family: 'Courier New', Courier, monospace;
                 background-color: hsl(240, 60%, 10%);
                 color: var(--primary-accent);
-                text-shadow: 0 0 6px var(--primary-accent);
+                text-shadow: 0 0 4px var(--primary-accent);
                 font-size: 1.05rem;
             }
 
@@ -57,7 +57,7 @@
                 margin: auto;
             }
 
-            article > * {
+            article * {
                 max-width: 100%;
                 text-align: justify;
             }
@@ -71,9 +71,13 @@
                 border-color: var(--primary-accent);
             }
 
-            #book {
-
+            summary > h3 {
+                display: inline-block;
             }
+
+            /* #book {
+
+            } */
 
             footer {
                 height: 50dvh;
@@ -119,7 +123,7 @@
             <img src="./img/built-from-scratch.png" alt="built from scratch" />
 
             <article>
-                <h1 id="section-1">
+                <h1 id="what-is-this-site">
                     What is this site?
                 </h1>
 
@@ -150,13 +154,197 @@
 
                 <hr />
 
-                <h1 id="section-2">
+                <h1 id="how-i-made-this-site">
                     How I made this site
                 </h1>
 
                 <p>
+                    I'm writing this section in the form of a guide, so I'll 
+                    be able to just come back to this page if I want do it 
+                    again in the future.
+                </p>
+
+                <p>
+                    Putting this website live on the Web required my use of 
+                    an account on 
+                    <a href="https://aws.amazon.com/console/" target="_blank">Amazon 
+                    Web Services (AWS)</a>. I followed instructions provided 
+                    by AWS, though my process didn't always happen in the same 
+                    order nor to the letter described by AWS.
+                </p>
+
+                <details id="creating-the-local-website-files">
+                    <summary>
+                        <h3>
+                            Creating the local website files
+                        </h3>
+                    </summary>
+
+                    <p>
+                        To make the barebones files required for a Web page, I:
+                        
+                        <ul>
+                            <li>
+                                created a folder on my computer with a descriptive 
+                                name ("nickhz.live" in my case)
+                            </li>
+                            <li>
+                                entered that folder and created a file in the 
+                                folder called "index.html"
+                            </li>
+                            <li>
+                                right-clicked that file and selected "open 
+                                with..." before selecting a text editor (like 
+                                Notepad or Sublime Text or Visual Studio Code) 
+                            </li>
+                            <li>
+                                entered the following into the file:
+                            </li>
+                        </ul>
+
+                        <pre style="border: 1px solid var(--primary-accent);">
+&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;link rel="shortcut icon" type="image/x-icon" href="./img/icon.png" /&gt;
+        &lt;meta charset="utf-8" /&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" /&gt;
+
+        &lt;title&gt;Main Page&lt;/title&gt;
+
+        &lt;!-- Opengraph properties, for giving a site preview if the link is posted anywhere. Makes the link look less sketchy. --&gt;
+        &lt;meta property="og:title" content="The Main Page" /&gt;
+        &lt;meta property="og:description" content="This is my website" /&gt;
+        &lt;meta property="og:type" content="website" /&gt;
+        &lt;meta property="og:image" content="[fully qualified link to a website image]" /&gt;
+        &lt;meta property="og:image:alt" content="my website image" /&gt;
+        &lt;meta property="og:url" content="[fully qualified link to the website]" /&gt;
+        &lt;meta property="og:site_name" content="My website name" /&gt;
+        
+        &lt;!-- Style properties --&gt;
+        &lt;style&gt;
+            body {
+                margin: 0;
+                min-height: 100dvh;
+            }
+
+            body > *:first-child {
+                margin-top: 0;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;
+            My Website
+        &lt;/h1&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+                    </p>
+
+                    <p>
+                        After saving the file with these contents, I created a 
+                        subfolder called "img" and put a 32x32 image in the folder 
+                        called "icon.png". After this, I'm done with the most 
+                        basic setup of the site's files. You should be able to 
+                        open index.html (with a Web browser this time) and see 
+                        something like the following:
+                    </p>
+
+                    <img src="img/barebones-index.png" alt="barebones index.html file" />
+
+                    <p>
+                        This is what will show up on the Web page whenever it's 
+                        live on the Web. To add content, there are many 
+                        <a href="https://www.w3schools.com/html/default.asp" target="_blank">tutorials</a> 
+                        online, from 
+                        <a href="https://neocities.org/tutorial/html/1" target="_blank">brief</a> 
+                        to 
+                        <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/Creating_the_content" target="_blank">in-depth</a>, 
+                        with which you can learn HTML, CSS, and potentially 
+                        JavaScript. For now, the page just look like this, 
+                        and this document focuses on how I put the site live on 
+                        the Web.
+                    </p>
+                </details>
+
+                <details id="signing-in-to-the-aws-management-console">
+                    <summary>
+                        <h3>Signing in to the AWS Management Console</h3>
+                    </summary>
+
+                    <p>
+                        Go to AWS using using the "Sign In to the Console" 
+                        button at the upper right of 
+                        <a href="https://aws.amazon.com/console/" target="_blank">the 
+                        AWS management console</a> page:
+                    </p>
+
+                    <img src="img/aws-console-sign-in.png" alt="amazon web services console sign-in button" />
+
+                    <p>
+                        On this page, it gives the option to create a new AWS 
+                        account, if needed. To sign on to my existing account, 
+                        then instead of filling out the login details right away, 
+                        I hit the "Sign in using root user email" button:
+                    </p>
+
+                    <img src="img/aws-root-user-sign-in.png" alt="amazon web services root user sign-in button" />
+
+                    <p>
+                        I select "Root user" from the following screen and follow 
+                        the login process. MFA may need to be set up for this, 
+                        which should be doable from this page, after entering 
+                        login details. I use the mobile "Authenticator" app from 
+                        Microsoft.
+                    </p>
+
+                </details>
+
+                <details id="putting-the-website-files-on-aws">
+                    <summary>
+                        <h3>
+                            Putting the website files on AWS
+                        </h3>
+                    </summary>
+                </details>
+
+                <details id="registering-the-domain-name">
+                    <summary>
+                        <h3>
+                            Registering the website name / domain name with AWS
+                        </h3>
+                    </summary>
+
+                    <p>
+                        HAVING YOUR OWN WEBSITE NAME REQUIRES A MONETARY PAYMENT. 
+                        IF YOU DO NOT WANT THE SITE TO BE ACCESSED ON THE WEB BY 
+                        OTHER PEOPLE OR IF YOU DON'T HAVE A PAYMENT ON THE ORDER 
+                        OF AROUND $15 USD TO PAY TO AWS, THIS SECTION MAY BE 
+                        SKIPPED.
+                    </p>
+                </details>
+
+                <p>
                     (in progress)
                 </p>
+
+                <br />
+                <br />
+
+                <i>
+                    Sources:
+                    <ul>
+                        <li>
+                            <a href="https://aws.amazon.com/console/" target="_blank">Amazon Web Services (AWS)</a>
+                        </li>
+                        <li>
+                            <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html" target="blank">Tutorial: Configuring a static website using a custom domain registered with Route 53</a>
+                        </li>
+                    </ul>
+                </i>
             </article>
         </main>
 
