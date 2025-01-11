@@ -99,6 +99,10 @@
                 font-size: 1.5rem;
             }
 
+            details {
+                border-bottom: 1px solid var(--primary-accent);
+            }
+
             @media only screen and (min-width: 768px) {
                 main, 
                 body > time {
@@ -268,7 +272,7 @@
                         After saving the file with these contents, I created a 
                         subfolder called "img" and put a 32x32 image in the folder 
                         called "icon.png". After this, I'm done with the most 
-                        basic setup of the site's files. You should be able to 
+                        basic setup of the site's files. I should be able to 
                         open index.html (with a Web browser this time) and see 
                         something like the following:
                     </p>
@@ -283,8 +287,8 @@
                         <a href="https://neocities.org/tutorial/html/1" target="_blank">brief</a> 
                         to 
                         <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/Creating_the_content" target="_blank">in-depth</a>, 
-                        with which you can learn HTML, CSS, and potentially 
-                        JavaScript. For now, the page just look like this, 
+                        with which HTML, CSS, and potentially JavaScript. can 
+                        be learned. For now, the page justs look like this, 
                         and this document focuses on how I put the site live on 
                         the Web.
                     </p>
@@ -386,7 +390,7 @@
                         just fill out the "Registrant contact" section and 
                         select "Same as registrant contact" for all the 
                         others. After this, it's a regular checkout process 
-                        that'll take your payment.
+                        that'll take the payment.
                     </p>
 
                     <p>
@@ -777,8 +781,59 @@
                         After 60 seconds, the website should be available 
                         under its subdomain name with HTTP requests 
                         (http://www.example.com will automatically direct to 
-                        http://example.com). Using HTTPS is not available yet 
-                        and will be set up in another step. For now, logging 
+                        http://example.com). Using HTTPS is not available yet, 
+                        but setup for it may begin now.
+                    </p>
+                </details>
+
+                <details id="getting-an-ssl-certificate">
+                    <summary>
+                        <h3>
+                            Getting an SSL certificate for HTTPS
+                        </h3>
+                    </summary>
+
+                    <p>
+                        Find "Certificate Manager" in the search bar, hit 
+                        favorite, and follow these steps:
+                    </p>
+
+                    <ul>
+                        <li>
+                            Hit the Request button
+                        </li>
+                        <li>
+                            Select "Request a public certificate," hit "Next"
+                        </li>
+                        <li>
+                            In the text box under "Domain names," enter the 
+                            root domain name ("example.com")
+                        </li>
+                        <li>
+                            Hit "Add another name to this certificate," and 
+                            enter "*." before the root domain to include all 
+                            subdomains ("*.example.com")
+                        </li>
+                        <li>
+                            Under "Validation method," select "DNS 
+                            validation - recommended"
+                        </li>
+                        <li>
+                            "Key algorithm" is fine using RSA 2048
+                        </li>
+                        <li>
+                            hit "Request"
+                        </li>
+                        <li>
+                            now with the request created, hit "Create records 
+                            in Route 53," make sure every entry is selected, 
+                            and hit "Create records"
+                        </li>
+                    </ul>
+
+                    <p>
+                        The certificate will be in the "Pending validation" 
+                        state for a while after this. For now, basic logging 
                         will be set up for the website.
                     </p>
                 </details>
@@ -860,12 +915,428 @@
 
                     <p>
                         Logs won't appear immediately, even upon accessing the 
-                        site. For now, I move on to setting up HTTPS.
+                        site. Now, the SSL certificate in Certificate 
+                        Manager may be in "Issued" status, allowing the next 
+                        step for HTTPS to occur.
                     </p>
                 </details>
 
+                <details id="setting-up-cloudfront">
+                    <summary>
+                        <h3>
+                            Setting up CloudFront for HTTPS
+                        </h3>
+                    </summary>
+
+                    <p>
+                        Go to Certificate Manager and ensure that the 
+                        certificate with the domain name has moved from 
+                        "Pending validation" to "Issued" status. If it 
+                        hasn't, wait a few minutes. If it hasn't moved in an 
+                        hour, try the TROUBLESHOOTING dropdown under the 
+                        "Assigning the website name ("http://example.com/")" 
+                        section above, then try dealing with the certificate 
+                        again.
+                    </p>
+
+                    <p>
+                        Once the SSL certificate is issued, find "CloudFront" 
+                        in the search bar, hit favorite, and follow these 
+                        steps:
+                    </p>
+
+                    <ul>
+                        <li>
+                            Create a distribution
+                        </li>
+                        <li>
+                            "Origin domain" is the root-domain bucket address 
+                            ("example.com.[...].amazonaws.com")
+                        </li>
+                        <li>
+                            If a warning recommends to use the website 
+                            endpoint, accept it by clicking "Use website 
+                            endpoint," or if there's no warning, ensure that 
+                            the origin is the correct root-domain bucket (NOT 
+                            www or logs) and that the address is of the scheme 
+                            "example.com.s3-website-[...].amazonaws.com" with 
+                            the "s3-website-" portion present
+                        </li>
+                        <li>
+                            Under "Default cache behavior" > "Viewer" > 
+                            "Viewer protocol policy," select "Redirect HTTP to 
+                            HTTPS"
+                        </li>
+                        <li>
+                            Web Application Firewall (WAF) can be disabled for 
+                            a fresh site due to its cost, but may want to 
+                            enable later in the CloudFront's Security tab.
+                        </li>
+                        <li>
+                            Under "Settings" > "Price class," select "Use only 
+                            North America and Europe"
+                        </li>
+                        <li>
+                            Under "Alternate domain name (CNAME) - optional," 
+                            add the root domain AND the subdomain (example.com 
+                            AND www.example.com)
+                        </li>
+                        <li>
+                            Ensure "Custom SSL certificate - optional" is 
+                            populated
+                        </li>
+                        <li>
+                            Enter "index.html" into the "Default root object" 
+                            text box
+                        </li>
+                        <li>
+                            Standard logging is optional at the beginning, can 
+                            be set now or later; I used S3 (Legacy) initially
+                        </li>
+                        <li>
+                            Hit "Create distribution"
+                        </li>
+                    </ul>
+
+                    <p>
+                        The distribution will initially be in "Deploying" 
+                        status. While that completes, version control for the 
+                        website's source code can be set up through Git.
+                    </p>
+                </details>
+
+                <details id="setting-up-git">
+                    <summary>
+                        <h3>
+                            Setting up Git version control (GitHub)
+                        </h3>
+                    </summary>
+
+                    <p>
+                        Sign in to Git, on 
+                        <a href="https://github.com/" target="_blank">the 
+                        GitHub website</a> and locally. Local sign-in 
+                        procedures will vary depending on operating system 
+                        & Git software used; more information can be found 
+                        online.
+                    </p>
+
+                    <p>
+                        Create a repo on the GitHub website. The name can 
+                        be anything, but I just give it the name of the 
+                        website domain or subdomain being held by that 
+                        repo ("example.com")
+                    </p>
+
+                    <p>
+                        For personal projects, I prefer the copyleft 
+                        <a href="https://choosealicense.com/licenses/gpl-3.0/" target="_blank">GNU 
+                        General Public License v3.0</a>; commercial derivative 
+                        projects are allowed, but all derivative projects must 
+                        be open source and include the same license.
+                    </p>
+
+                    <p>
+                        I clone the repo into my local system, then inside 
+                        that cloned repo folder, I place a subfolder, which 
+                        can be named anything, but for this example, I name it 
+                        the "public" the folder. I put the website files in 
+                        the public folder, then outside the public folder, in 
+                        the root folder of the repo, I make a ".github" 
+                        folder. In that folder, I put a "workflows" subfolder. 
+                        In that "workflows" subfolder, I put a file called 
+                        "main.yml" that will call on a Github action to 
+                        connect to AWS S3 and update the files on push. The 
+                        content of main.yml is as follows:
+                    </p>
+
+                    <pre>
+on:
+push:
+  branches:
+  - main
+
+jobs:
+deploy:
+  runs-on: ubuntu-latest
+  steps:
+  - name: Checkout
+    uses: actions/checkout@v1
+  
+  - name: Configure AWS Credentials
+    uses: aws-actions/configure-aws-credentials@v1
+    with:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws-region: [THE AWS REGION]
+  
+  - name: [CI JOB NAME]
+    run: aws s3 sync ./public/ s3://example.com --delete
+
+</pre>
+                
+                    <p>
+                        The text "[THE AWS REGION]" must be replaced with the AWS 
+                        region name (like "us-east-1") of the website S3 bucket, 
+                        and "example.com" must be replaced with the actual root 
+                        domain name of the S3 bucket. The text "[CI JOB NAME]" 
+                        can be changed to whatever is preferred.
+                    </p>
+
+                    <p>
+                        Add the changes to git, commit it to the repo, and 
+                        push it to the origin. This will need to be connected 
+                        to AWS through an IAM user and custom security policy. 
+                        For now, Cloudfront deployment should be complete.
+                    </p>
+                </details>
+
+                <details id="directing-route-53-to-https">
+                    <summary>
+                        <h3>
+                            Directing Route 53 to HTTPS 
+                            ("https://www.example.com/")
+                        </h3>
+                    </summary>
+
+                    <p>
+                        Go to Route 53 in the AWS Management Console, go to 
+                        hosted zones, then go into the zone with the name of 
+                        the website.
+                        
+                        <ul>
+                            <li>
+                                Check the box next to the A record, which will 
+                                be the record with "A" in the "Type" column 
+                                and the root domain (like "example.com") in 
+                                the "Record name" column
+                            </li>
+                            <li>
+                                In the "Record details" panel that populates 
+                                to the right, hit "Edit record"
+                            </li>
+                            <li>
+                                Under "Route traffic to," change the first 
+                                selection box to "Alias to CloudFront 
+                                distribution"
+                            </li>
+                            <li>
+                                In the "Choose distribution" text box, 
+                                clicking it should give the option to fill the 
+                                newly deployed CloudFront distribution into 
+                                the box; select it
+                            </li>
+                            <li>
+                                Hit "Save"
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p>
+                        After 60 seconds, the HTTPS site should be available. 
+                        Try visiting the HTTPS site and its subdomain (i.e., 
+                        https://example.com and https://www.example.com). Now, 
+                        the site should be completely live.
+                    </p>
+
+                    <p>
+                        Lastly, Git setup will be completed.
+                    </p>
+                </details>
+
+                <details id="creating-an-aws-iam-user-for-git">
+                    <summary>
+                        <h3>
+                            Creating an AWS IAM user for Git
+                        </h3>
+                    </summary>
+
+                    <p>
+                        In search, look up "IAM" and then favorite & enter the 
+                        result. Choose users, either by selecting it on the 
+                        left panel that appears when the top left hamburger 
+                        menu icon is pressed or by clicking the number under 
+                        the "Users" entry under "IAM resources."
+                    </p>
+
+                    <ul>
+                        <li>
+                            Hit "Create user"
+                        </li>
+                        <li>
+                            Give it a descriptive name; I use the schema 
+                            "example.com-git-ci-user"
+                        </li>
+                        <li>
+                            Hit "Next"
+                        </li>
+                        <li>
+                            Choose "Attach policies directly"
+                        </li>
+                        <li>
+                            In the "Permissions policies" box, hit the button 
+                            in the top right of its box that says "Create 
+                            policy"
+                        </li>
+                        <li>
+                            In the new tab that opened under "Select a 
+                            service," choose S3, then in the dropdowns that 
+                            appear, select:
+                            <ul>
+                                <li>
+                                    List > ListBucket
+                                </li>
+                                <li>
+                                    Write > PutObject
+                                </li>
+                                <li>
+                                    Write > DeleteObject
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Scroll down to the "Resources" dropdown, and 
+                            select "Specific"
+                        </li>
+                        <li>
+                            Next to "bucket," hit "Add ARNs" and input the 
+                            root domain name, which is also the name of the S3 
+                            bucket that it targets, into the "Resource bucket 
+                            name" box; hit "Add ARNs"
+                        </li>
+                        <li>
+                            Next to "object," hit "Add ARNs," input the root 
+                            domain name into the "Resource bucket name" box, 
+                            select "Any object name" for the "Resource object 
+                            name," and hit "Add ARNs"
+                        </li>
+                        <li>
+                            Hit "Next"
+                        </li>
+                        <li>
+                            In "Policy name," I just reuse the name from 
+                            before; "example.com-git-ci-user"
+                        </li>
+                        <li>
+                            Standard description: "Git CI hook used to edit 
+                            the code for the example.com site, using Git 
+                            version control.
+                        </li>
+                        <li>
+                            Scroll down and hit "Create policy"
+                        </li>
+                        <li>
+                            On the original tab, where permissions were being 
+                            set, hit the refresh button next to the "Create 
+                            policy" button that opened the other tab; the new 
+                            policy should appear in the search here if 
+                            refreshed after about a minute.
+                        </li>
+                        <li>
+                            Find the new policy through search, and check the 
+                            checkbox next to it
+                        </li>
+                        <li>
+                            Hit "Next"
+                        </li>
+                        <li>
+                            Hit "Create user"
+                        </li>
+                    </ul>
+
+                    <p>
+                        After this, an IAM user for Git actions on the S3 
+                        bucket will be created, and Git will be hooked up to 
+                        this IAM user in the next & final section.
+                    </p>
+                </details>
+
+                <details id="connecting-git-to-aws-s3">
+                    <summary>
+                        <h3>
+                            Connecting Git to AWS S3
+                        </h3>
+                    </summary>
+
+                    <p>
+                        In IAM, under Users, go to the user created to connect 
+                        to S3.
+                    </p>
+
+                    <ul>
+                        <li>
+                            In the middle on the right side of the "Summary" 
+                            box, click the "Create access key" link
+                        </li>
+                        <li>
+                            Select "Command Line Interface (CLI)" and check 
+                            the box at the bottom before hitting "Next"
+                        </li>
+                        <li>
+                            Can enter a description or just hit the "Create 
+                            access key" button
+                        </li>
+                        <li>
+                            After the access key is created, KEEP THAT PAGE 
+                            OPEN IN THE TAB when also opening up Github
+                        </li>fbM0oDR6sgRHO4ebJ03y/oyqfDQOQxiV7t3q/vtc
+                        <li>
+                            In Github, in the website repo, go to the 
+                            "Settings" tab at the top of the repository
+                        </li>
+                        <li>
+                            Go to "Secrets and variables" > "Actions," and hit 
+                            the "New repository secret" button
+                        </li>
+                        <li>
+                            The first key name is "AWS_ACCESS_KEY_ID" like in 
+                            the yml file above, and the "Secret" is the text 
+                            in the still-open AWS console under the 
+                            "Access key" section in the "Access key" column
+                        </li>
+                        <li>
+                            Hit "Add secret," then hit "New repository 
+                            secret" again
+                        </li>
+                        <li>
+                            The next secret will have the name 
+                            "AWS_SECRET_ACCESS_KEY" and will have the value 
+                            from the AWS console that's under the "Access key" 
+                            section in the right-side "Secret key" column; 
+                            copy & paste it into GitHub before hitting "Add 
+                            secret" again
+                        </li>
+                        <li>
+                            Push any update to the Git repository's "main" 
+                            branch to run the pipeline from the repo into AWS
+                        </li>
+                    </ul>
+                </details>
+
                 <p>
-                    (the rest of this is in progress)
+                    All of that composes how I built and am building this 
+                    site, aside from the code itself. The code is the easy 
+                    part to remember how to do. I plan to write about the code 
+                    & design by creating a journal entry for each page on the 
+                    site. That's not any sort of hard & fast rule for me, 
+                    though; it's just something I might do.
+                </p>
+
+                <p>
+                    The next development logs may be about patterns in how I'm 
+                    building things, improvements to my process, things I'm 
+                    moving toward, and any part of development that winds up 
+                    having unexpected depth.
+                </p>
+
+                <p>
+                    Documenting all this was at least as gruelling as 
+                    figuring a lot of it out, but hopefully, the step-by-step 
+                    is gonna save me those headaches in the future.
+                </p>
+
+                <p>
+                    That's all for now.
                 </p>
 
                 <br />
