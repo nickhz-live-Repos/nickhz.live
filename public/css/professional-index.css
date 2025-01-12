@@ -1,0 +1,328 @@
+
+:root {
+    --main-flower-bg: #2c3c54;
+    --flower-bg: #ecef6c;
+}
+
+body {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: white;
+    background-color: #949c9c;
+    overflow: hidden;
+}
+
+.flower {
+    position: absolute;
+    overflow: visible;
+    border-radius: 50%;
+    background-color: var(--flower-bg);
+    width: 50px;
+    height: 50px;
+}
+
+.petal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.petal:nth-of-type(2) {
+    rotate: 300deg;
+}
+
+.petal:nth-of-type(3) {
+    rotate: 240deg;
+}
+
+.petal:nth-of-type(4) {
+    rotate: 180deg;
+}
+
+.petal:nth-of-type(5) {
+    rotate: 120deg;
+}
+
+.petal:nth-of-type(6) {
+    rotate: 60deg;
+}
+
+.stem {
+    position: absolute;
+    left: 24px;
+    top: -5px;
+    width: 6px;
+    height: 10px;
+    background: 
+        radial-gradient(closest-corner circle at top, transparent 100%, var(--flower-bg) 100% 200%, transparent 200%),
+        radial-gradient(closest-corner circle at bottom, transparent 100%, var(--flower-bg) 100% 200%, transparent 200%)
+    ;
+}
+
+.leaf {
+    position: absolute;
+    border-radius: 50%;
+    left: 30px;
+    top: -19px;
+    width: 38px;
+    height: 38px;
+    background-color: var(--flower-bg);
+}
+
+@keyframes main-flower-sway {
+    from {
+        transform: translateX(-5%) rotate(-2deg);
+    }
+    to {
+        transform: translateX(5%) rotate(2deg);
+    }
+}
+
+main.flower {
+    text-align: center;
+    background-color: var(--main-flower-bg);
+    color: white;
+    width: 16vw;
+    height: 16vw;
+    left: 42vw;
+    top: calc(50dvh - 8vw);
+    font-size: 2rem;
+    font-weight: bold;
+    animation: 4s ease-in-out alternate infinite main-flower-sway;
+}
+
+main > .petal > .stem {
+    left: 7.8vw;
+    top: -1.5vw;
+    width: 2vw;
+    height: 3vw;
+    background: 
+        radial-gradient(closest-corner circle at top, transparent 100%, var(--main-flower-bg) 100% 200%, transparent 200%),
+        radial-gradient(closest-corner circle at bottom, transparent 100%, var(--main-flower-bg) 100% 200%, transparent 200%)
+    ;
+}
+
+main > .petal > .leaf {
+    left: 9.6vw;
+    top: -6vw;
+    width: 12vw;
+    height: 12vw;
+    background-color: var(--main-flower-bg);
+    transition: 0.5s;
+}
+
+main > .petal > .leaf:hover {
+    background-color: yellowgreen;
+    color: black;
+}
+
+a {
+    color: azure;
+    font-style: italic;
+}
+
+@keyframes petal-1-anim {
+    from {
+        rotate: 0;
+    }
+    to {
+        rotate: 300deg;
+    }
+}
+
+@keyframes petal-2-anim {
+    from {
+        rotate: 0;
+    }
+    to {
+        rotate: 240deg;
+    }
+}
+
+@keyframes petal-3-anim {
+    from {
+        rotate: 0;
+    }
+    to {
+        rotate: 180deg;
+    }
+}
+
+@keyframes petal-4-anim {
+    from {
+        rotate: 0;
+    }
+    to {
+        rotate: 120deg;
+    }
+}
+
+@keyframes petal-5-anim {
+    from {
+        rotate: 0;
+    }
+    to {
+        rotate: 60deg;
+    }
+}
+
+main > .petal {
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+main > .petal:nth-of-type(2) {
+    animation-duration: 1s;
+    animation-name: petal-1-anim;
+}
+
+main > .petal:nth-of-type(2) > .leaf {
+    rotate: -300deg;
+}
+
+main > .petal:nth-of-type(3) {
+    animation-duration: 0.8s;
+    animation-name: petal-2-anim;
+}
+
+main > .petal:nth-of-type(3) > .leaf {
+    rotate: -240deg;
+}
+
+main > .petal:nth-of-type(4) {
+    animation-duration: 0.6s;
+    animation-name: petal-3-anim;
+}
+
+main > .petal:nth-of-type(4) > .leaf {
+    rotate: -180deg;
+}
+
+main > .petal:nth-of-type(5) {
+    animation-duration: 0.4s;
+    animation-name: petal-4-anim;
+}
+
+main > .petal:nth-of-type(5) > .leaf {
+    rotate: -120deg;
+}
+
+main > .petal:nth-of-type(6) {
+    animation-duration: 0.2s;
+    animation-name: petal-5-anim;
+}
+
+main > .petal:nth-of-type(6) > .leaf {
+    rotate: -60deg;
+}
+
+#flower-field {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 40dvh;
+    width: 100%;
+    z-index: -1;
+    /* animation: 4s ease-in-out alternate infinite flower-sway; */
+}
+
+#flower-field > .flower {
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-delay: -3s;
+    animation-name: main-flower-sway;
+}
+
+#flower-field > .flower:first-of-type {
+    animation-duration: 3s;
+}
+
+#flower-field > .flower:nth-of-type(2) {
+    left: 10vw;
+    top: 50px;
+    animation-duration: 2s;
+}
+
+#flower-field > .flower:nth-of-type(3) {
+    left: 20vw;
+    bottom: 50px;
+    animation-duration: 2.3s;
+}
+
+#flower-field > .flower:nth-of-type(4) {
+    left: 40vw;
+    top: 100px;
+    animation-duration: 2.9s;
+}
+
+#flower-field > .flower:nth-of-type(5) {
+    left: 55vw;
+    bottom: 100px;
+    animation-duration: 2.7s;
+}
+
+#flower-field > .flower:nth-of-type(6) {
+    left: 70vw;
+    top: 150px;
+    animation-duration: 2.2s;
+}
+
+#flower-field > .flower:nth-of-type(7) {
+    left: 70vw;
+    bottom: 0;
+    animation-duration: 3.1s;
+}
+
+#flower-field > .flower:nth-of-type(8) {
+    left: 90vw;
+    top: 50px;
+    animation-duration: 2.4s;
+}
+
+#flower-field > .flower:nth-of-type(9) {
+    left: 100vw;
+    bottom: 50px;
+    animation-duration: 2.8s;
+}
+
+#flower-field > .flower:nth-of-type(10) {
+    left: 30vw;
+    top: 150px;
+    animation-duration: 3.3s;
+}
+
+#flower-field > .flower:nth-of-type(11) {
+    left: 60vw;
+    top: 0;
+    animation-duration: 2s;
+}
+
+#flower-field > .flower:nth-of-type(12) {
+    left: 0;
+    bottom: 0;
+    animation-duration: 2.6s;
+}
+
+#flower-field > .flower:nth-of-type(13) {
+    left: 85vw;
+    bottom: 100px;
+    animation-duration: 2.1s;
+}
+
+#flower-field > .flower:nth-of-type(14) {
+    left: 45vw;
+    top: 0;
+    animation-duration: 3s;
+}
+
+#flower-field > .flower:nth-of-type(15) {
+    left: 75vw;
+    top: 0;
+    animation-duration: 2.9s;
+}
+
+#flower-field > .flower:nth-of-type(16) {
+    left: 25vw;
+    top: 0;
+    animation-duration: 3.2s;
+}
