@@ -75,7 +75,7 @@
             }
 
             summary > h3 {
-                display: inline-block;
+                display: inline;
             }
 
             pre {
@@ -101,6 +101,8 @@
 
             article > details {
                 border-bottom: 1px solid var(--primary-accent);
+                margin-top: 1.25rem;
+                padding-bottom: 1.25rem;
             }
 
             @media only screen and (min-width: 768px) {
@@ -174,35 +176,17 @@
                     been in my plan to document how I made this site, so I'll 
                     be able to just come back to this page if I want do it 
                     again in the future or adapt parts of my process for 
-                    something else. Devlogs do sometimes highlight how people 
-                    solved problems they encountered, and the problem I had 
-                    was setting up all the infrastructure & automation to put 
-                    this site up in first place.
+                    something else.
                 </p>
 
                 <p>
                     Putting this website live on the Web required my use of 
                     an account on 
                     <a href="https://aws.amazon.com/console/" target="_blank">Amazon 
-                    Web Services (AWS)</a>. Additionally, the site code 
-                    automatically updates upon pushing to a GitHub repo, 
-                    though this isn't necessarily required to put the website 
-                    online.
-                </p>
-                
-                <p>
-                    Additionally, in the course of writing this guide, much of 
-                    the information didn't come from me reviewing 
-                    documentation, but rather it came from me going back 
-                    through the settings & configurations for everything, to 
-                    reverse engineer how I did it. For instance, I didn't find 
-                    which permissions to grant to an IAM user for this 
-                    specific purpose anywhere on the Web, so I had to figure 
-                    the permissions out through experimentation and retrieve 
-                    them from my IAM policy setup rather than through any 
-                    documentation. To my knowledge, this guide is the only one 
-                    on the open Web that composes all of the information 
-                    covered.
+                    Web Services (AWS)</a>. As a completely optional 
+                    preference of mine, I also made the site code 
+                    automatically update upon pushing to a code repository on 
+                    <a href="https://github.com/" target="_blank">GitHub</a>.
                 </p>
 
                 <p>
@@ -1339,24 +1323,56 @@ deploy:
 
                 <p>
                     All of that composes how I built and am building this 
-                    site, aside from the code itself. The code is the easy 
-                    part to remember how to do. I plan to write about the code 
-                    & design by creating a journal entry for each page on the 
-                    site. That's not any sort of hard & fast rule for me, 
-                    though; it's just something I might do.
+                    site, aside from the contents of the HTML, CSS, and 
+                    JavaScript, which all have much more available & complete 
+                    documentation available on the wider Web.
+                </p>
+
+                <hr />
+
+                <h1>
+                    Post-script / reflection
+                </h1>
+
+                </p>
+                    For me, the site's infrastructure is the hard part of 
+                    putting it online, and the code is the easy part. For the 
+                    code & design of the site, I plan to write about it by 
+                    creating a journal entry for each page I've put onto this 
+                    site.
                 </p>
 
                 <p>
                     The next development logs may be about patterns in how I'm 
                     building things, improvements to my process, things I'm 
                     moving toward, and parts of my projects' creation that 
-                    wind up having unexpected depth.
+                    wind up having unexpected depth. Devlogs do sometimes
+                    highlight how people solved problems they encountered, and 
+                    the problem I had was setting up all the infrastructure & 
+                    automation to put this site up in first place.
+                </p>
+                
+                <p>
+                    Additionally, in the course of writing this guide, much of 
+                    the information didn't come from me reviewing 
+                    documentation, but rather it came from me going back 
+                    through the settings & configurations for everything, to 
+                    reverse engineer how I did it. For instance, I didn't find 
+                    which permissions to grant to an IAM user for this 
+                    specific purpose anywhere on the Web, so I had to figure 
+                    the permissions out through experimentation and retrieve 
+                    them from my IAM policy setup rather than through any 
+                    documentation. To my knowledge, this guide is the only one 
+                    on the open Web that composes all of the information 
+                    covered.
                 </p>
 
                 <p>
-                    Documenting all this was at least as gruelling as 
-                    figuring a lot of it out, but hopefully, the step-by-step 
-                    is gonna save me those headaches in the future.
+                    Re-tracing all my steps and ocumenting this all after the 
+                    fact, it was at least as grueling as figuring a lot of it 
+                    out, but hopefully, the step-by-step is gonna save me some 
+                    headaches in the future. It could even save headaches for 
+                    someone else, too!
                 </p>
 
                 <p>
