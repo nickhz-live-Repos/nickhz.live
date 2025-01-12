@@ -181,20 +181,44 @@
                     Putting this website live on the Web required my use of 
                     an account on 
                     <a href="https://aws.amazon.com/console/" target="_blank">Amazon 
-                    Web Services (AWS)</a>. I mostly followed instructions 
-                    provided by AWS, but my process didn't always happen in 
-                    the same order nor to the letter described by AWS, as my 
-                    needs varied from the existing process.
+                    Web Services (AWS)</a>. I initially mostly followed 
+                    instructions provided by AWS, but my needs didn't always 
+                    align with everything happening in the same order nor to 
+                    the letter described by AWS. This is one of the more 
+                    in-depth processes for putting a static site on the Web, 
+                    not the least because it includes site code that 
+                    automatically updates upon pushing to a GitHub repo.
+                </p>
+                
+                <p>
+                    Additionally, in the course of writing this guide, much of 
+                    the information didn't come from me reviewing 
+                    documentation, but rather it came from me going back 
+                    through the settings & configurations for everything, to 
+                    reverse engineer how I did it. For instance, I didn't find 
+                    which permissions to grant to an IAM user for this 
+                    specific purpose anywhere on the Web, so I had to figure 
+                    the permissions out through experimentation and retrieve 
+                    them from my IAM policy setup rather than through any 
+                    documentation. To my knowledge, this guide is the only one 
+                    on the open Web that composes all of the information 
+                    covered.
+                </p>
+
+                <p>
+                    What exactly this guide covers can be inferred from the 
+                    titles of the sections below.
                 </p>
 
                 <p>
                     USING AMAZON WEB SERVICES REQUIRES A MONTHLY 
                     PAYMENT AFTER THE FIRST YEAR. FOR A SIMPLE STATIC SITE 
                     LIKE THIS ONE, THE PAYMENT WILL BE ON THE ORDER OF 
-                    UNDER $15 USD PER MONTH IN ADDITION TO THE INITIAL AND 
+                    $2-$15 USD PER MONTH IN ADDITION TO THE INITIAL AND 
                     YEARLY RENEWAL PAYMENT MADE FOR THE WEBSITE NAME 
                     REGISTRATION. IF THIS PAYMENT CAN'T BE MADE, THE SITE 
-                    SHOULD NOT BE HOSTED ON AWS.
+                    MAY BE CREATED BUT MAY WANT TO BE TAKEN DOWN OR MOVED 
+                    AFTERWARD.
                 </p>
 
                 <details id="creating-the-local-website-files">
