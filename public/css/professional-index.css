@@ -81,20 +81,20 @@ main.flower {
     text-align: center;
     background-color: var(--main-flower-bg);
     color: white;
-    width: 16vw;
-    height: 16vw;
-    left: 42vw;
-    top: calc(50dvh - 8vw);
-    font-size: 2rem;
+    width: 32vw;
+    height: 32vw;
+    left: 34vw;
+    top: calc(50dvh - 16vw);
+    font-size: 1.5rem;
     font-weight: bold;
     animation: 4s ease-in-out alternate infinite main-flower-sway;
 }
 
 main > .petal > .stem {
-    left: 7.8vw;
-    top: -1.5vw;
-    width: 2vw;
-    height: 3vw;
+    left: 15.6vw;
+    top: -3vw;
+    width: 4vw;
+    height: 6vw;
     background: 
         radial-gradient(closest-corner circle at top, transparent 100%, var(--main-flower-bg) 100% 200%, transparent 200%),
         radial-gradient(closest-corner circle at bottom, transparent 100%, var(--main-flower-bg) 100% 200%, transparent 200%)
@@ -102,10 +102,10 @@ main > .petal > .stem {
 }
 
 main > .petal > .leaf {
-    left: 9.6vw;
-    top: -6vw;
-    width: 12vw;
-    height: 12vw;
+    left: 19.4vw;
+    top: -12vw;
+    width: 24vw;
+    height: 24vw;
     background-color: var(--main-flower-bg);
     transition: 0.5s;
 }
@@ -325,4 +325,34 @@ main > .petal:nth-of-type(6) > .leaf {
     left: 25vw;
     top: 0;
     animation-duration: 3.2s;
+}
+
+/* 
+
+desktop css overrides 
+
+*/
+@media only screen and (min-width: 768px) {
+    main.flower {
+        width: 16vw;
+        height: 16vw;
+        left: 42vw;
+        top: calc(50dvh - 8vw);
+        font-size: 2rem;
+        font-weight: bold;
+    }
+    
+    main > .petal > .stem {
+        left: 7.8vw;
+        top: -1.5vw;
+        width: 2vw;
+        height: 3vw;
+    }
+    
+    main > .petal > .leaf {
+        left: 9.6vw;
+        top: -6vw;
+        width: 12vw;
+        height: 12vw;
+    }
 }
