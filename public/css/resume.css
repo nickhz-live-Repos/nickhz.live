@@ -9,10 +9,8 @@ body {
     overflow-x: hidden;
 }
 
-#home-button {
+.backlink {
     position: fixed;
-    bottom: 0;
-    left: 0;
     width: 7dvh;
     height: 7dvh;
     padding: 0.5dvh;
@@ -22,19 +20,40 @@ body {
     transition: 0.5s;
 }
 
-#home-button:hover {
+.backlink:hover {
     filter: invert(1);
 }
 
-#house-graphic {
+.backlink-graphic {
     height: 100%;
     background-color: white;
+}
+
+#home-button {
+    bottom: 0;
+    left: 0;
+}
+
+#house-graphic {
     clip-path: 
         polygon(
             50% 0, 100% 45%, 85% 45%, 85% 100%, 60% 100%, 60% 65%, 
             40% 65%, 40% 100%, 15% 100%, 15% 45%, 0 45%
         )
     ;
+}
+
+#parent-directory-graphic {
+    clip-path:
+        polygon(
+            40% 15%, 60% 15%, 100% 65%, 80% 65%, 50% 30%, 20% 65%, 0 65%
+        )
+    ;
+}
+
+#parent-directory-button {
+    bottom: 0;
+    left: calc(8dvh + 5px);
 }
 
 #name-tag {
@@ -301,10 +320,14 @@ desktop css overrides
         line-height: 2rem;
     }
 
-    #home-button {
+    .backlink {
         top: 0;
         width: 4dvh;
         height: 4dvh;
+    }
+
+    #parent-directory-button {
+        left: calc(5dvh + 5px);
     }
 
     #name-tag {
