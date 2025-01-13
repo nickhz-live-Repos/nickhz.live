@@ -85,7 +85,7 @@ main.flower {
     height: 32vw;
     left: 34vw;
     top: calc(50dvh - 16vw);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     animation: 4s ease-in-out alternate infinite main-flower-sway;
 }
