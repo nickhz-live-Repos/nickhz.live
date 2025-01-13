@@ -6,7 +6,7 @@
     const transitionFrame = document.getElementById('bg-transition-frame');
     const menuItemBgs = [
         null,
-        'black',
+        '#2c3c54',
         null,
         null,
         'rgb(0, 0, 27)',

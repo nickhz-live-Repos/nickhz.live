@@ -159,8 +159,8 @@ body > main {
 #rotary-menu > a:nth-of-type(2) {
     top: 17dvh;
 
-    background:
-        radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.25) 0% 55%, rgba(255, 255, 255, 0.25) 55%)
+    background: 
+        radial-gradient(circle at 50% 50%, rgba(44, 60, 84, 0.25) 0% 55%, transparent 55%)
     ;
 }
 
@@ -390,7 +390,7 @@ input:checked + .tab-content {
     box-shadow: none;
 
     background:
-        radial-gradient(black 0% 60%, white 60% 65%, black 65%)
+        radial-gradient(#2c3c54 0% 60%, #949c9c 60%)
     ;
 
     text-shadow:
