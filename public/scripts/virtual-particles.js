@@ -104,6 +104,7 @@ const virtualParticles = (
                 // remove any dead particles
                 particle.element.remove();
                 particles.splice(i, 1);
+                i--;
             } else {
                 // update any live particles
                 particle.decayTime -= delta;
