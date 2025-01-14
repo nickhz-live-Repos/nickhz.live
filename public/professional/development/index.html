@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <base href="../../" />
+        <link rel="shortcut icon" type="image/x-icon" href="./img/nh-cursive-icon.png" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+        <!-- Page properties -->
+        <title>Professional Development - Nick Hernandez</title>
+
+        <!-- Opengraph properties, for giving a site preview if the link is posted anywhere. Makes the link look less sketchy. -->
+        <meta property="og:title" content="Skills Development & Self-Education - Nick Hernandez" />
+        <meta property="og:description" content="My page for tracking independent self-study & practice for professional skills" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://nickhz.live/img/built-from-scratch.png" />
+        <meta property="og:image:alt" content="built from scratch" />
+        <meta property="og:url" content="https://nickhz.live/professional/development/" />
+        <meta property="og:site_name" content="The Personal Site of Nick Hernandez" />
+
+        <!-- Style properties -->
+        <link href="css/style.css" rel="stylesheet" />
+        <style>
+            body {
+                background: hsl(215, 50%, 5%);
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            #title-ticker {
+                position: absolute;
+                background: goldenrod;
+                border: 5px solid black;
+                padding: 1rem 3rem;
+                transform: perspective(5px) rotateX(-1deg);
+                left: -2.3rem;
+                top: -1.3rem;
+                font-size: 2rem;
+                font-style: italic;
+                font-weight: bold;
+                border-radius: 15px;
+            }
+
+            #title-ticker > * {
+                transform: perspective(5px) rotateX(1deg);
+                position: relative;
+            }
+
+            #title-ticker > div > div {
+                display: inline-block;
+                position: relative;
+                width: 15rem;
+                height: 2.8rem;
+                top: 0.7rem;
+                overflow: hidden;
+            }
+
+            #title-ticker > div > div > span {
+                position: absolute;
+                display: block;
+                top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <header id="title-ticker">
+            <div>
+            Self -
+                <div>
+                    <span>Development<span>
+                    <span>Education</span>
+                    <span>Training</span>
+                    <span>Discipline</span>
+                </div>
+            </div>
+        </header>
+    </body>
+</html>

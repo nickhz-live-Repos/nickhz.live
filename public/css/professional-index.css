@@ -123,7 +123,7 @@ a {
 
 @keyframes petal-1-anim {
     from {
-        rotate: 0;
+        rotate: 0deg;
     }
     to {
         rotate: 300deg;
@@ -132,7 +132,7 @@ a {
 
 @keyframes petal-2-anim {
     from {
-        rotate: 0;
+        rotate: 0deg;
     }
     to {
         rotate: 240deg;
@@ -141,7 +141,7 @@ a {
 
 @keyframes petal-3-anim {
     from {
-        rotate: 0;
+        rotate: 0deg;
     }
     to {
         rotate: 180deg;
@@ -150,7 +150,7 @@ a {
 
 @keyframes petal-4-anim {
     from {
-        rotate: 0;
+        rotate: 0deg;
     }
     to {
         rotate: 120deg;
@@ -159,7 +159,7 @@ a {
 
 @keyframes petal-5-anim {
     from {
-        rotate: 0;
+        rotate: 0deg;
     }
     to {
         rotate: 60deg;
