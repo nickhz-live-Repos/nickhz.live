@@ -11,7 +11,7 @@
         <title>Professional Development - Nick Hernandez</title>
 
         <!-- Opengraph properties, for giving a site preview if the link is posted anywhere. Makes the link look less sketchy. -->
-        <meta property="og:title" content="Skills Development & Self-Education - Nick Hernandez" />
+        <meta property="og:title" content="Self-Development - Nick Hernandez" />
         <meta property="og:description" content="My page for tracking independent self-study & practice for professional skills" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://nickhz.live/img/built-from-scratch.png" />
@@ -23,14 +23,14 @@
         <link href="css/style.css" rel="stylesheet" />
         <style>
             body {
-                background: hsl(215, 50%, 5%);
+                background: black;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
             }
 
             #title-ticker {
                 position: absolute;
-                background: goldenrod;
-                border: 5px solid black;
+                background: hsl(43, 74%, 49%);
+                border: 2px solid black;
                 padding: 1rem 3rem;
                 transform: perspective(5px) rotateX(-1deg);
                 left: -2.3rem;
@@ -39,6 +39,7 @@
                 font-style: italic;
                 font-weight: bold;
                 border-radius: 15px;
+                z-index: 1;
             }
 
             #title-ticker > * {
@@ -90,6 +91,66 @@
             #title-words > span:nth-child(4) {
                 animation-delay: 12s;
             }
+
+            #self-development-content {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+
+            #self-development-content > * {
+                height: 100%;
+                overflow-y: scroll;
+                scrollbar-width: none;
+                position: absolute;
+                box-sizing: border-box;
+                padding-top: 3.7rem;
+                border-radius: 2rem;
+            }
+
+            #skills-list {
+                border-right: 5px solid black;
+                width: 19.1%;
+                background: hsl(43, 100%, 42%);
+            }
+            #skills-list > * {
+                width: 100%;
+                padding: 1rem;
+                border-top: 1px solid black;
+                box-sizing: border-box;
+                display: block;
+                text-align: right;
+            }
+            #skills-list > *:last-child {
+                border-bottom: 1px solid black;
+            }
+            #skills-list > label:hover {
+                background-color: gold;
+            }
+            #skills-list > a {
+                text-align: left;
+            }
+            #skills-list > a:hover {
+                background-color: limegreen;
+            }
+            #skills-list > .skills-list-divider {
+                padding: 2px; 
+                background-color: hsl(43, 100%, 20%); 
+                margin: 0; 
+                border: none; 
+                border-top: 1px solid black;
+            }
+
+            #self-development-content > article {
+                left: 19.1%;
+                width: 30.9%;
+                background: hsl(0, 62%, 10%);
+            }
+            #self-development-content > section {
+                left: 50%;
+                width: 50%;
+                background: hsl(215, 50%, 5%);
+            }
         </style>
     </head>
     <body>
@@ -104,5 +165,36 @@
                 </div>
             </div>
         </header>
+
+        <main id="self-development-content">
+            <nav id="skills-list">
+                <a href="professional">
+                    &lt; Back to Professional Pages
+                </a>
+                <a href="./">
+                    &lt; Back to Homepage
+                </a>
+                <hr class="skills-list-divider" />
+                <div style="text-align: left">
+                    Below are skills I train on my own time.
+                    <br />
+                    <br />
+                    Select one to see details & proof of my self-development.
+                </div>
+                <hr class="skills-list-divider" />
+                <label>
+                    HTML / CSS / JS &gt;
+                </label>
+                <label>
+                    Amazon Web Services (AWS) &gt;
+                </label>
+            </nav>
+            <article>
+
+            </article>
+            <section>
+
+            </section>
+        </main>
     </body>
 </html>
