@@ -22,6 +22,12 @@
         <!-- Style properties -->
         <link href="css/style.css" rel="stylesheet" />
         <style>
+            :root {
+                --skills-accent: hsl(43, 100%, 42%);
+                --article-accent: hsl(0, 62%, 10%);
+                --section-accent: hsl(215, 50%, 5%);
+            }
+
             body {
                 background: black;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -39,7 +45,7 @@
                 font-style: italic;
                 font-weight: bold;
                 border-radius: 15px;
-                z-index: 1;
+                z-index: 3;
             }
 
             #title-ticker > * {
@@ -104,34 +110,41 @@
                 scrollbar-width: none;
                 position: absolute;
                 box-sizing: border-box;
-                padding-top: 3.7rem;
+                padding-top: 3.8rem;
                 border-radius: 2rem;
             }
 
             #skills-list {
-                border-right: 5px solid black;
+                /* border-right: 5px solid black; */
                 width: 19.1%;
-                background: hsl(43, 100%, 42%);
+                background: hsl(43, 100%, 30%);
             }
             #skills-list > * {
+                background-color: var(--skills-accent);
                 width: 100%;
-                padding: 1rem;
-                border-top: 1px solid black;
+                padding: 0.5rem;
                 box-sizing: border-box;
                 display: block;
-                text-align: right;
             }
-            #skills-list > *:last-child {
-                border-bottom: 1px solid black;
+            #back-links {
+                display: flex;
             }
-            #skills-list > label:hover {
-                background-color: gold;
+            #back-links > * {
+                display: block;
+                width: 50%;
+                background-color: var(--skills-accent);
+                margin: 2px;
+                padding: 2px;
+                border-radius: 1rem;
+                border: 3px outset black;
+                text-align: center;
+                word-break: break-word;
             }
-            #skills-list > a {
-                text-align: left;
-            }
-            #skills-list > a:hover {
+            #back-links > *:hover {
                 background-color: limegreen;
+            }
+            #back-links > *:active {
+                border: 3px inset black;
             }
             #skills-list > .skills-list-divider {
                 padding: 2px; 
@@ -140,6 +153,18 @@
                 border: none; 
                 border-top: 1px solid black;
             }
+            #skills-list > label {
+                background-color: var(--skills-accent);
+                border-top: 1px solid black;
+                border-bottom: 1px solid black;
+                margin-top: -1px;
+                border-radius: 0 15px 15px 0;
+            }
+            #skills-list > label:hover {
+                background-color: gold;
+            }
+
+
 
             #self-development-content > article {
                 left: 19.1%;
@@ -168,14 +193,15 @@
 
         <main id="self-development-content">
             <nav id="skills-list">
-                <a href="professional">
-                    &lt; Back to Professional Pages
-                </a>
-                <a href="./">
-                    &lt; Back to Homepage
-                </a>
+                <div id="back-links">
+                    <a href="./">&lt;&lt;&lt; Home</a>
+                    <a href="professional">&lt; Professional Pages</a>
+                </div>
                 <hr class="skills-list-divider" />
                 <div style="text-align: left">
+                    (PAGE IS A WORK IN PROGRESS)
+                    <br />
+                    <br />
                     Below are skills I train on my own time.
                     <br />
                     <br />
@@ -183,10 +209,9 @@
                 </div>
                 <hr class="skills-list-divider" />
                 <label>
-                    HTML / CSS / JS &gt;
-                </label>
-                <label>
-                    Amazon Web Services (AWS) &gt;
+                    HTML / CSS / JS
+                </label><label>
+                    Amazon Web Services (AWS)
                 </label>
             </nav>
             <article>
