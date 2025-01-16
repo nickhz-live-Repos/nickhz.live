@@ -7,6 +7,13 @@
 */
 
 const frutigerMetroClouds = (inputConfig) => {
+    /*
+        CONFIG WITH DEFAULT VALUES IS BETTER DONE USING 
+        
+        Objects.assign({default config settings}, inputConfig)
+
+        BUT THIS WILL BE KEPT AS IS FOR DEMONSTRATION
+    */
     const safeDefine = (property, defaultValue) => {
         return property === undefined ? defaultValue : property;
     };
