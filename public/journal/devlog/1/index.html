@@ -105,6 +105,10 @@
                 padding-bottom: 1.25rem;
             }
 
+            figcaption {
+                font-style: italic;
+            }
+
             @media only screen and (min-width: 768px) {
                 main, 
                 body > time {
@@ -1201,6 +1205,14 @@ deploy:
                                     Write > DeleteObject
                                 </li>
                             </ul>
+
+                            <figure>
+                                <img src="img/aws-iam-git-sync-policy-selection-visual.png" alt="AWS IAM policy selection in Visual mode" />
+                                <figcaption>
+                                    The page should look something like this 
+                                    upon policy selection.
+                                </figcaption>
+                            </figure>
                         </li>
                         <li>
                             Scroll down to the "Resources" dropdown, and 
@@ -1217,6 +1229,25 @@ deploy:
                             domain name into the "Resource bucket name" box, 
                             select "Any object name" for the "Resource object 
                             name," and hit "Add ARNs"
+
+                            <figure>
+                                <img src="img/aws-iam-git-sync-specify-permissions-visual-final.png" alt="AWS IAM's Specify Permissions setup in Visual mode" />
+                                <figcaption>
+                                    If the "List" & "Write" dropdowns from the last 
+                                    section are collapsed, the page should look like 
+                                    this.
+                                </figcaption>
+                            </figure>
+
+                            <figure>
+                                <img src="img/aws-iam-git-sync-specify-permissions-json-final.png" alt="AWS IAM's Specify Permissions setup in JSON mode" />
+                                <figcaption>
+                                    As an additional sanity check, selecting 
+                                    "JSON" mode in the top right next to 
+                                    "Visual" should give a JSON that looks 
+                                    like this.
+                                </figcaption>
+                            </figure>
                         </li>
                         <li>
                             Hit "Next"
