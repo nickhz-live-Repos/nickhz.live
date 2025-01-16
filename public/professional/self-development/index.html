@@ -21,162 +21,7 @@
 
         <!-- Style properties -->
         <link href="css/style.css" rel="stylesheet" />
-        <style>
-            :root {
-                --skills-accent: hsl(43, 100%, 42%);
-                --article-accent: hsl(0, 62%, 10%);
-                --section-accent: hsl(215, 50%, 5%);
-            }
-
-            body {
-                background: black;
-                font-family: Verdana, Geneva, Tahoma, sans-serif;
-            }
-
-            #title-ticker {
-                position: absolute;
-                background: hsl(43, 74%, 49%);
-                border: 2px solid black;
-                padding: 1rem 3rem;
-                transform: perspective(5px) rotateX(-1deg);
-                left: -2.3rem;
-                top: -1.3rem;
-                font-size: 2rem;
-                font-style: italic;
-                font-weight: bold;
-                border-radius: 15px;
-                z-index: 3;
-            }
-
-            #title-ticker > * {
-                transform: perspective(5px) rotateX(1deg);
-                position: relative;
-            }
-
-            #title-words {
-                display: inline-block;
-                position: relative;
-                width: 15rem;
-                height: 2.8rem;
-                top: 0.8rem;
-                overflow: hidden;
-            }
-
-            #title-words > span {
-                position: absolute;
-                display: block;
-                top: 3rem;
-                animation-timing-function: linear;
-                animation-name: title-words-roll;
-                animation-duration: 16s;
-                animation-iteration-count: infinite;
-            }
-
-            @keyframes title-words-roll {
-                0% {
-                    top: 3rem;
-                }
-
-                5%, 20% {
-                    top: 0;
-                }
-
-                25%, 100% {
-                    top: -3rem;
-                }
-            }
-
-            #title-words > span:nth-child(2) {
-                animation-delay: 4s;
-            }
-
-            #title-words > span:nth-child(3) {
-                animation-delay: 8s;
-            }
-
-            #title-words > span:nth-child(4) {
-                animation-delay: 12s;
-            }
-
-            #self-development-content {
-                position: fixed;
-                width: 100%;
-                height: 100%;
-            }
-
-            #self-development-content > * {
-                height: 100%;
-                overflow-y: scroll;
-                scrollbar-width: none;
-                position: absolute;
-                box-sizing: border-box;
-                padding-top: 3.8rem;
-                border-radius: 2rem;
-            }
-
-            #skills-list {
-                /* border-right: 5px solid black; */
-                width: 19.1%;
-                background: hsl(43, 100%, 30%);
-            }
-            #skills-list > * {
-                background-color: var(--skills-accent);
-                width: 100%;
-                padding: 0.5rem;
-                box-sizing: border-box;
-                display: block;
-            }
-            #back-links {
-                display: flex;
-            }
-            #back-links > * {
-                display: block;
-                width: 50%;
-                background-color: var(--skills-accent);
-                margin: 2px;
-                padding: 2px;
-                border-radius: 1rem;
-                border: 3px outset black;
-                text-align: center;
-                word-break: break-word;
-            }
-            #back-links > *:hover {
-                background-color: limegreen;
-            }
-            #back-links > *:active {
-                border: 3px inset black;
-            }
-            #skills-list > .skills-list-divider {
-                padding: 2px; 
-                background-color: hsl(43, 100%, 20%); 
-                margin: 0; 
-                border: none; 
-                border-top: 1px solid black;
-            }
-            #skills-list > label {
-                background-color: var(--skills-accent);
-                border-top: 1px solid black;
-                border-bottom: 1px solid black;
-                margin-top: -1px;
-                border-radius: 0 15px 15px 0;
-            }
-            #skills-list > label:hover {
-                background-color: gold;
-            }
-
-
-
-            #self-development-content > article {
-                left: 19.1%;
-                width: 30.9%;
-                background: hsl(0, 62%, 10%);
-            }
-            #self-development-content > section {
-                left: 50%;
-                width: 50%;
-                background: hsl(215, 50%, 5%);
-            }
-        </style>
+        <link href="css/self-development.css" rel="stylesheet" />
     </head>
     <body>
         <header id="title-ticker">
@@ -199,23 +44,72 @@
                 </div>
                 <hr class="skills-list-divider" />
                 <div style="text-align: left">
-                    (PAGE IS A WORK IN PROGRESS)
+                    <b>(PAGE IS A WORK IN PROGRESS)</b>
                     <br />
                     <br />
-                    Below are skills I train on my own time.
+                    Below are skills I train on in my own time.
                     <br />
                     <br />
                     Select one to see details & proof of my self-development.
                 </div>
                 <hr class="skills-list-divider" />
-                <label>
-                    HTML / CSS / JS
-                </label><label>
+                <label for="html-css-js">
+                    HTML / CSS / JavaScript Frontend
+                </label>
+                <label for="amazon-web-services">
                     Amazon Web Services (AWS)
                 </label>
+                <label for="java-core">
+                    Java
+                </label>
+                <label for="git-version-control">
+                    Git
+                </label>
             </nav>
-            <article>
+            <article id="skill-display">
+                <input type="radio" name="skill-selection" id="html-css-js" />
+                <div class="skill-overview">
+                    <h1>
+                        HTML / CSS / JavaScript Frontend
+                    </h1>
+                    <hr />
+                    <p>
+                        lorem ipsum
+                    </p>
+                </div>
 
+                <input type="radio" name="skill-selection" id="amazon-web-services" />
+                <div class="skill-overview">
+                    <h1>
+                        Amazon Web Services (AWS)
+                    </h1>
+                    <hr />
+                    <p>
+                        dolor sit amet
+                    </p>
+                </div>
+
+                <input type="radio" name="skill-selection" id="java-core" />
+                <div class="skill-overview">
+                    <h1>
+                        Java
+                    </h1>
+                    <hr />
+                    <p>
+                        consectetur adipiscing elit
+                    </p>
+                </div>
+
+                <input type="radio" name="skill-selection" id="git-version-control" />
+                <div class="skill-overview">
+                    <h1>
+                        Git Version Control
+                    </h1>
+                    <hr />
+                    <p>
+                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                    </p>
+                </div>
             </article>
             <section>
 
