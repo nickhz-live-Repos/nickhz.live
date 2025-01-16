@@ -100,6 +100,10 @@ body {
     )
 */
 
+label {
+    cursor: pointer;
+}
+
 /*
     left panel
 */
@@ -148,6 +152,7 @@ body {
     border-bottom: 1px solid black;
     margin-top: -1px;
     border-radius: 0 15px 15px 0;
+    text-decoration: underline;
 }
 #skills-list > label:hover {
     background-color: gold;
@@ -160,22 +165,24 @@ body {
     middle panel
 */
 
-#skill-display {
+#skill-sublist {
     left: 19.1%;
     width: 30.9%;
     background: hsl(0, 62%, 10%);
 }
-#skill-display > input[type=radio],
-#skill-display > input[type=radio] + .skill-overview  {
+#skill-sublist > input[type=radio],
+#skill-sublist > input[type=radio] + .skill-overview,
+#skill-praxis > input[type=radio],
+#skill-praxis > input[type=radio] + .praxis-exhibit {
     display: none;
 }
-#skill-display > input[type=radio]:checked + .skill-overview {
+#skill-sublist > input[type=radio]:checked + .skill-overview,
+#skill-praxis > input[type=radio]:checked + .praxis-exhibit {
     display: block;
 }
 .skill-overview {
-    padding: 1.3rem 1rem 1rem 1rem;
-    min-height: 100%;
-    border-radius: 15px;
+    padding: 1.3rem 0;
+    border-radius: 0 15px 15px 15px;
     color: white;
     background-color: hsl(0, 100%, 25%);
 }
@@ -183,13 +190,32 @@ body {
     margin-top: 0;
     text-align: center;
 }
-
+.skill-overview > label {
+    width: 100%;
+    padding: 0.5rem;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-top: -1px;
+    border-radius: 0 24px 24px 0;
+    box-sizing: border-box;
+    display: block;
+    background-color: hsl(0, 100%, 35%);
+}
+.skill-overview > label > p {
+    text-decoration: underline;
+}
+.skill-overview > label:hover {
+    background-color: red;
+}
+.skill-overview > *:last-child {
+    margin-bottom: 1rem;
+}
 
 /*
     right panel
 */
 
-#self-development-content > section {
+#skill-praxis {
     left: 50%;
     width: 50%;
     background: hsl(215, 50%, 5%);
