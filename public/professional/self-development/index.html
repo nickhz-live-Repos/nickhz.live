@@ -154,7 +154,7 @@
 
             <!-- right-side section -->
             <section id="skill-praxis">
-                <input type="radio" name="praxis-selection" id="this-websites-interface" checked />
+                <input type="radio" name="praxis-selection" id="this-websites-interface" />
                 <div class="praxis-exhibit">
                     <h1>
                         This Website's Interface
@@ -201,14 +201,48 @@
                     </p>
                 </div>
 
-                <input type="radio" name="praxis-selection" id="this-websites-infrastructure" />
+                <input type="radio" name="praxis-selection" id="this-websites-infrastructure" checked />
                 <div class="praxis-exhibit">
                     <h1>
                         This Website's AWS Infrastructure
                     </h1>
                     <hr />
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod nulla ut malesuada interdum.
+                        This website is deployed and maintained using these AWS products:
+                        <ul>
+                            <li>
+                                <a href="https://aws.amazon.com/cloudfront/" target="_blank">CloudFront</a> - site content delivery
+                            </li>
+                            <li>
+                                <a href="https://aws.amazon.com/route53/" target="_blank">Route 53</a> - DNS management & configuration
+                            </li>
+                            <li>
+                                <a href="https://aws.amazon.com/s3/" target="_blank">S3</a> - site interface file hosting
+                            </li>
+                            <li>
+                                <a href="https://aws.amazon.com/iam/" target="_blank">IAM</a> - security policy configuration for code pipeline automation
+                            </li>
+                            <li>
+                                <a href="https://aws.amazon.com/certificate-manager/" target="_blank">Certificate Manager</a> - SSL certification for HTTPS
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p>
+                        I configured all of these services to fit my needs. 
+                        These needs include deployment itself, along with 
+                        domain routing management and basic CI/CD through a 
+                        custom-restricted-policy IAM user account for this 
+                        website's 
+                        <a href="https://github.com/Hernandezn/nickhz.live/tree/main/public" target="_blank">GitHub 
+                        code repository</a> through GitHub Actions.
+                    </p>
+
+                    <p>
+                        <i><b>I documented the exact steps I took to deploy this 
+                        site 
+                        <a href="journal/devlog/1#creating-the-local-website-files" target="_blank">here 
+                        on my development log.</a></b></i>
                     </p>
                 </div>
                 
