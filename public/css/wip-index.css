@@ -157,6 +157,11 @@ input:checked + .preview-pane {
     border-radius: 5px;
 }
 
+/* 
+
+desktop css overrides 
+
+*/
 @media only screen and (min-width: 768px) {
     #wip-display {
         width: 80%;
@@ -169,6 +174,8 @@ input:checked + .preview-pane {
         right: 0;
         bottom: auto;
         overflow-x: visible;
+        overflow-y: scroll;
+        scrollbar-width: none;
         white-space: normal;
     }
 
