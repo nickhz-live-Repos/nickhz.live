@@ -232,3 +232,18 @@ label {
     color: white;
     background-color: hsl(220, 80%, 35%);
 }
+.praxis-exhibit a {
+    color: orange;
+}
+
+.two-column-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+.two-column-flex > * {
+    display: block;
+    width: 50%;
+}
+.two-column-flex > * > * {
+    max-width: 100%;
+}
