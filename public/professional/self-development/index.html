@@ -161,8 +161,11 @@
                     </h1>
                     <hr />
                     <p>
-                        My source code for this website interface is in 
-                        <a href="https://github.com/Hernandezn/nickhz.live/tree/main/public" target="_blank">this Github repo folder</a>.
+                        My source code for this website's frontend interface 
+                        is in 
+                        <a href="https://github.com/Hernandezn/nickhz.live/tree/main/public" target="_blank">this 
+                        Github repo folder</a>. Coded, tested, and debugged 
+                        using VSCode & Chromium-browser DevTools features.
                     </p>
                     <p>
                         Here are some other pages on this site, which you can visit by clicking each image:
@@ -189,7 +192,8 @@
                     </p>
                     <p>
                         My HTML/CSS/JavaScript visual effects on the <a href="./" target="_blank">homepage</a> 
-                        & <a href="professional" target="_blank">Professional index</a> show that I have familiarity & 
+                        & <a href="professional" target="_blank">Professional 
+                        index</a> show that I have familiarity & 
                         flexibility with composing frontend technologies together, 
                         without needing to use or reference any external code.
                     </p>
@@ -246,7 +250,7 @@
                     </p>
                 </div>
                 
-                <input type="radio" name="praxis-selection" id="java-programming-by-joyce-farrell" checked />
+                <input type="radio" name="praxis-selection" id="java-programming-by-joyce-farrell" />
                 <div class="praxis-exhibit">
                     <h1>
                         Java Programming Textbook by Joyce Farrell
@@ -255,7 +259,8 @@
                     <p>
                         In my first introduction to coding, I went beyond 
                         expectations for a fresh newbie and completed every 
-                        exercise from a Java programming textbook. 
+                        exercise from a Java programming textbook. Coded using 
+                        Notepad & JGrasp.
                     </p>
 
                     <figure>
@@ -280,14 +285,50 @@
                     </p>
                 </div>
                 
-                <input type="radio" name="praxis-selection" id="this-websites-git" />
+                <input type="radio" name="praxis-selection" id="this-websites-git" checked />
                 <div class="praxis-exhibit">
                     <h1>
                         This Website's Git
                     </h1>
                     <hr />
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod nulla ut malesuada interdum.
+                        This website's code is version controlled through 
+                        <a href="https://github.com/Hernandezn/nickhz.live" target="_blank">this 
+                        GitHub repository</a>.
+                    </p>
+
+                    <p>
+                        Supplementing this, my work through Git includes:
+
+                        <ul>
+                            <li>
+                                Git CLI - primary management & local 
+                                configuration
+                            </li>
+                            <li>
+                                GitHub Desktop - simple secondary management 
+                                for quick minor code pushes
+                            </li>
+                            <li>
+                                GitHub SSH - dynamically configured to push to 
+                                different repos through different accounts
+                            </li>
+                            <li>
+                                GitHub Actions - used to define a basic CI/CD 
+                                pipeline for automatically deploying site 
+                                updates to AWS 
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p>
+                        Deployment automation is defined through 
+                        <a href="https://github.com/Hernandezn/nickhz.live/blob/main/.github/workflows/main.yml" target="_blank">YAML 
+                        configuration in a GitHub workflow</a>, which tells 
+                        the remote runner to check out the code, to retrieve 
+                        AWS credentials from secrets I set up in GitHub, and 
+                        to run a CLI command to sync the website's files to 
+                        the specified repo folder.
                     </p>
                 </div>
             </section>
