@@ -24,13 +24,16 @@
         <style>
             :root {
                 --book-cover-color: #FDD716;
+                
+                scrollbar-color: var(--book-cover-color) black;
             }
 
             body {
                 background-color: black;
+                font-size: 1.15rem;
             }
 
-            body * {
+            body > * {
                 background-color: var(--book-cover-color);
                 color: black;
             }
@@ -39,32 +42,318 @@
                 color: blue;
             }
 
-            hgroup {
+            a#back-link {
+                background-color: black;
+                color: var(--book-cover-color);
+                position: fixed;
+                top: 0.5rem;
+                left: 0.5rem;
+                font-size: 2rem;
+                writing-mode: vertical-rl;
+                text-orientation: upright;
+            }
+
+            hgroup,
+            main {
                 box-sizing: border-box;
                 border: 1px solid var(--book-cover-color);
                 padding: 1rem;
-                text-align: center;
                 position: relative;
-                width: 90%;
-                left: 10%;
+                width: 85%;
+                left: 15%;
+            }
+
+            hgroup {
+                text-align: center;
+            }
+
+            main {
+                margin-top: 5rem;
+            }
+
+            main > section > p {
+                text-indent: 3rem;
+            }
+
+            hr {
+                border-color: black;
+            }
+
+            /* 
+
+            desktop css overrides 
+
+            */
+            @media only screen and (min-width: 768px) {
+                a#back-link {
+                    writing-mode: unset;
+                }
+
+                hgroup,
+                main {
+                    width: 90%;
+                    left: 10%;
+                }
             }
         </style>
     </head>
     <body>
-        <hgroup>
-            <h3>
-                Self-Study of 
-            </h3>
-            <h1>
-                Eloquent JavaScript 2024
-            </h1>
-            <h3>
-                Textbook by Marijn Haverbeke
-            </h3>
+        <a href="./professional/self-development?a=html-css-js&b=eloquent-javascript-2024" id="back-link">&lt; BACK</a>
 
+        <hgroup id="top">
+            <h2>
+                Self-Study of 
+            </h2>
+            <h1>
+                Eloquent JavaScript, 6th ed. (2024)
+            </h1>
+            <h2>
+                Textbook by Marijn Haverbeke
+            </h2>
             <h4>
-                <a href="https://eloquentjavascript.net/" target="_blank">Full text available online</a>
+                Self-study by Nicolas Hernandez
+            </h4>
+            <h4>
+                <a href="https://eloquentjavascript.net/" target="_blank">Full textbook made available online by the author</a>
             </h4>
         </hgroup>
+
+        <main>
+            <section id="preamble">
+                <h1>
+                    Preamble
+                </h1>
+                <p>
+                    This is a self-study effort from January 2025. I've been 
+                    eying this textbook up for a few days now, but since I 
+                    have this website, I figure this is a good place to host 
+                    my notes in an environment where I can actually execute 
+                    JavaScript. I didn't have a place to put it, though, so 
+                    I added <a href="./professional" target="_blank">an extra 
+                    index page</a> to branch my site structure off into a 
+                    <a href="./professional/self-development?a=html-css-js&b=eloquent-javascript-2024" target="_blank">self-development 
+                    page</a>, where I have the link to this page. It doesn't 
+                    take long to actually make pages, but because they're my 
+                    pages, I get to choose to give them novel creative 
+                    designs, which adds artistic & troubleshooting processes 
+                    on top of the coding. 
+                </p>
+                <p>
+                    All of this just to start studying, not that any of that 
+                    was necessary. I enjoy the content of the work, if that's 
+                    not made apparent by the existence of this page. What kind 
+                    of fool works without being told? One who's curious or 
+                    creative or otherwise self-driven... that kind of fool! 
+                    And now, I'll fool around with the content this book. 
+                </p>
+            </section>
+
+            <section id="introduction">
+                <h1>
+                    Chapter 0 - Introduction
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-1">
+                <h1>
+                    Chapter 1 - Values, Types, and Operators
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-2">
+                <h1>
+                    Chapter 2 - Program Structure
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-3">
+                <h1>
+                    Chapter 3 - Functions
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-4">
+                <h1>
+                    Chapter 4 - Data Structures: Objects and Arrays
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-5">
+                <h1>
+                    Chapter 5 - Higher-order Functions
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-6">
+                <h1>
+                    Chapter 6 - The Secret Life of Objects
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-7">
+                <h1>
+                    Chapter 7 - Project: A Robot
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-8">
+                <h1>
+                    Chapter 8 - Bugs and Errors
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-9">
+                <h1>
+                    Chapter 9 - Regular Expressions
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-10">
+                <h1>
+                    Chapter 10 - Modules
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-11">
+                <h1>
+                    Chapter 11 - Asynchronous Programming
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-12">
+                <h1>
+                    Chapter 12 - Project: A Programming Language
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-13">
+                <h1>
+                    Chapter 13 - JavaScript and the Browser
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-14">
+                <h1>
+                    Chapter 14 - The Document Object Model
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-15">
+                <h1>
+                    Chapter 15 - Handling Events
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-16">
+                <h1>
+                    Chapter 16 - Project: A Platform Game
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-17">
+                <h1>
+                    Chapter 17 - Drawing on Canvas
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-18">
+                <h1>
+                    Chapter 18 - HTTP and Forms
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-19">
+                <h1>
+                    Chapter 19 - Project: A Pixel Art Editor
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-20">
+                <h1>
+                    Chapter 20 - Node.js
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="chapter-21">
+                <h1>
+                    Chapter 21 - Project: Skill-Sharing Website
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+
+            <section id="reflection">
+                <h1>
+                    Reflection
+                </h1>
+                <p>
+                    --
+                </p>
+            </section>
+        </main>
     </body>
 </html>

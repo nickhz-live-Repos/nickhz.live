@@ -1,5 +1,13 @@
 <!DOCTYPE html>
+<!--
+    No, this is not made from a frontend framework, webpage template, or 
+    code-generation tool; I hand-coded this page, along with all pages on this 
+    website.
 
+    The full source code for this website is here in my Github repository: 
+
+    https://github.com/Hernandezn/nickhz.live
+-->
 <html>
     <head>
         <base href="../../" />
@@ -58,10 +66,10 @@
                 <label for="amazon-web-services">
                     Amazon Web Services (AWS)
                 </label>
-                <label for="java-core">
+                <label for="java">
                     Java
                 </label>
-                <label for="git-version-control">
+                <label for="git">
                     Git
                 </label>
             </nav>
@@ -122,7 +130,7 @@
                     </label>
                 </div>
 
-                <input type="radio" name="skill-selection" id="java-core" />
+                <input type="radio" name="skill-selection" id="java" />
                 <div class="skill-overview">
                     <h1>
                         Java
@@ -142,7 +150,7 @@
                     </label>
                 </div>
 
-                <input type="radio" name="skill-selection" id="git-version-control" />
+                <input type="radio" name="skill-selection" id="git" />
                 <div class="skill-overview">
                     <h1>
                         Git Version Control
@@ -357,93 +365,49 @@
                         </figcaption>
                     </figure>
 
-                    <hr />
-
                     <p>
                         <b>
-                            I am currently working on this. I'll use 
-                            this section to track my progress until it's 
-                            complete.<br /><br />I may transfer this section to a 
-                            sub-page as it becomes appropriate to demonstrate 
-                            JavaScript exercises in a live environment (like 
-                            on my own Web pages).
+                            I am currently working on this. I'm using 
+                            <a href="./professional/self-development/eloquent-javascript-2024">this 
+                            subpage</a> to track my progress until it's 
+                            complete.
                         </b>
-                    </p>
-
-                    <p>
-                        Chapters:
-
-                        <ol class="checkbox-tracker" start="0">
-                            <li>
-                                <input type="checkbox" disabled checked /><span>Introduction</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Values, Types, and Operators</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Program Structure</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Functions</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Data Structures: Objects and Arrays</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Higher-order Functions</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>The Secret Life of Objects</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Project: A Robot</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Bugs and Errors</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Regular Expressions</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Modules</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Asynchronous Programming</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Project: A Programming Language</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>JavaScript and the Browser</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>The Document Object Model</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Handling Events</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Project: A Platform Game</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Drawing on Canvas</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>HTTP and Forms</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Project: A Pixel Art Editor</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Node.js</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" disabled /><span>Project: Skill-Sharing Website</span>
-                            </li>
-                        </ol>
                     </p>
                 </div>
             </section>
         </main>
+        <script title="self-development page link script">
+            /*
+                allows this page to open with specific panels selected, using 
+                url parameters for instance top open with the "html-css-js" 
+                middle panel and "eloquent-javascript-2024" right-side panel, 
+                go to:
+                
+                https://nickhz.live/professional/self-development?a=html-css-js&b=eloquent-javascript-2024
+            */
+            {
+                const skill = 
+                    new URLSearchParams(window.location.search).get('a')
+                ;
+                const exhibit = 
+                    new URLSearchParams(window.location.search).get('b')
+                ;
+                
+                const applyUrlSelection = (urlParameter, querySelectorForRadioInputs) => {
+                    const selections = document.querySelectorAll(querySelectorForRadioInputs);
+                    const selection = document.getElementById(urlParameter);
+
+                    console.log(selections);
+                    console.log(typeof selections);
+
+                    if(selections && Array.from(selections).indexOf(selection) >= 0) {
+                        selection.checked = true;
+                    }
+                };
+
+                applyUrlSelection(skill, '#skill-sublist > input[type=radio]');
+                applyUrlSelection(exhibit, '#skill-praxis > input[type=radio]');
+            };
+        </script>
     </body>
 </html>
