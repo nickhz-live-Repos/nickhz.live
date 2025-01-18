@@ -85,6 +85,10 @@
                 text-align: center;
             }
 
+            code {
+                color: hsl(300, 50%, 25%);
+            }
+
             /* 
 
             desktop css overrides 
@@ -208,8 +212,71 @@
                     Chapter 1 - Values, Types, and Operators
                 </summary>
 
+                <blockquote>
+                    That's not a bug; it's a feature.
+                </blockquote>
+
                 <p>
-                    --
+                    This chapter had lots of basic operations, plus the 
+                    nullish operator ("??"), which browsers didn't even widely 
+                    support until 2020. I'm not sure a great number of people 
+                    formally educated until just recently would even know 
+                    about it if they're not doing occasional reviews of the 
+                    base technology like I'm doing here. Even then, lots of 
+                    documentation is from before this was well-supported. It's 
+                    one of the rare cases where the latest textbook edition is 
+                    necessary if it's to supply this knowledge. Sure enough, 
+                    <a href="https://eloquentjavascript.net/3rd_edition/01_values.html" target="_blank">this 
+                    feature isn't in the same textbook's 3rd edition</a>.
+                </p>
+
+                <p>
+                    These are some concepts from this chapter that I haven't 
+                    been using in my JavaScript:
+                </p>
+
+                <ul>
+                    <li>
+                        <code>2.998e8</code> // yields 299800000
+                    </li>
+                    <li>
+                        <code><var>x</var> = <var>a</var> && <var>b</var>;</code> // where a is not boolean; only gives b if a is truthy, and gives back the falsey a otherwise
+                    </li>
+                    <li>
+                        <code><var>x</var> = <var>a</var> || <var>b</var>;</code> // where a is not boolean; gives a if it's truthy, and gives the default value b otherwise
+                    </li>
+                    <li>
+                        <code><var>x</var> = <var>a</var> ?? <var>b</var>;</code> // where a is not boolean; gives a if it's not null or undefined (so can give falsey a values like 0 or ""), and gives the default value b otherwise
+                    </li>
+                    <li>
+                        <code>NaN != NaN</code>
+                    </li>
+                </ul>
+
+                <p>
+                    Here are some concepts I know that supplement this 
+                    chapter: 
+                </p>
+
+                <ul>
+                    <li>
+                        <code>+'5' + 1 === 6 //</code> plus sign as a unary operator explicitly coerces a string to a number, though it's not as complete as parseInt('5'), as +'5px' would instead yield NaN
+                    </li>
+                    <li>
+                        <code>!!'5' === true; !!{} === true; !!0 === false;</code> // double exclamation point as a unary operator explicitly coerces any value to a boolean
+                    </li>
+                    <li>
+                        <code>!'5' === false; !{} === false; !0 === true;</code> // single exclamation point as a unary operator explicitly converts any value to its opposite boolean
+                    </li>
+                    <li>
+                        <code>299_800_000</code> // yields 299800000; underscores can be added in any numeric literals to make them more readable
+                    </li>
+                </ul>
+
+                <p>
+                    Between these two lists, some of them are maybe not 
+                    intended by the language, but they're all consistent 
+                    enough to be used as outright features.
                 </p>
             </details>
 
