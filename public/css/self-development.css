@@ -201,7 +201,7 @@ label {
     padding: 0.5rem;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
-    margin-top: -1px;
+    margin-top: 1rem;
     border-radius: 0 24px 24px 0;
     box-sizing: border-box;
     display: block;
@@ -246,4 +246,12 @@ label {
 }
 .two-column-flex > * > * {
     max-width: 100%;
+}
+
+#current-work {
+    font-weight: bold;
+    color: lime;
+}
+.checkbox-tracker input[type=checkbox]:checked + span {
+    text-decoration: line-through;
 }
