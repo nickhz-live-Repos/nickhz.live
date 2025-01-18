@@ -79,6 +79,11 @@
                 border-color: black;
             }
 
+            summary {
+                font-size: 1.5em;
+                font-weight: bold;
+            }
+
             /* 
 
             desktop css overrides 
@@ -87,6 +92,7 @@
             @media only screen and (min-width: 768px) {
                 a#back-link {
                     writing-mode: unset;
+                    max-width: 10%;
                 }
 
                 hgroup,
@@ -98,7 +104,9 @@
         </style>
     </head>
     <body>
-        <a href="./professional/self-development?a=html-css-js&b=eloquent-javascript-2024" id="back-link">&lt; BACK</a>
+        <a href="./professional/self-development?a=html-css-js&b=eloquent-javascript-2024" id="back-link">
+            &lt; <span class="desktop-only">MY </span>SKILLS<span class="desktop-only"> PAGE</span>
+        </a>
 
         <hgroup id="top">
             <h2>
@@ -119,10 +127,10 @@
         </hgroup>
 
         <main>
-            <section id="preamble">
-                <h1>
+            <details id="preamble">
+                <summary>
                     Preamble
-                </h1>
+                </summary>
                 <p>
                     This is a self-study effort from January 2025. I've been 
                     eying this textbook up for a few days now, but since I 
@@ -140,220 +148,267 @@
                 </p>
                 <p>
                     All of this just to start studying, not that any of that 
-                    was necessary. I enjoy the content of the work, if that's 
-                    not made apparent by the existence of this page. What kind 
-                    of fool works without being told? One who's curious or 
-                    creative or otherwise self-driven... that kind of fool! 
-                    And now, I'll fool around with the content this book. 
+                    was necessary. I enjoy the content of the work and the 
+                    learning involved, if that's not made apparent by the 
+                    existence of this page. What kind of fool works without 
+                    being told? One who's curious or creative or otherwise 
+                    self-driven... that kind of fool! And now, I'll fool 
+                    around with the content of this book. 
                 </p>
-            </section>
+            </details>
 
-            <section id="introduction">
-                <h1>
+            <hr />
+
+            <details id="introduction">
+                <summary>
                     Chapter 0 - Introduction
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-1">
-                <h1>
+            <hr />
+
+            <details id="chapter-1">
+                <summary>
                     Chapter 1 - Values, Types, and Operators
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-2">
-                <h1>
+            <hr />
+
+            <details id="chapter-2">
+                <summary>
                     Chapter 2 - Program Structure
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-3">
-                <h1>
+            <hr />
+
+            <details id="chapter-3">
+                <summary>
                     Chapter 3 - Functions
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-4">
-                <h1>
+            <hr />
+
+            <details id="chapter-4">
+                <summary>
                     Chapter 4 - Data Structures: Objects and Arrays
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-5">
-                <h1>
+            <hr />
+
+            <details id="chapter-5">
+                <summary>
                     Chapter 5 - Higher-order Functions
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-6">
-                <h1>
+            <hr />
+
+            <details id="chapter-6">
+                <summary>
                     Chapter 6 - The Secret Life of Objects
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-7">
-                <h1>
+            <hr />
+
+            <details id="chapter-7">
+                <summary>
                     Chapter 7 - Project: A Robot
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-8">
-                <h1>
+            <hr />
+
+            <details id="chapter-8">
+                <summary>
                     Chapter 8 - Bugs and Errors
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-9">
-                <h1>
+            <hr />
+
+            <details id="chapter-9">
+                <summary>
                     Chapter 9 - Regular Expressions
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-10">
-                <h1>
+            <hr />
+
+            <details id="chapter-10">
+                <summary>
                     Chapter 10 - Modules
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-11">
-                <h1>
+            <hr />
+
+            <details id="chapter-11">
+                <summary>
                     Chapter 11 - Asynchronous Programming
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-12">
-                <h1>
+            <hr />
+
+            <details id="chapter-12">
+                <summary>
                     Chapter 12 - Project: A Programming Language
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-13">
-                <h1>
+            <hr />
+
+            <details id="chapter-13">
+                <summary>
                     Chapter 13 - JavaScript and the Browser
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-14">
-                <h1>
+            <hr />
+
+            <details id="chapter-14">
+                <summary>
                     Chapter 14 - The Document Object Model
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-15">
-                <h1>
+            <hr />
+
+            <details id="chapter-15">
+                <summary>
                     Chapter 15 - Handling Events
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-16">
-                <h1>
+            <hr />
+
+            <details id="chapter-16">
+                <summary>
                     Chapter 16 - Project: A Platform Game
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-17">
-                <h1>
+            <hr />
+
+            <details id="chapter-17">
+                <summary>
                     Chapter 17 - Drawing on Canvas
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-18">
-                <h1>
+            <hr />
+
+            <details id="chapter-18">
+                <summary>
                     Chapter 18 - HTTP and Forms
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-19">
-                <h1>
+            <hr />
+
+            <details id="chapter-19">
+                <summary>
                     Chapter 19 - Project: A Pixel Art Editor
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-20">
-                <h1>
+            <hr />
+
+            <details id="chapter-20">
+                <summary>
                     Chapter 20 - Node.js
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="chapter-21">
-                <h1>
+            <hr />
+
+            <details id="chapter-21">
+                <summary>
                     Chapter 21 - Project: Skill-Sharing Website
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
 
-            <section id="reflection">
-                <h1>
+            <hr />
+
+            <details id="reflection">
+                <summary>
                     Reflection
-                </h1>
+                </summary>
                 <p>
                     --
                 </p>
-            </section>
+            </details>
         </main>
     </body>
 </html>
