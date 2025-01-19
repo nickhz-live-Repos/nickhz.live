@@ -76,6 +76,10 @@
                 border-color: black;
             }
 
+            summary {
+                font-size: 1.2em;
+            }
+
             main > details > summary {
                 font-size: 1.5em;
                 font-weight: bold;
@@ -323,10 +327,13 @@
                     
                     <label for="yield-test-min">Lower Bound:</label>
                     <input type="number" id="yield-test-min" placeholder="min" onchange="refreshYieldTestGenerator()" />
-
+                    <br />
                     <label for="yield-test-max">Upper Bound:</label>
                     <input type="number" id="yield-test-max" placeholder="max" onchange="refreshYieldTestGenerator()" />
+                    <br />
                     <button onclick="yieldTestButtonPress()">Yield a value!</button>
+                    <br />
+                    <br />
                     <span id="yield-test-output" style="border: 1px solid black; padding: 4px;">
                         [press the button to 
                         <code>yield</code> a value from a generator 
