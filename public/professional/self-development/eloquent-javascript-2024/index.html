@@ -446,6 +446,16 @@
                     fun() {}</code> is not.
                 </p>
 
+                <p>
+                    I should also note that I'd forgotten about default 
+                    function inputs that replace undefined ones, where a 
+                    function is defined <code>(a, b = 'default input') => 
+                    {}</code> so that if a function call is missing an 
+                    argument, it can fill <code>b</code> in with the 
+                    assignment expression in the function arguments 
+                    definition. 
+                </p>
+
                 <h2>
                     Chapter 3 Exercises
                 </h2>
