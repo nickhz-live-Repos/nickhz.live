@@ -397,9 +397,6 @@
                     const selections = document.querySelectorAll(querySelectorForRadioInputs);
                     const selection = document.getElementById(urlParameter);
 
-                    console.log(selections);
-                    console.log(typeof selections);
-
                     if(selections && Array.from(selections).indexOf(selection) >= 0) {
                         selection.checked = true;
                     }

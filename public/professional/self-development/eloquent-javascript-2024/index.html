@@ -76,7 +76,7 @@
                 border-color: black;
             }
 
-            summary {
+            main > details > summary {
                 font-size: 1.5em;
                 font-weight: bold;
             }
@@ -138,13 +138,20 @@
                 </summary>
 
                 <p>
-                    This is a self-study effort from January 2025. I've been 
-                    eying this textbook for a few days now, but since I have 
-                    this website, I figure this is a good place to host my 
-                    notes in an environment where I can actually execute 
-                    JavaScript. I didn't have a place to put it, though, so 
-                    I added <a href="./professional" target="_blank">an extra 
-                    index page</a> to branch my site structure off into a 
+                    This is a self-study effort from January 2025. The scripts 
+                    I wrote for the chapter exercises are at the bottom of 
+                    <a href="https://github.com/Hernandezn/nickhz.live/blob/main/public/professional/self-development/eloquent-javascript-2024/index.html" target="_blank">this 
+                    page's source code</a>.
+                </p>
+                    
+                <p>
+                    I've been eying this textbook for a few days now, but 
+                    since I have this website, I figure this is a good place 
+                    to host my notes in an environment where I can actually 
+                    execute JavaScript. I didn't have a place to put it, 
+                    though, so I added <a href="./professional" target="_blank">an 
+                    extra index page</a> to branch my site structure off into 
+                    a 
                     <a href="./professional/self-development?a=html-css-js&b=eloquent-javascript-2024" target="_blank">self-development 
                     page</a>, where I have the link to this page. It doesn't 
                     take long to actually make pages, but because they're my 
@@ -213,7 +220,7 @@
                 </summary>
 
                 <blockquote>
-                    That's not a bug; it's a feature.
+                    That's not a bug, it's a feature.
                 </blockquote>
 
                 <p>
@@ -223,9 +230,9 @@
                     formally educated until just recently would even know 
                     about it if they're not doing occasional reviews of the 
                     base technology like I'm doing here. Even then, lots of 
-                    documentation is from before this was well-supported. It's 
-                    one of the rare cases where the latest textbook edition is 
-                    necessary if it's to supply this knowledge. Sure enough, 
+                    documentation was made before this was well-supported. 
+                    It's a case where the latest textbook edition is necessary 
+                    if it's to supply this knowledge. Sure enough, 
                     <a href="https://eloquentjavascript.net/3rd_edition/01_values.html" target="_blank">this 
                     feature isn't in the same textbook's previous edition</a>. 
                 </p>
@@ -287,9 +294,115 @@
                     Chapter 2 - Program Structure
                 </summary>
 
+                <blockquote>
+                    The devil's in the details.
+                </blockquote>
+
                 <p>
-                    --
+                    I already knew everything that was in this chapter, or at 
+                    least, I knew everything it intended for me to know. Of 
+                    the (offhand-mentioned) list of reserved keywords, I 
+                    haven't been using most of the object-oriented ones in my 
+                    JavaScript. The keywords <code>async</code> and 
+                    <code>await</code> are conspicuously missing from the 
+                    chapter's list of keywords, and I don't think I've ever 
+                    used the keywords <code>with</code> or <code>yield</code>. 
+                    None of this is in the intended scope of the chapter, but 
+                    if I'm brushing up on my JavaScript, I think it's good to 
+                    look out for places where I can be thorough.
                 </p>
+
+                <p>
+                    The <code>with</code> keyword is deprecated, but here's 
+                    my first script using <code>yield</code>. The below 
+                    elements generate a number between the lower & upper 
+                    bounds, then stops generating after 10 yields, unless you 
+                    change the bounds: 
+                    <br />
+                    <br />
+                    
+                    <label for="yield-test-min">Lower Bound:</label>
+                    <input type="number" id="yield-test-min" placeholder="min" onchange="refreshYieldTestGenerator()" />
+
+                    <label for="yield-test-max">Upper Bound:</label>
+                    <input type="number" id="yield-test-max" placeholder="max" onchange="refreshYieldTestGenerator()" />
+                    <button onclick="yieldTestButtonPress()">Yield a value!</button>
+                    <span id="yield-test-output" style="border: 1px solid black; padding: 4px;">
+                        [press the button to 
+                        <code>yield</code> a value from a generator 
+                        function]
+                    </span>
+                    <script>
+                        const yieldTestMin = document.getElementById('yield-test-min');
+                        const yieldTestMax = document.getElementById('yield-test-max');
+                        const yieldTestOutput = document.getElementById('yield-test-output');
+
+                        // generates a random number between min and max
+                        const yieldTestGeneratorFunction = function*(min, max) {
+                            const diff = max - min;
+                            let counter = 0;
+
+                            while(counter++ < 10) {
+                                yield min + diff * Math.random();
+                            }
+                            yield '10 yields reached!';
+                        };
+
+                        // refreshes the generator function reference
+                        let yieldTestGeneratorIterator = yieldTestGeneratorFunction(0, 0);
+                        const refreshYieldTestGenerator = () => {
+                            const minInput = +yieldTestMin.value;
+                            const maxInput = +yieldTestMax.value;
+
+                            // accounts for missing inputs and maxes lower than mins
+                            const min = isNaN(minInput) ? 0 : minInput;
+                            const max = isNaN(maxInput) ? min : maxInput < min ? min : maxInput;
+
+                            yieldTestGeneratorIterator = yieldTestGeneratorFunction(min, max);
+                        }
+
+                        const yieldTestButtonPress = () => {
+                            yieldTestOutput.innerText = yieldTestGeneratorIterator.next().value ?? 'Change the bounds at least once every 10 yields!';
+                        };
+                    </script>
+                </p>
+
+                <h2>
+                    Chapter 2 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+                                Exercise 2.1 - Looping a Triangle
+                            </summary>
+                            <span id="exercise-2-1"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+                                Exercise 2.2 - FizzBuzz
+                            </summary>
+
+                            <span id="exercise-2-2"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+                                Exercise 2.3 - Chessboard
+                            </summary>
+
+                            <label for="exercise-2-3-input">Select a chessboard size:</label>
+                            <input type="number" id="exercise-2-3-input" value="8" min="0" increment="1" placeholder="chessboard size" />
+                            <br />
+                            <br />
+                            <span id="exercise-2-3"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -532,5 +645,108 @@
                 </p>
             </details>
         </main>
+
+        
+        <!-- 
+            
+            BOOK EXERCISE SCRIPTS 
+            
+            Each exercise is wrapped in a block, both for clarity and to avoid 
+            naming conflicts.
+
+        -->
+
+        <script title="chapter 2 exercises">
+            /*
+                Exercise 2.1 - Looping a Triangle
+            */
+            { // i think this is one of the first things i did in java, too
+                const output = document.getElementById('exercise-2-1');
+
+                const iterations = 7;
+                const character = '#';
+
+                let result = '';
+                let addend = character;
+                let count = 0;
+                while(count++ < iterations) {
+                    result += addend + '\n';
+                    addend += character;
+                }
+
+                output.innerText = result;
+            };
+
+
+            /*
+                Exercise 2.2 - FizzBuzz
+
+                I feel so silly doing FizzBuzz, but I like silly things.
+            */
+            {
+                const output = document.getElementById('exercise-2-2');
+
+                const doFizzBuzz = (num) => {
+                    let value = '';
+
+                    if(num % 3 === 0) {
+                        value += 'Fizz';
+                    }
+
+                    if(num % 5 === 0) {
+                        value += 'Buzz';
+                    }
+
+                    return value || num;
+                };
+
+                let result = '';
+                for(let i = 1; i <= 100; i++) {
+                    result += doFizzBuzz(i) + '\n'
+                }
+
+                output.innerText = result;
+            };
+
+            /*
+                Exercise 2.3 - Chessboard
+
+                the book hints at nesting loops, but the O(n) runtime was too tempting
+            */
+            {
+                const output = document.getElementById('exercise-2-3');
+                const input = document.getElementById('exercise-2-3-input');
+
+                const black = '#', white = '_';
+                const makeChessboard = (num) => {
+                    let result = '';
+
+                    num = parseInt(num);
+                    for(let i = 0, next = white; i < num; i++) {
+                        result += next;
+                        next = next === black ? white : black;
+                    }
+
+
+                    const oddLine = result;
+                    const evenLine = oddLine.substring(1) + (num % 2 === 0 ? white : black);
+                    result += '\n';
+                    for(let i = 1, next = evenLine; i < num; i++) {
+                        result += next + '\n';
+                        next = next === evenLine ? oddLine : evenLine;
+                    }
+
+                    return result;
+                };
+
+                const setOutput = () => {
+                    output.innerText = makeChessboard(input.value);
+                }
+
+                input.addEventListener('change', setOutput);
+
+                setOutput();
+            };
+        </script>
     </body>
 </html>
