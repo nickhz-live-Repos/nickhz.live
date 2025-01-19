@@ -402,8 +402,8 @@
                                 Exercise 2.3 - Chessboard
                             </summary>
 
-                            <label for="exercise-2-3-input">Select a chessboard size:</label>
-                            <input type="number" id="exercise-2-3-input" value="8" min="0" increment="1" placeholder="chessboard size" />
+                            <label for="exercise-2-3-input">Select a chessboard size (max 100):</label>
+                            <input type="number" id="exercise-2-3-input" value="8" min="0" max="100" increment="1" placeholder="chessboard size" />
                             <br />
                             <br />
                             <span id="exercise-2-3"></span>
@@ -419,9 +419,93 @@
                     Chapter 3 - Functions
                 </summary>
 
+                <blockquote>
+                    Every instruction is made of smaller instructions, every 
+                    little bit's got a million bits.
+                </blockquote>
+
                 <p>
-                    --
+                    These chapters are getting longer now. There's a little 
+                    quirk to be found in a chapter that instructs how to write 
+                    sets of instructions, while part of that instruction is an 
+                    example specifically about recursion.
                 </p>
+                
+                <p>
+                    The book doesn't specifically endorse one way or the 
+                    other when it comes to creating functions, but I'm bought 
+                    in on the arrow functions. I always thought that unless 
+                    two functions must reference one another, it's bad form to 
+                    use a function before it's defined in the code. So I 
+                    didn't use this quirk of <code>function fun() {}</code> 
+                    declaration notation and wound up forgetting about it. 
+                    Plus, this notation never lets you define <code>fun</code> 
+                    as a constant, and I always define functions as 
+                    <code>const</code> whenever possible. <code>const fun = () 
+                    => {}</code> is valid JavaScript, and <code>const function 
+                    fun() {}</code> is not.
+                </p>
+
+                <h2>
+                    Chapter 3 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+                                Exercise 3.1 - Minimum
+                            </summary>
+
+                            <label for="exercise-3-1-input-1">First number:</label>
+                            <br />
+                            <input type="number" id="exercise-3-1-input-1" value="0" placeholder="First number" />
+                            <br />
+                            <br />
+                            <label for="exercise-3-1-input-2">Second number:</label>
+                            <br />
+                            <input type="number" id="exercise-3-1-input-2" value="0" placeholder="Second number" />
+                            <br />
+                            <br />
+                            Their minimum: <span id="exercise-3-1"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+                                Exercise 3.2 - Recursion
+                            </summary>
+
+                            <label for="exercise-3-2-input">Number to check for parity:</label>
+                            <br />
+                            <input type="number" id="exercise-3-2-input" value="0" placeholder="Second number" />
+                            <br />
+                            <br />
+                            Even or odd? <span id="exercise-3-2"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+                                Exercise 3.3 - Bean Counting
+                            </summary>
+
+                            <label for="exercise-3-3-input-1">Text to count characters in:</label>
+                            <br />
+                            <input type="text" id="exercise-3-3-input-1" placeholder="Text to check" />
+                            <br />
+                            <br />
+                            <label for="exercise-3-3-input-2">Character to count for countChar:</label>
+                            <br />
+                            <input type="text" id="exercise-3-3-input-2" value="B" maxlength="1" placeholder="Character to count" />
+                            <br />
+                            <br />
+                            CountBs: <span id="exercise-3-3-1"></span>
+                            <br />
+                            CountChar: <span id="exercise-3-3-2"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -431,9 +515,47 @@
                     Chapter 4 - Data Structures: Objects and Arrays
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 4 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -443,9 +565,47 @@
                     Chapter 5 - Higher-order Functions
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 5 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -455,9 +615,47 @@
                     Chapter 6 - The Secret Life of Objects
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 6 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -467,9 +665,47 @@
                     Chapter 7 - Project: A Robot
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 7 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -479,9 +715,47 @@
                     Chapter 8 - Bugs and Errors
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 8 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -491,9 +765,47 @@
                     Chapter 9 - Regular Expressions
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 9 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -503,9 +815,47 @@
                     Chapter 10 - Modules
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 10 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -515,9 +865,47 @@
                     Chapter 11 - Asynchronous Programming
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 11 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -527,9 +915,47 @@
                     Chapter 12 - Project: A Programming Language
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 12 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -538,10 +964,48 @@
                 <summary>
                     Chapter 13 - JavaScript and the Browser
                 </summary>
-                
+
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 13 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -551,9 +1015,47 @@
                     Chapter 14 - The Document Object Model
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 14 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -563,9 +1065,47 @@
                     Chapter 15 - Handling Events
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 15 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -575,9 +1115,47 @@
                     Chapter 16 - Project: A Platform Game
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 16 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -587,9 +1165,47 @@
                     Chapter 17 - Drawing on Canvas
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 17 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -599,9 +1215,47 @@
                     Chapter 18 - HTTP and Forms
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 18 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -611,9 +1265,47 @@
                     Chapter 19 - Project: A Pixel Art Editor
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 19 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -623,9 +1315,47 @@
                     Chapter 20 - Node.js
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 20 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -635,9 +1365,47 @@
                     Chapter 21 - Project: Skill-Sharing Website
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 21 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
 
             <hr />
@@ -647,9 +1415,47 @@
                     Reflection
                 </summary>
 
+                <blockquote>
+
+                </blockquote>
+
                 <p>
                     --
                 </p>
+
+                <h2>
+                    Chapter 4 Exercises
+                </h2>
+
+                <ul>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+
+                            </summary>
+
+                            <span id="exercise-"></span>
+                        </details>
+                    </li>
+                </ul>
             </details>
         </main>
 
@@ -666,8 +1472,10 @@
         <script title="chapter 2 exercises">
             /*
                 Exercise 2.1 - Looping a Triangle
+
+                I think this is one of the first things I did in Java, too.
             */
-            { // i think this is one of the first things i did in java, too
+            {
                 const output = document.getElementById('exercise-2-1');
 
                 const iterations = 7;
@@ -688,7 +1496,7 @@
             /*
                 Exercise 2.2 - FizzBuzz
 
-                I feel so silly doing FizzBuzz, but I like silly things.
+                I feel so silly doing FizzBuzz, but I enjoy silly things.
             */
             {
                 const output = document.getElementById('exercise-2-2');
@@ -718,7 +1526,8 @@
             /*
                 Exercise 2.3 - Chessboard
 
-                the book hints at nesting loops, but the O(n) runtime was too tempting
+                The book hints at nesting loops, but the O(n) runtime was too 
+                tempting...
             */
             {
                 const output = document.getElementById('exercise-2-3');
@@ -747,12 +1556,159 @@
                 };
 
                 const setOutput = () => {
-                    output.innerText = makeChessboard(input.value);
-                }
+                    output.innerText = makeChessboard(input.value <= 100 ? input.value : 100);
+                };
 
                 input.addEventListener('change', setOutput);
+                input.addEventListener('keyup', setOutput);
 
                 setOutput();
+            };
+        </script>
+
+        <script title="chapter 3 exercises">
+            // the "oops, i wasn't supposed to use functions last chapter" chapter 
+
+            /*
+                Exercise 3.1 - Minimum
+
+                The shortest one yet, in spite of the added inputs. SonarQube 
+                for Java says that ternaries are too complicated to use 
+                regularly, but look how simple a ternary made this!
+            */
+            {
+                const output = document.getElementById('exercise-3-1');
+                const input1 = document.getElementById('exercise-3-1-input-1');
+                const input2 = document.getElementById('exercise-3-1-input-2');
+
+                const min = (a, b) => {
+                    return a < b ? a : b;
+                };
+
+                const doCompare = () => {
+                    output.innerText = min(+input1.value, +input2.value);
+                };
+
+                input1.addEventListener('change', doCompare);
+                input2.addEventListener('change', doCompare);
+                input1.addEventListener('keyup', doCompare);
+                input2.addEventListener('keyup', doCompare);
+            };
+
+            /*
+                Exercise 3.2 - Recursion
+
+                I figured out recursion on my own during a Project Euler 
+                problem many moons ago. 
+            */
+            {
+                const output = document.getElementById('exercise-3-2');
+                const input = document.getElementById('exercise-3-2-input');
+
+                const checkParity = (num) => {
+                    if(num < 0) {
+                        num = -num;
+                    }
+                    
+                    switch(num) {
+                        case 0:
+                            return 'Even';
+                        case 1:
+                            return 'Odd';
+                        default:
+                            return checkParity(num - 2);
+                    }
+                };
+
+                const doCheck = () => {
+                    output.innerText = checkParity(+input.value);
+                };
+
+                input.addEventListener('change', doCheck);
+                input.addEventListener('keyup', doCheck);
+            };
+
+            /*
+                Exercise 3.3 - Bean Counting
+
+                2 inputs, 2 outputs! I wonder how many channels any one 
+                exercise will have to interface through? 
+            */
+            {
+                const output1 = document.getElementById('exercise-3-3-1');
+                const output2 = document.getElementById('exercise-3-3-2');
+                const input1 = document.getElementById('exercise-3-3-input-1');
+                const input2 = document.getElementById('exercise-3-3-input-2');
+
+                const countChar = (text, char) => {
+                    let count = 0;
+                    
+                    for(let i = 0; i < text.length; i++) {
+                        if(text[i] == char) {
+                            count++;
+                        }
+                    }
+
+                    return count;
+                };
+
+                const countBs = (text) => {
+                    return countChar(text, 'B');
+                }
+
+                const doCount = () => {
+                    output1.innerText = countBs(input1.value);
+                    output2.innerText = countChar(input1.value, input2.value);
+                };
+
+                input1.addEventListener('keyup', doCount);
+                input2.addEventListener('keyup', doCount);
+            };
+        </script>
+
+        <script title="chapter 4 exercises">
+            /*
+            
+            */
+            {
+
+            };
+
+            /*
+            
+            */
+            {
+
+            };
+
+            /*
+            
+            */
+            {
+
+            };
+        </script>
+
+        <script title="chapter  exercises">
+            /*
+            
+            */
+            {
+
+            };
+
+            /*
+            
+            */
+            {
+
+            };
+
+            /*
+            
+            */
+            {
+
             };
         </script>
     </body>
