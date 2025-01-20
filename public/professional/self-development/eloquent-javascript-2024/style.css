@@ -1,0 +1,89 @@
+
+:root {
+    --book-cover-color: #FDD716;
+    
+    scrollbar-color: var(--book-cover-color) black;
+}
+
+body {
+    background-color: black;
+    font-size: 1.15rem;
+}
+
+body > * {
+    background-color: var(--book-cover-color);
+    color: black;
+}
+
+a {
+    color: blue;
+}
+
+a#back-link {
+    background-color: black;
+    color: var(--book-cover-color);
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    font-size: 2rem;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+}
+
+hgroup,
+main {
+    box-sizing: border-box;
+    border: 1px solid var(--book-cover-color);
+    padding: 1rem;
+    position: relative;
+    width: 85%;
+    left: 15%;
+}
+
+hgroup {
+    text-align: center;
+}
+
+main {
+    margin-top: 5rem;
+    margin-bottom: 60dvh;
+}
+
+hr {
+    border-color: black;
+}
+
+summary {
+    font-size: 1.2em;
+}
+
+main > details > summary {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+figure {
+    text-align: center;
+}
+
+code {
+    color: hsl(300, 50%, 25%);
+}
+
+/* 
+
+desktop css overrides 
+
+*/
+@media only screen and (min-width: 768px) {
+    a#back-link {
+        writing-mode: unset;
+        max-width: 10%;
+    }
+
+    hgroup,
+    main {
+        width: 90%;
+        left: 10%;
+    }
+}
