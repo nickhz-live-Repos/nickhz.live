@@ -628,12 +628,39 @@
                 </summary>
 
                 <blockquote>
-
+                    Yo, dawg, I heard you like functions.
                 </blockquote>
 
                 <p>
-                    --
+                    Well, I looked ahead and saw that chaper 4 was the longest 
+                    chapter in the entire book. This chapter was significantly 
+                    shorter, though it also covers inbuilt language specifics 
+                    that are wheels I've tended to reinvent rather than using 
+                    their implementations that are available by default. 
+                    Hopefully by having run by these here, I'll have better 
+                    recall when it comes time to use them:
                 </p>
+
+                <ul>
+                    <li>
+                        <code>filteredArray = array.filter(item => { return boolean; })</code> // array function to filter out items that return falsey when passed to the given function
+                    </li>
+                    <li>
+                        <code>mappedArray = array.map(item => { return doStuff(item); })</code> // array function to process each item into a value derived from that item, then return those derived values in an array
+                    </li>
+                    <li>
+                        <code>value = array.reduce((item1, item2) => { return combinedItem; }, startItem?)</code> // array function that combines the first value with each subsequent value, using the combining function, iteratively until they're all combined, returning the combination
+                    </li>
+                    <li>
+                        <code>array.some(arg => { return boolean; })</code> // array function returning true if ANY of its values return truthy when passed into the given function
+                    </li>
+                    <li>
+                        <code>array.find( item => { return boolean; } )</code> // array function finding the first element that returns true when it's passed to the given function
+                    </li>
+                    <li>
+                        <code>(a, {b}) => { ... }</code> // asserts that b is a property of an object and uses that property by its value when it's in the function
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 5 Exercises
@@ -643,28 +670,90 @@
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 5.1 - Flattening
                             </summary>
 
-                            <span id="exercise-"></span>
+                            <label for="exercise-5-1-input">2+ Dimensional Array as JSON:</label>
+                            <br />
+                            <input type="text" id="exercise-5-1-input" value="[[&quot;A&quot;, 3], [-1, true, &quot;+ -&quot;], [null]]" />
+                            <br />
+                            <br />
+                            Flattened array: <span id="exercise-5-1"></span>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 5.2 - Your Own Loop
                             </summary>
 
-                            <span id="exercise-"></span>
+                            <p>
+                                This exercise is disabled on the live page.
+                            </p>
+
+                            <label for="exercise-5-2-input-1">Input value:</label>
+                            <br />
+                            <input type="text" id="exercise-5-2-input-1" value="3" disabled />
+                            <br />
+                            <br />
+                            <label for="exercise-5-2-input-2">Test function:</label>
+                            <br />
+                            <input type="text" id="exercise-5-2-input-2" value="n => n > 0" disabled />
+                            <br />
+                            <br />
+                            <label for="exercise-5-2-input-3">Update function:</label>
+                            <br />
+                            <input type="text" id="exercise-5-2-input-3" value="n => n - 1" disabled />
+                            <br />
+                            <br />
+                            <label for="exercise-5-2-input-4">Body function:</label>
+                            <br />
+                            <input type="text" id="exercise-5-2-input-4" value="n => { document.getElementById('exercise-5-2').innerText += n; return; }" disabled />
+                            <br />
+                            <br />
+                            Loop output: <span id="exercise-5-2"></span>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 5.3 - Everything
                             </summary>
 
-                            <span id="exercise-"></span>
+                            <p>
+                                Any exercise whose input would require 
+                                arbitrary function definitions won't be 
+                                allowed to run off of UI elements on the live 
+                                site.
+                            </p>
+
+                            <!-- <span id="exercise-"></span> -->
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+                                Exercise 5.4 - Dominant Writing Direction
+                            </summary>
+
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                Eloquent JavaScript site. My solution is below 
+                                and can be pasted & run on the code section 
+                                near the bottom of 
+                                <a href="https://eloquentjavascript.net/05_higher_order.html#i-4ccl4J1nOw" target="_blank">this 
+                                page</a>.
+                            </p>
+
+                            <pre>const dominantDirection = (text) => 
+    countBy(text, n => characterScript(n.codePointAt(0)))
+    .filter(n => n.name != null)
+    .reduce((a, b) => a.count > b.count ? a : b)
+    .name
+    .direction
+;
+</pre>
+                            <!-- <span id="exercise-"></span> -->
                         </details>
                     </li>
                 </ul>
@@ -678,7 +767,7 @@
                 </summary>
 
                 <blockquote>
-
+                    
                 </blockquote>
 
                 <p>
@@ -1536,6 +1625,8 @@
         <script src="chapter-3-exercises.js"></script>
 
         <script src="chapter-4-exercises.js"></script>
+
+        <script src="chapter-5-exercises.js"></script>
 
         <script title="chapter  exercises">
             /*
