@@ -796,12 +796,19 @@ console.log(dominantDirection("Hey, مساء الخير"));
                 </summary>
 
                 <blockquote>
-
+                    It's short for "classification."
                 </blockquote>
 
                 <p>
-                    More tinkering with objects! Here are some more concepts I 
-                    haven't been using in my code:
+                    There's something so arcane about the Symbol type. When a 
+                    Symbol is instantiated, I imagine a unique glyph appearing 
+                    and being used as the label for whatever property it 
+                    corresponds to.
+                </p>
+
+                <p>
+                    This chapter had more tinkering with objects, so here are 
+                    some more concepts I haven't been using in my code:
                 </p>
 
                 <ul>
@@ -815,9 +822,71 @@ console.log(dominantDirection("Hey, مساء الخير"));
                         <code>const obj = { fun(arg) { return () => { return this[arg] } } };</code> // shorthand java-like object method assignment, and "this" is usable in ARROW functions defined in the method (not "function fun()"" declarations)
                     </li>
                     <li>
-                        
+                        <code>Object.getPrototypeOf(obj)</code> // returns the prototype of an object, which is like a parent object it's extending; obj always has access to all properties of its prototype, even if obj itself is empty
+                    </li>
+                    <li>
+                        <code>let obj2 = Object.create(obj1);</code> // creates an empty obj2 that has access to all the properties of obj1; Object.getPrototypeOf(obj2) will return obj1
+                    </li>
+                    <li>
+                        <code>"function constructObj(arg) {const obj2 = Object.create(obj); obj2.instanceProperty = arg; return obj2;}" ~= "class Obj {constructor(arg) {this.instanceProperty = arg} classProperty: }"</code> // class instead of prototype as an object's template; its prototype only any methods defined in the class
+                    </li>
+                    <li>
+                        // a class is fundamentally just a function with a .prototype property where it references methods added to the class, with the new keyword doing the work to make objects invoked with the constructor contain the methods in .prototype; was confusing me until I read <a href="https://stackoverflow.com/a/38972040" target="_blank">this rundown</a>
+                    </li>
+                    <li>
+                        // only non-arrow functions have the .prototype property, which is why only arrow functions work well with "this" bindings when they're defined within a class method's body
+                    </li>
+                    <li>
+                        <code>const SomeClass = class { ... }</code> // constant class name binding declaration
+                    </li>
+                    <li>
+                        <code>let obj = new class { log() { console.log(this) } }; obj.log();</code> // object declaration as an instance of an anonymous class
+                    </li>
+                    <li>
+                        <code>class { #secretField = 3; #secretMethod() { console.log('this can only be called from inside the class') } publicMethod() { this.#secretMethod(); } }</code> // a class can have private properties by starting their names with #
+                    </li>
+                    <li>
+                        // private properties MUST be declared within the class; only public properties can be assigned to the class or object instance after the class is defined
+                    </li>
+                    <li>
+                        <code>SomeClass.prototype.property2 = 'new property';</code> // property2 becomes visible in all objects that are instances of SomeClass
+                    </li>
+                    <li>
+                        <code>SomeClass.prototype.method2 = function() { console.log(this); };</code> // for adding new methods to the prototype, it's best to use the function keyword instead of an arrow function, so that any "this" instances don't bind to the global scope
+                    </li>
+                    <li>
+                        <code>const pureObject = Object.create(null);</code> // creates an object with no prototype; only has what you define without inheriting any properties from Object.prototype
+                    </li>
+                    <li>
+                        <code>Object.keys(obj);</code> // note that it does not return its prototype's values, only the object's own values
+                    </li>
+                    <li>
+                        <code>let a = Symbol(2); let obj = { a: 2, [a]: 'symbol property', b: 4}; obj.a === 2; obj[a] === 'symbol property';</code> // can define a symbol as an object property name by giving it square brackets in the object definition declaration
+                    </li>
+                    <li>
+                        <code>class { static fun() { new this() } }</code> // classes can have static methods that are class members instead of instance members, and new this() calls the constructor of the class where it's contained
+                    </li>
+                    <li>
+                        <code>class IterableThing{ constructor(){} [Symbol.iterator]() { return new class ThingIterator{ constructor(){} next() { return {value, done} } } } }</code> // <a href="https://eloquentjavascript.net/06_object.html#h-z2tOOXM8qO" target="_blank">iterator interface</a>; makes the class objects usable for a for-of loop and for the destructuring operator ("...thing")
+                    </li>
+                    <li>
+                        <code>static staticProperty = 'some value'; static staticMethod() { return this.staticProperty }</code> // static methods can access static properties with the this keyword, as the object instance is the class constructor in this context
                     </li>
                 </ul>
+
+                <p>
+                    I already knew about maps, the "extends" & "static" & 
+                    "super" keywords work like in Java. The syntax is similar, 
+                    but you can tell that all things about JavaScript classes 
+                    are syntactic construct made by composing objects & 
+                    functions such that they can look & act like Java classes, 
+                    with the syntax hiding all of the complexity required for 
+                    that underneath. It's not a fundamental of the language 
+                    like it is in Java; it's a bunch of other concepts all 
+                    coming together to make this, which makes it harder to 
+                    wrap your head around, despite the code itself being 
+                    mostly familiar.
+                </p>
 
                 <h2>
                     Chapter 6 Exercises
@@ -827,28 +896,178 @@ console.log(dominantDirection("Hey, مساء الخير"));
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 6.1 - A Vector Type
                             </summary>
 
-                            <span id="exercise-"></span>
+                            <br />
+
+                            <a href="https://eloquentjavascript.net/06_object.html#i-zO8FRQBMAy" target="_blank">Link to the exercise</a>
+
+                            <pre>const Vec = class {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    plus(vector) {
+        return new Vec(this.x + vector.x, this.y + vector.y);
+    }
+
+    minus(vector) {
+        return new Vec(this.x - vector.x, this.y - vector.y);
+    }
+
+    get length() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+};
+
+console.log(new Vec(1, 2).plus(new Vec(2, 3)));
+// → Vec{x: 3, y: 5}
+console.log(new Vec(1, 2).minus(new Vec(2, 3)));
+// → Vec{x: -1, y: -1}
+console.log(new Vec(3, 4).length);
+// → 5
+</pre>
+
+                            <!-- <span id="exercise-"></span> -->
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 6.2 - Groups
                             </summary>
 
-                            <span id="exercise-"></span>
+                            <br />
+
+                            <a href="https://eloquentjavascript.net/06_object.html#i-rpYp9Ou4LG" target="_blank">Link to the exercise</a>
+
+                            <pre>const Group = class {
+    #group;
+
+    constructor() {
+        this.#group = [];
+    }
+
+    add(item) {
+        if(!this.has(item)) {
+            this.#group.push(item);
+        }
+    }
+
+    delete(item) {
+        const itemIndex = this.#group.indexOf(item);
+
+        if(itemIndex !== -1) {
+            this.#group.splice(itemIndex, 1);
+        }
+    }
+
+    has(item) {
+        return this.#group.includes(item);
+    }
+
+    static from(iterable) {
+        const result = new Group();
+
+        for(const item of iterable) {
+            result.add(item);
+        }
+
+        return result;
+    }
+};
+
+let group = Group.from([10, 20]);
+console.log(group.has(10));
+// → true
+console.log(group.has(30));
+// → false
+group.add(10);
+group.delete(10);
+console.log(group.has(10));
+// → false
+</pre>
+                            <!-- <span id="exercise-"></span> -->
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 6.3 - Iterable Groups
                             </summary>
 
-                            <span id="exercise-"></span>
+                            <br />
+
+                            <a href="https://eloquentjavascript.net/06_object.html#i-djD3XDJ27V" target="_blank">Link to the exercise</a>
+
+                            <pre>const Group = class {
+    #group;
+
+    constructor() {
+        this.#group = [];
+    }
+
+    add(item) {
+        if(!this.has(item)) {
+            this.#group.push(item);
+        }
+    }
+
+    delete(item) {
+        const itemIndex = this.#group.indexOf(item);
+
+        if(itemIndex !== -1) {
+            this.#group.splice(itemIndex, 1);
+        }
+    }
+
+    has(item) {
+        return this.#group.includes(item);
+    }
+
+    [Symbol.iterator]() {
+        return new GroupIterator(this.#group);
+    }
+
+    static from(iterable) {
+        const result = new Group();
+
+        for(const item of iterable) {
+            result.add(item);
+        }
+
+        return result;
+    }
+};
+
+const GroupIterator = class {
+    #group;
+    #index;
+
+    constructor(groupArray) {
+        this.#group = groupArray;
+        this.#index = 0;
+    }
+
+    next() {
+        return {
+            value: this.#group[this.#index],
+            done: this.#group.length < ++this.#index
+        };
+    }
+}
+
+for (let value of Group.from(["a", "b", "c"])) {
+    console.log(value);
+}
+// → a
+// → b
+// → c
+</pre>
+
+                            <!-- <span id="exercise-"></span> -->
                         </details>
                     </li>
                 </ul>
@@ -1672,6 +1891,8 @@ console.log(dominantDirection("Hey, مساء الخير"));
         <script src="chapter-4-exercises.js"></script>
 
         <script src="chapter-5-exercises.js"></script>
+
+        <script src="chapter-6-exercises.js"></script>
 
         <script title="chapter  exercises">
             /*
