@@ -70,6 +70,10 @@ code {
     color: hsl(300, 50%, 25%);
 }
 
+pre {
+    border: 1px solid black;
+}
+
 /* 
 
 desktop css overrides 

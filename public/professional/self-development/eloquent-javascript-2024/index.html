@@ -688,30 +688,33 @@
                             </summary>
 
                             <p>
-                                This exercise is disabled on the live page.
+                                This exercise is disabled on the live page. 
+                                Below is my solution; it can be pasted in the 
+                                code area in the "Your Own Loop" section 
+                                <a href="https://eloquentjavascript.net/05_higher_order.html#i-gKQ1S54F4o" target="_blank">here 
+                                on the textbook site</a>.
                             </p>
 
-                            <label for="exercise-5-2-input-1">Input value:</label>
-                            <br />
-                            <input type="text" id="exercise-5-2-input-1" value="3" disabled />
-                            <br />
-                            <br />
-                            <label for="exercise-5-2-input-2">Test function:</label>
-                            <br />
-                            <input type="text" id="exercise-5-2-input-2" value="n => n > 0" disabled />
-                            <br />
-                            <br />
-                            <label for="exercise-5-2-input-3">Update function:</label>
-                            <br />
-                            <input type="text" id="exercise-5-2-input-3" value="n => n - 1" disabled />
-                            <br />
-                            <br />
-                            <label for="exercise-5-2-input-4">Body function:</label>
-                            <br />
-                            <input type="text" id="exercise-5-2-input-4" value="n => { document.getElementById('exercise-5-2').innerText += n; return; }" disabled />
-                            <br />
-                            <br />
-                            Loop output: <span id="exercise-5-2"></span>
+                            <pre>const loop = (value, test, update, body) => {
+    let i = value;
+
+    while(test(i)) {
+        body(i);
+        i = update(i);
+
+        console.log(i);
+        console.log(output1.innerText);
+    }
+
+    return i;
+};
+
+loop(3, n => n > 0, n => n - 1, console.log);
+// → 3
+// → 2
+// → 1
+</pre>
+                            <!-- Loop output: <span id="exercise-5-2"></span> -->
                         </details>
                     </li>
                     <li>
@@ -724,8 +727,30 @@
                                 Any exercise whose input would require 
                                 arbitrary function definitions won't be 
                                 allowed to run off of UI elements on the live 
-                                site.
+                                site. My solution below can be checked by 
+                                pasting it into the code section under the 
+                                "Everything" header 
+                                <a href="https://eloquentjavascript.net/05_higher_order.html#i-SmbRSAd5GA" target="_blank">here 
+                                on the textbook site</a>.
                             </p>
+
+                            <pre>const every = (arr, test) => {
+    for(const item of arr) {
+        if(!test(item)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+console.log(every([1, 3, 5], n => n &lt; 10));
+// → true
+console.log(every([2, 4, 16], n => n &lt; 10));
+// → false
+console.log(every([], n => n &lt; 10));
+// → true
+</pre>
 
                             <!-- <span id="exercise-"></span> -->
                         </details>
@@ -752,6 +777,10 @@
     .name
     .direction
 ;
+console.log(dominantDirection("Hello!"));
+// → ltr
+console.log(dominantDirection("Hey, مساء الخير"));
+// → rtl
 </pre>
                             <!-- <span id="exercise-"></span> -->
                         </details>
@@ -767,12 +796,28 @@
                 </summary>
 
                 <blockquote>
-                    
+
                 </blockquote>
 
                 <p>
-                    --
+                    More tinkering with objects! Here are some more concepts I 
+                    haven't been using in my code:
                 </p>
+
+                <ul>
+                    <li>
+                        <code>const fun = () => { console.log(this) }; const a = {fun}, b = {fun}; a.fun(); b.fun();</code> // the "this" keyword in functions binds dynamically to any object that uses the function as a method
+                    </li>
+                    <li>
+                        <code>const fun = (property) => { console.log(this[property]) }; fun.call(obj, fun);</code> // "this" can also be dynamically bound by using an object in the function's "call" method
+                    </li>
+                    <li>
+                        <code>const obj = { fun(arg) { return () => { return this[arg] } } };</code> // shorthand java-like object method assignment, and "this" is usable in ARROW functions defined in the method (not "function fun()"" declarations)
+                    </li>
+                    <li>
+                        
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 6 Exercises
