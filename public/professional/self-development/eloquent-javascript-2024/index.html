@@ -993,8 +993,29 @@ console.log(dominantDirection("Hey, مساء الخير"));
                 </blockquote>
 
                 <p>
-                    --
+                    It's a program that aggregates what's been covered so far 
+                    and makes a little crawler that navigates around a 
+                    <a href="https://en.wikipedia.org/wiki/Graph_(abstract_data_type)" target="_blank">graph 
+                    data structure</a>. It's pretty walkthrough-ey and is 
+                    about as much of a project as any one the DHTML effects I 
+                    noodled out to add motion to some pages on this site. It 
+                    adds a couple of new things, though:
                 </p>
+
+                <ul>
+                    <li>
+                        <code>const frozenObj = Object.freeze(obj)</code> // frozenObj will ignore any changes made to its properties
+                    </li>
+                    <li>
+                        <code>const roll = Symbol('roll'); Array.prototype[roll] = function() { return this[Math.floor(Math.random() * this.length)]; };</code> // adds arr[roll]() method to arrays that returns a random element from that array
+                    </li>
+                    <li>
+                        // all prototype changes to commonly used objects should be done through a Symbol address, to avoid naming collisions
+                    </li>
+                    <li>
+                        <code>let {property, item} = obj;</code> // can assign variable bindings from an object with properties of the same names
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 7 Exercises
@@ -1004,28 +1025,238 @@ console.log(dominantDirection("Hey, مساء الخير"));
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 7.1 - Measuring a Robot
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/07_robot.html#i-JrK0ADjuHH" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box. 
+                            </p>
+
+                            <pre>runRobot = function(state, robot, memory) {
+for (let turn = 0;; turn++) {
+        if (state.parcels.length == 0) {
+            return turn;
+        }
+        let action = robot(state, memory);
+        state = state.move(action.direction);
+        memory = action.memory;
+    }
+};
+
+function compareRobots(robot1, memory1, robot2, memory2) {
+    let [sum1, sum2] = [0, 0];
+
+    for(let i = 0; i < 100; i++) {
+        const initialState = VillageState.random();
+
+        sum1 += runRobot(initialState, robot1, memory1);
+        sum2 += runRobot(initialState, robot2, memory2);
+    }
+
+    const [avg1, avg2] = [sum1 / 100, sum2 / 100];
+
+    console.log(`Average 1: ${avg1}; Average 2: ${avg2}`);
+    return [avg1, avg2];
+};
+
+compareRobots(routeRobot, [], goalOrientedRobot, []);
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 7.2 - Robot Efficiency
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/07_robot.html#i-VbBsQJ1lp6" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box. 
+                            </p>
+
+                            <p>
+                                I think I derived some of graph theory when 
+                                making this. My explanations for this are in 
+                                code comments on 
+                                <a href="./chapter-7-exercises.js">my 
+                                JavaScript file for the chapter exercises</a>.
+                            </p>
+
+                            <pre>const buildRouteGraph = (graph) => {
+    const routeGraph = {};
+
+    // create all one-step routes
+    for(const fromLocation in graph) {
+        const routes = {};
+        routeGraph[fromLocation] = routes;
+
+        for(const toLocation in graph) {
+            if(toLocation !== fromLocation) {
+                routes[toLocation] = graph[fromLocation].includes(toLocation) ? [toLocation] : [];
+            }
+        }
+    }
+
+    // for each location, branch from the known routes until all destinations have routes
+    for(const fromLocation in routeGraph) {
+        const routesFromLocation = routeGraph[fromLocation];
+        const knownLocations = [fromLocation];
+
+        // get all known locations for this location
+        for(const knownRoutes in routesFromLocation) {
+            const routeToDestination = routesFromLocation[knownRoutes];
+            const knownDestination = routeToDestination.length > 0 ? routeToDestination[routeToDestination.length - 1] : null;
+            if(knownDestination !== null && !knownLocations.includes(knownDestination)) {
+                knownLocations.push(knownDestination);
+            }
+        }
+
+        // get the next step that comes after these locations, and from this, build routes to the places that weren't known
+        for(const knownLocation of knownLocations) {
+            const adjacentLocations = graph[knownLocation];
+
+            for(const adjacentLocation of adjacentLocations) {
+                if(!knownLocations.includes(adjacentLocation)) {
+                    routesFromLocation[adjacentLocation] = routesFromLocation[knownLocation].slice();
+                    routesFromLocation[adjacentLocation].push(adjacentLocation);
+                    knownLocations.push(adjacentLocation);
+                }
+            }
+        } // !!! BECAUSE KNOWN LOCATIONS EXPANDS WITH EACH SUCCESSFUL ITERATION, THIS ALSO ITERATES OVER NEW KNOWN LOCATIONS, FINDING ALL ROUTES
+        // (this exceeded expected behavior upon writing; I expected it to find routes up to 2 spaces away)
+    }
+
+    return routeGraph;
+};
+
+const routeGraph = buildRouteGraph(roadGraph);
+const currentState = VillageState.random();
+
+const myRobot = (villageState, memory) => {
+
+    // if it's not currently en-route, pick a next route
+    if(memory.length === 0) {
+        const currentLocation = villageState.place;
+
+        const parcels = villageState.parcels;
+
+        // if a parcel is held, assess its destination; if not, assess its location
+        let distance = Infinity;
+        for(const parcel of parcels) {
+            const potentialDestination = parcel.place == currentLocation 
+                ? 
+                parcel.address
+                :
+                parcel.place
+            ;
+            const potentialRoute = routeGraph[currentLocation][potentialDestination];
+
+            if(potentialRoute.length <= distance) {
+                memory = potentialRoute;
+                distance = memory.length;
+            }
+        }
+    }
+
+    return {
+        direction: memory[0],
+        memory: memory.slice(1)
+    };
+};
+
+runRobotAnimation(currentState, myRobot, []);
+
+
+
+// robot measurement assessment; copied from my answer to the last exercise
+runRobot = function(state, robot, memory) {
+    for (let turn = 0;; turn++) {
+        if (state.parcels.length == 0) {
+        return turn;
+        }
+        let action = robot(state, memory);
+        state = state.move(action.direction);
+        memory = action.memory;
+    }
+};
+
+function compareRobots(robot1, memory1, robot2, memory2) {
+    let [sum1, sum2] = [0, 0];
+    
+    for(let i = 0; i < 100; i++) {
+        const initialState = VillageState.random();
+    
+        sum1 += runRobot(initialState, robot1, memory1);
+        sum2 += runRobot(initialState, robot2, memory2);
+    }
+    
+    const [avg1, avg2] = [sum1 / 100, sum2 / 100];
+    
+    console.log(`Average 1: ${avg1}; Average 2: ${avg2}`);
+    return [avg1, avg2];
+};
+
+// myRobot average: ~12.5, goalOrientedRobot average: ~15
+compareRobots(myRobot, [], goalOrientedRobot, []);
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 7.3 - Persistent Group
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                <a href="https://eloquentjavascript.net/07_robot.html#i-s+ntyh5xrm" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box. 
+                            </p>
+
+                            <pre>const PGroup = class {
+    static #empty = new PGroup([]);
+    #group;
+
+    constructor(values) {
+        this.#group = values;
+    }
+
+    static get empty() {
+        return this.#empty;
+    }
+
+    add(item) {
+        const newGroup = this.#group.slice();
+
+        if(!this.has(item)) {
+            newGroup.push(item);
+        }
+
+        return new PGroup(newGroup);
+    }
+
+    delete(item) {
+        const newGroup = this.#group.slice();
+        const itemIndex = newGroup.indexOf(item);
+
+        if(itemIndex !== -1) {
+            newGroup.splice(itemIndex, 1);
+        }
+
+        return new PGroup(newGroup);
+    }
+
+    has(item) {
+        return this.#group.includes(item);
+    }
+}</pre>
                         </details>
                     </li>
                 </ul>
