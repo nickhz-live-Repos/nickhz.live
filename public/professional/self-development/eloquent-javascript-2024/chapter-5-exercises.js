@@ -51,8 +51,8 @@
             body(i);
             i = update(i);
 
-            console.log(i);
-            console.log(output1.innerText);
+            // console.log(i);
+            // console.log(output1.innerText);
         }
 
         return i;

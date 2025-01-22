@@ -5,6 +5,15 @@
     Classy!
 */
 {
+    const input1 = document.getElementById('exercise-6-1-input-1');
+    const input2 = document.getElementById('exercise-6-1-input-2');
+    const input3 = document.getElementById('exercise-6-1-input-3');
+    const input4 = document.getElementById('exercise-6-1-input-4');
+    const output1 = document.getElementById('exercise-6-1-1');
+    const output2 = document.getElementById('exercise-6-1-2');
+    const output3 = document.getElementById('exercise-6-1-3');
+    const output4 = document.getElementById('exercise-6-1-4');
+
     const Vec = class {
         constructor(x, y) {
             this.x = x;
@@ -23,6 +32,31 @@
             return Math.sqrt(this.x * this.x + this.y * this.y);
         }
     };
+
+    const doExercise = () => {
+        const vector1 = new Vec(+input1.value, +input2.value);
+        const vector2 = new Vec(+input3.value, +input4.value);
+        
+        const vecSum = vector1.plus(vector2);
+        const vecDiff = vector1.minus(vector2);
+
+        output1.innerText = `[${vecSum.x}, ${vecSum.y}]`;
+        output2.innerText = `[${vecDiff.x}, ${vecDiff.y}]`;
+
+        output3.innerText = vector1.length;
+        output4.innerText = vector2.length;
+    }
+
+    input1.addEventListener('change', doExercise);
+    input2.addEventListener('change', doExercise);
+    input3.addEventListener('change', doExercise);
+    input4.addEventListener('change', doExercise);
+    input1.addEventListener('keyup', doExercise);
+    input2.addEventListener('keyup', doExercise);
+    input3.addEventListener('keyup', doExercise);
+    input4.addEventListener('keyup', doExercise);
+
+    doExercise();
 };
 
 /*
@@ -32,6 +66,14 @@
     feels so deceptively simple...
 */
 {
+    const input1 = document.getElementById('exercise-6-2-input-1');
+    const input2 = document.getElementById('exercise-6-2-input-2');
+    const input3 = document.getElementById('exercise-6-2-input-3');
+    const input4 = document.getElementById('exercise-6-2-input-4');
+    const input5 = document.getElementById('exercise-6-2-input-5');
+    const input6 = document.getElementById('exercise-6-2-input-6');
+    const output1 = document.getElementById('exercise-6-2');
+
     const Group = class {
         #group;
 
@@ -67,6 +109,50 @@
             return result;
         }
     };
+
+    let group = null;
+    const createGroup = () => {
+        let arr = null;
+        
+        try {
+            arr = JSON.parse(input1.value);
+        } catch(e) {
+            return;
+        }
+
+        if(arr instanceof Array) {
+            group = Group.from(arr);
+        }
+    };
+    input1.addEventListener('change', createGroup);
+    input1.addEventListener('keyup', createGroup);
+    createGroup();
+
+    
+    const doHas = () => {
+        output1.innerText = (group?.has(input6.value) ? 'Yes' : 'No');
+    };
+    input1.addEventListener('change', doHas);
+    input1.addEventListener('keyup', doHas);
+    input6.addEventListener('change', doHas);
+    input6.addEventListener('keyup', doHas);
+    doHas();
+
+
+    const doAdd = () => {
+        group?.add(input2.value);
+        input2.value = '';
+    }
+    input3.addEventListener('click', doAdd);
+    input3.addEventListener('click', doHas);
+
+
+    const doDelete = () => {
+        group?.delete(input4.value);
+        input4.value = '';
+    }
+    input5.addEventListener('click', doDelete);
+    input5.addEventListener('click', doHas);
 };
 
 /* 
@@ -79,6 +165,15 @@
 */
 
 {
+    const input1 = document.getElementById('exercise-6-3-input-1');
+    const input2 = document.getElementById('exercise-6-3-input-2');
+    const input3 = document.getElementById('exercise-6-3-input-3');
+    const input4 = document.getElementById('exercise-6-3-input-4');
+    const input5 = document.getElementById('exercise-6-3-input-5');
+    const input6 = document.getElementById('exercise-6-3-input-6');
+    const output1 = document.getElementById('exercise-6-3-1');
+    const output2 = document.getElementById('exercise-6-3-2');
+
     const Group = class {
         #group;
 
@@ -134,5 +229,64 @@
                 done: this.#group.length < ++this.#index
             };
         }
+    };
+
+    let group = null;
+    const createGroup = () => {
+        let arr = null;
+        
+        try {
+            arr = JSON.parse(input1.value);
+        } catch(e) {
+            return;
+        }
+
+        if(arr instanceof Array) {
+            group = Group.from(arr);
+        }
+    };
+    input1.addEventListener('change', createGroup);
+    input1.addEventListener('keyup', createGroup);
+    createGroup();
+
+    
+    const doHas = () => {
+        output1.innerText = (group?.has(input6.value) ? 'Yes' : 'No');
+    };
+    input1.addEventListener('change', doHas);
+    input1.addEventListener('keyup', doHas);
+    input6.addEventListener('change', doHas);
+    input6.addEventListener('keyup', doHas);
+    doHas();
+
+
+    const doAdd = () => {
+        group?.add(input2.value);
+        input2.value = '';
     }
+    input3.addEventListener('click', doAdd);
+    input3.addEventListener('click', doHas);
+
+
+    const doDelete = () => {
+        group?.delete(input4.value);
+        input4.value = '';
+    }
+    input5.addEventListener('click', doDelete);
+    input5.addEventListener('click', doHas);
+
+    // the new part
+    const doIterate = () => {
+        output2.innerHTML = '';
+
+        for(const groupItem of group) {
+            output2.appendChild(document.createTextNode(groupItem));
+            output2.appendChild(document.createElement('br'));
+        }
+    }
+    input1.addEventListener('change', doIterate);
+    input1.addEventListener('keyup', doIterate);
+    input3.addEventListener('click', doIterate);
+    input5.addEventListener('click', doIterate);
+    doIterate();
 };
