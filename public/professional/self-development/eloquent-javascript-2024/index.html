@@ -437,7 +437,7 @@
                 </summary>
 
                 <blockquote>
-
+                    This is the longest chapter in the book!
                 </blockquote>
 
                 <p>
@@ -495,7 +495,7 @@
                         <code>JSON.stringify({}); JSON.parse(someJsonString);</code> // converts to and from JSON strings, largely for API calls
                     </li>
                     <li>
-                        <code>arr.?[0]; obj.?()</code> // the winking elvis operator's notation for arrays & function calls
+                        <code>arr?.[0]; obj?.fun?.()</code> // the winking elvis operator's notation for arrays & function calls
                     </li>
                     <li>
                         <code>n => ({prop: n})</code> // shorthand for an arrow function that returns an object; parentheses keep object from being interpreted as a function body
@@ -989,7 +989,7 @@ console.log(dominantDirection("Hey, مساء الخير"));
                 </summary>
 
                 <blockquote>
-
+                    Go, RoboJackets!
                 </blockquote>
 
                 <p>
@@ -1824,5 +1824,35 @@ console.log(dominantDirection("Hey, مساء الخير"));
 
             };
         </script>
+
+
+        <!--
+            I did little Leetcode Java during this, too, just as sanity checks 
+            to make sure I don't lose that as I regain JavaScript specifics 
+            that are similar-sounding. If switching back & forth between 
+            those two, it might be easy to get wires crossed between my mental 
+            models of their coding patterns.
+
+            Here's the Java solution I noodled out for Leetcode problem 139 in 
+            a couple of minutes:
+
+            public boolean wordBreak(String s, List<String> wordDict) {
+                for(int i = 0; i < wordDict.size(); i++) {
+                    if(wordBreaks(s, wordDict.get(i), wordDict)) {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+
+            public boolean wordBreaks(String s, String dictionaryWord, List<String> wordDict) {
+                return s.startsWith(dictionaryWord) && subWordBreaks(s.substring(dictionaryWord.length()), wordDict);
+            }
+
+            public boolean subWordBreaks(String subWord, List<String> wordDict) {
+                return subWord.length() == 0 || wordBreak(subWord, wordDict);
+            }
+        -->
     </body>
 </html>
