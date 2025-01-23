@@ -1256,7 +1256,19 @@ compareRobots(myRobot, [], goalOrientedRobot, []);
     has(item) {
         return this.#group.includes(item);
     }
-}</pre>
+};
+
+let a = PGroup.empty.add("a");
+let ab = a.add("b");
+let b = ab.delete("a");
+
+console.log(b.has("b"));
+// → true
+console.log(a.has("b"));
+// → false
+console.log(b.has("a"));
+// → false
+</pre>
                         </details>
                     </li>
                 </ul>
@@ -1270,12 +1282,52 @@ compareRobots(myRobot, [], goalOrientedRobot, []);
                 </summary>
 
                 <blockquote>
-
+                    I start from the wall outlet, then I check the power 
+                    supply unit, then I check the motherboard, ...
                 </blockquote>
 
                 <p>
-                    --
+                    About the only debugging feature I've used in JavaScript 
+                    was exception handling & console logging, so this is 
+                    mostly new territory for me. Here are some features to 
+                    keep a note of from this chapter:
                 </p>
+
+                <ul>
+                    <li>
+                        <code>"use strict";</code> // can be used as the first line in a script or function description to enable <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode" target="_blank">strict mode</a>, throwing errors to help debug code
+
+                        <ul>
+                            <li>
+                                <code>function fun() { "use strict"; i = 10; console.log(i) };</code>// keeps undeclared function variables from silently being declared in the global scope
+                            </li>
+                            <li>
+                                <code>"use strict"; function fun(property) { this.property = property };</code> // keeps function variables from binding "this" to the global scope whenever the functions aren't used as methods
+                            </li>
+                            <li>
+                                <code>"use strict"; with</code> // keeps from using "with" statements
+                            </li>
+                            <li>
+                                <code>"ust strict"; function fun(a, b, a) {};</code> // keeps a function from getting multiple parameters with the same name
+                            </li>
+                            <li>
+                                // + much more, but these are the features highlighted in the book
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <code>debugger;</code> // sets a break point in the program; pauses the program and allows you to inspect the values of variable bindings at that point
+                    </li>
+                    <li>
+                        <code>try { ... } finally { ... }</code> // a finally block does not stop an exception from propagating; it runs, then the exception continues up the call stack until caught
+                    </li>
+                    <li>
+                        <code>if(thing.happens) throw new Error("thing happened");</code> // this is an "assertion" construct, asserting that something doesn't happen, by throwing an exception if it DOES happen
+                    </li>
+                    <li>
+                        <code>const thing = new class { ... }</code> // creates an instance of an anonymous class
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 8 Exercises
@@ -1285,28 +1337,82 @@ compareRobots(myRobot, [], goalOrientedRobot, []);
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 8.1 - Retry
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <label for="exercise-8-1-input-1">Multiplicand 1:</label>
+                            <input type="number" id="exercise-8-1-input-1" value="8" />
+                            <br />
+                            <br />
+                            <label for="exercise-8-1-input-2">Multiplicand 2:</label>
+                            <input type="number" id="exercise-8-1-input-2" value="8" />
+                            <br />
+                            <br />
+                            Product: 
+                            <code id="exercise-8-1"></code>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 8.2 - The Locked Box
                             </summary>
 
-                            <code id="exercise-"></code>
-                        </details>
-                    </li>
-                    <li>
-                        <details>
-                            <summary>
+                            <p>
+                                <a href="https://eloquentjavascript.net/08_error.html#i-iGlwnUbkRs" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the final 
+                                code box. 
+                            </p>
 
-                            </summary>
+                            <pre>class LockedBoxError extends Error {}
 
-                            <code id="exercise-"></code>
+const box = new class {
+    locked = true;
+    #content = [];
+
+    unlock() { this.locked = false; }
+    lock() { this.locked = true;  }
+    get content() {
+        if (this.locked) throw new LockedBoxError("Locked!");
+        return this.#content;
+    }
+};
+
+function withBoxUnlocked(body) {
+    try {
+        box.unlock();
+
+        body();
+    } catch(e) {
+        if(e instanceof LockedBoxError) {
+            console.log(e);
+        }
+
+        throw e;
+    } finally {
+        box.lock();
+    }
+}
+
+withBoxUnlocked(() => {
+    box.content.push("gold piece");
+});
+
+try {
+    withBoxUnlocked(() => {
+        throw new Error("Pirates on the horizon! Abort!");
+    });
+} catch (e) {
+    console.log("Error raised: " + e);
+}
+
+console.log(box.locked);
+// → true
+
+box.unlock();
+console.log(box.content);
+</pre>
                         </details>
                     </li>
                 </ul>
@@ -1320,7 +1426,7 @@ compareRobots(myRobot, [], goalOrientedRobot, []);
                 </summary>
 
                 <blockquote>
-
+                    
                 </blockquote>
 
                 <p>
@@ -2032,6 +2138,8 @@ compareRobots(myRobot, [], goalOrientedRobot, []);
         <script src="chapter-5-exercises.js"></script>
 
         <script src="chapter-6-exercises.js"></script>
+
+        <script src="chapter-7-exercises.js"></script>
 
         <script title="chapter  exercises">
             /*

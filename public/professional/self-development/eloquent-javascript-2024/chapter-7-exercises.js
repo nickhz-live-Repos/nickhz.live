@@ -297,7 +297,7 @@
         has(item) {
             return this.#group.includes(item);
         }
-    }
+    };
 
     // let a = PGroup.empty.add("a");
     // let ab = a.add("b");
@@ -309,4 +309,4 @@
     // // → false
     // console.log(b.has("a"));
     // // → false
-}
+};
