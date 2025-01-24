@@ -1,6 +1,8 @@
 
 /*
     Exercise 8.1 - Retry
+
+    It got simple again!
 */
 {
     const input1 = document.getElementById('exercise-8-1-input-1');
@@ -46,6 +48,8 @@
 
 /*
     Exercise 8.2 - Locked Box
+
+    This is encryption now.
 */
 {
     class LockedBoxError extends Error {}
