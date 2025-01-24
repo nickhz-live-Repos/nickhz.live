@@ -148,8 +148,8 @@
         return routeGraph;
     };
 
-    const routeGraph = buildRouteGraph(roadGraph);
-    const currentState = VillageState.random();
+    // const routeGraph = buildRouteGraph(roadGraph);
+    // const currentState = VillageState.random();
  
     /*
         For the robot itself, hold its intended route as the memory. Initial 
@@ -262,7 +262,7 @@
 */
 {
     const PGroup = class {
-        static #empty = new PGroup([]);
+        static #empty = new this([]);
         #group;
 
         constructor(values) {

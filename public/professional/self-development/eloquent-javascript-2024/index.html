@@ -1221,7 +1221,7 @@ compareRobots(myRobot, [], goalOrientedRobot, []);
                             </p>
 
                             <pre>const PGroup = class {
-    static #empty = new PGroup([]);
+    static #empty = new this([]);
     #group;
 
     constructor(values) {
@@ -1426,7 +1426,7 @@ console.log(box.content);
                 </summary>
 
                 <blockquote>
-                    
+
                 </blockquote>
 
                 <p>
