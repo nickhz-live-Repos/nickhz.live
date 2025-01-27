@@ -1867,12 +1867,112 @@ function verify(regexp, yes, no) {
                 </summary>
 
                 <blockquote>
-
+                    The bread & butter needed for the frontend frameworks to 
+                    jam.
                 </blockquote>
 
                 <p>
-                    --
+                    It's just imports & exports, how they work, and how to 
+                    leverage that for JavaScript software design. Here are the 
+                    chapter's concepts about ECMAscript / ES modules, plus a 
+                    little extra that's helpful for my learning context:
                 </p>
+
+                <ul>
+                    <li>
+                        // using either "export" or "import" in a script turns it into a module
+                    </li>
+                    <li>
+                        <code>export const myBinding = ...</code> // anything marked as "export" becomes visible to other modules; can be any classes or functions or objects or primitives, anything that can be named can be exported
+                    </li>
+                    <li>
+                        // exports can only be made from the global context of the script; nothing can be exported directly from within a function or class or other block
+                    </li>
+                    <li>
+                        // the set of exports in a module are collectively called the "interface" of that module
+                    </li>
+                    <li>
+                        <code>import {myBinding, myOtherBinding} from "./my-bindings.js";</code> // "import" can be used within scripts to access any of the specified bindings from an exporting module; those bindings must be marked as "export" in the module being exported from
+                    </li>
+                    <li>
+                        // the above means that anything not marked as "export" is not visible to any outside module
+                    </li>
+                    <li>
+                        // the set of imports in a module are collectively called the "dependencies" of that module
+                    </li>
+                    <li>
+                        <code>import {myBinding as myVar} from "./my-bindings.js";</code> // can rename an imported binding upon its import; this importing module will use "myVar" in place of "myBinding" to refer to that binding
+                    </li>
+                    <li>
+                        // the above is especially important for managing the namespace, as it allows the use of bindings that might otherwise be incompatible because they share a name
+                    </li>
+                    <li>
+                        <code>export default ['a', 1, true]</code> // export default can only be defined once in a module, it can be nameless within the module, and it's usually used in modules that only have a single export
+                    </li>
+                    <li>
+                        <code>import myArray from "./my-bindings.js"</code> // default exports can be imported without brackets and named by the importing module
+                    </li>
+                    <li>
+                        <code>import * as bindingsObj from "./my-bindings.js"; bindings.myArray</code> // "import *" means the import name becomes an object that holds all the exports from the exporting module
+                    </li>
+                    <li>
+                        <code>&lt;script type="module"&gt;</code> // type="module" is required to use modules with inline scripts on an HTML page
+                    </li>
+                    <li>
+                        <code>import {parse} from "ini";</code> // module addresses can be plain names (like "ini") when managed by NPM node package manager
+                    </li>
+                    <li>
+                        // a distributable collection of code is termed a "package," and NPM is a standard distribution system for JavaScript packeges; see <a href="https://www.npmjs.com/" target="_blank">the NPM website</a> for information about creating, distributing, and utilizing packages
+                    </li>
+                </ul>
+
+                <p>
+                    As imports & exports were only implemented well after 
+                    JavaScript was a standard in programming, a common 
+                    proto-module system agreed upon by developers was 
+                    CommonJS, which uses a "require" function and "exports" 
+                    object to modularize JavaScript dependencies:
+                </p>
+
+                <ul>
+                    <li>
+                        <code>const ordinal = require("ordinal"); const {days, months} = require("date-names");</code> // "require" is implemented by a CommonJS module to return bindings that provide the module's functionality
+                    </li>
+                    <li>
+                        <code>exports.formatDate = function(date) { return `${days[date.getDay()]}, ${months[date.getMonth()]} ${ordinal(date.getDate())}, ${date.getFullYear()}`; };</code> // all of the bindings that came from "requires" above can be used to define properties for the current script's "exports" object
+                    </li>
+                    <li>
+                        <code>const {formatDate} = require("format-date.js"); formatDate(new Date(2017, 9, 13));</code> // yet another file can then find & use the formatDate binding, using the requires function to import it
+                    </li>
+                    <li>
+                        // NPM provides management & interoperability between CommonJS and ES modules, but writing new CommonJS is NOT recommended; it's no longer standard and can be harder to understand, but it's better to have at least this much knowledge so as to not be blindsided when it's encountered
+                    </li>
+                </ul>
+
+                <p>
+                    And here are some other pointers from the chapter:
+                </p>
+
+                <ul>
+                    <li>
+                        <code>let fun = Function('a, b', 'return a + b;');</code> // the "Function" function allows strings to be read as code; the first argument is the list of arguments for the function being defined, and the second argument is the function body that goes between the brackets
+                    </li>
+                    <li>
+                        <code>let answer = eval('(a, b) => { return a + b }');</code> // a more powerful binding than Function, "eval" parses ANY string passed to it as JavaScript code
+                    </li>
+                    <li>
+                        // transpilers or compilers -- converters that parse other coding styles & dialects (like TypeScript) into browser-readable JavaScript (or even to past versions of JavaScript, for backwards compatibility)
+                    </li>
+                    <li>
+                        // bundlers -- converters that merge all the code from a module's dependencies into a single large file, as fetching a single large file generally has MUCH better performance than fetching many smaller files from many different sources
+                    </li>
+                    <li>
+                        // minifiers -- converters that reduce the file size of a script by removing comments & renaming bindings into (often illegible but) short names like "a" and "_"
+                    </li>
+                    <li>
+                        // for the above 3 types of converter tools, this is post-processing done with one's code, and you still want to keep the raw code, as written, for development & maintenance purposes, while the converted version is used by the live run environment
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 10 Exercises
@@ -1882,28 +1982,180 @@ function verify(regexp, yes, no) {
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 10.1 - A Modular Robot
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This is a design brainstorming exercise rather 
+                                than a coding exercise.
+                            </p>
+
+                            <p>
+                                The top-level functionality of this program is 
+                                provided by <code>runRobot</code>, so the 
+                                modular structure of the program should have 
+                                <code>runRobot</code> be the top-level 
+                                interface to build the program around, as a 
+                                <code>default export</code> from 
+                                a <code>"robot"</code> file.
+                            </p>
+
+                            <p>
+                                One would also need arguments to give to the 
+                                <code>runRobot</code> function, which includes 
+                                a <code>VillageState</code>, a 
+                                <code>robot</code> function that returns an 
+                                object containing its next move (in a 
+                                "<code>direction</code>" property) & an 
+                                arbitrary value as its <code>memory</code>, 
+                                and that same arbitrary value would be passed 
+                                in to the robot function as its third 
+                                argument. Because the 
+                                <code>VillageState</code> doesn't have the 
+                                most apparent format for a developer to create 
+                                one themselves, it should be able to be 
+                                generated by an in-package function. That 
+                                function may take in arguments to define 
+                                specifics of a village state, but for the 
+                                scope of the project, it can simply return the 
+                                output of <code>VillageState.random()</code>. 
+                                Such a function and its requirements 
+                                (including the <code>VillageState</code> class 
+                                itself) can be included in a 
+                                <code>"village"</code> file. That function 
+                                returning the output of 
+                                <code>VillageState.random()</code> would be 
+                                the <code>default export</code>, I would 
+                                modify <code>VillageState</code> to include 
+                                its <code>roadGraph</code> among its object 
+                                properties, and the <code>roadGraph</code> can 
+                                be generated using <code>buildGraph</code> and 
+                                injected through a slightly extended 
+                                <code>VillageState</code> constructor.
+                            </p>
+
+                            <p>
+                                Due to the above, <code>buildGraph</code> may 
+                                be separated into a module and its output used 
+                                as the default argument for the 
+                                <code>"village" default export</code> 
+                                function, so that it may also be 
+                                custom-defined by a developer wanting their 
+                                own custom village map.
+                            </p>
+
+                            <p>
+                                The <code>robot</code> argument to the 
+                                <code>"robot" default export</code> function 
+                                doesn't make itself apparent, so it may define 
+                                <code>randomRobot</code> as a default input 
+                                and have that along with 
+                                <code>goalOrientedRobot</code> added to 
+                                another <code>"sample-robots"</code> module, 
+                                including any of their dependencies.
+                            </p>
+
+                            <p>
+                                Routing operations like <code>findRoute</code> 
+                                may be executed with something like 
+                                <code>"dijskstrajs"</code> from NPM and 
+                                interacted with through a translated version 
+                                of the <code>roadGraph</code> that's now in 
+                                the <code>VillageState</code>. For this, 
+                                <code>"village"</code> may also be a 
+                                dependency to the <code>"sample-robots"</code> 
+                                module.
+                            </p>
+
+                            <p>
+                                Sample usage of the <code>"robot"</code> 
+                                module should be documented in that module, 
+                                and with the prescribed dependency structure, 
+                                using it just within the scope of its project 
+                                should be straightforwardly simple.
+                            </p>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 10.2 - Roads Module
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise uses modular JS files and is 
+                                demonstrated through my creation of 
+                                <a href="./chapter-10-exercises-graph.js" target="_blank">chapter-10-exercises-graph.js</a>
+                                and <a href="./chapter-10-exercises-road-graph.js" target="_blank">chapter-10-exercises-road-graph.js</a>, 
+                                along with the &lt;script title="Chapter 10 
+                                Exercise 2" type="module"&gt; tag near the 
+                                bottom of the code on this page.
+                            </p>
+
+                            <p>
+                                The content of the graph will be displayed in 
+                                the browser's F12 developer console.
+                            </p>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 10.3 - Circular Dependencies
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This is a brainstorming exercise rather than a 
+                                coding exercise.
+                            </p>
+
+                            <p>
+                                Circular dependencies in CommonJS can work 
+                                through the base script, the one defining 
+                                <code>require</code>, wrapping CommonJS 
+                                modules into functions and using exception 
+                                handling to determine if that function is 
+                                unable to run due to an unfulfilled 
+                                dependency.
+                            </p>
+
+                            <p>
+                                It may ultimately resolve circular 
+                                dependencies by concatenating them and 
+                                defining their contents through the 
+                                <code>function</code> initializer so that the 
+                                code that appears earlier in the concatenation 
+                                can reference code that appears later, and 
+                                vice-versa.
+                            </p>
+
+                            <p>
+                                To determine which dependency to concatenate, 
+                                the exception message may be cross-referenced 
+                                with the <code>require()</code> arguments in 
+                                the module, determined through regex, then 
+                                that dependency can be sought, determined if 
+                                circular (again through determining its 
+                                <code>require()</code> args), and if it isn't 
+                                circular, resolve that dependency before 
+                                resolving this one. If it IS circular, then go 
+                                ahead & concatenate before resolving the 
+                                concatenated dependencies together.
+                            </p>
+
+                            <p>
+                                Because this allows the cache to populate all 
+                                modules before a CommonJS module calls 
+                                <code>require()</code>, the in-module call to 
+                                <code>require()</code> will be calling a 
+                                pre-loaded known dependency in either 
+                                dependency direction.
+                            </p>
+
+                            <p>
+                                That may not be how it DOES work, but that may 
+                                be how it COULD work.
+                            </p>
                         </details>
                     </li>
                 </ul>
@@ -2540,6 +2792,12 @@ function verify(regexp, yes, no) {
         -->
 
         <script src="chapter-9-exercises.js"></script>
+
+        <script title="Chapter 10 Exercise 2" type="module">
+            import graph from "./chapter-10-exercises-road-graph.js";
+
+            console.log(graph);
+        </script>
 
         <script title="chapter  exercises">
             /*
