@@ -1426,11 +1426,273 @@ console.log(box.content);
                 </summary>
 
                 <blockquote>
-
+                    It's slow, it's cryptic, it can always be done another 
+                    way, but it is powerful.
                 </blockquote>
 
                 <p>
-                    --
+                    It's a one-line solution for otherwise many-line problems. 
+                    Sure, it's general-use code that tends to run more slowly 
+                    than using purpose-built code where it's applicable, but 
+                    it wraps up a lot of functionality into a tiny package.
+                </p>
+
+                <p>
+                    Here are some concepts for regular expressions in 
+                    JavaScript:
+
+                    <ul>
+                        <li>
+                            <code>new Regexp("abc"); /abc/;</code> // these represent the same expression; they mean "a" followed by "b" followed by "c"
+                        </li>
+                        <li>
+                            <code>/A\+\/\/;</code> // backslashes must still be used to represent special character codes, plus a few other ones like /, +, and ?, and are not escaped to represent the backslash character (/\/ instead of /\\/ means single backslash "\")
+                        </li>
+                        <li>
+                            <code>/abc/.test(string);</code> // tests whether the given string contains a match of the regular expression pattern
+                        </li>
+                        <li>
+                            <code>/abc/.test(string); string.contains('abc');</code> // regex is a slower-running solution for simple tasks like this
+                        </li>
+                        <li>
+                            <code>/[0123456789]/; /[0-9]/;</code> // both match to all strings that contain a digit
+                        </li>
+                        <li>
+                            <code>/[a-z]/</code> // square brackets with a hyphen in the middle represent the whole range of characters between those characters, inclusive; for this, character values are their unicode values
+                        </li>
+                        <li>
+                            <code>/[0a-z]/</code> // square brackets can be thought of as a "one of" block, where it's one of the characters in the brackets; this one represents one of either: 0 or a through z
+                        </li>
+                        <li>
+                            // some special shortcuts
+
+                            <ul>
+                                <li>
+                                    <code>/\d/</code> // any digit; same as /[0-9]/
+                                </li>
+                                <li>
+                                    <code>/\w/</code> // any alphanumeric character
+                                </li>
+                                <li>
+                                    <code>/\s/</code> // any whitespace character, incl. newlines
+                                </li>
+                                <li>
+                                    <code>/\D/</code> // any NON-digit character
+                                </li>
+                                <li>
+                                    <code>/\W/</code> // any NON-alphanumeric character
+                                </li>
+                                <li>
+                                    <code>/\S/</code> // any NON-whitespace character
+                                </li>
+                                <li>
+                                    <code>/./</code> // any character except for newline
+                                </li>
+                                <li>
+                                    // the above were made with standard latin characters in mind; international characters may have unintended behavior for the expressions that don't evaluate against whitespace
+                                </li>
+                                <li>
+                                    <code>/p{L}/u</code> // any letter (includes unicode international characters)
+                                </li>
+                                <li>
+                                    <code>/p{N}/u</code> // any number (includes unicode international characters); not great if actual math is to be performed on it in JS
+                                </li>
+                                <li>
+                                    <code>/p{P}/u</code> // any punctuation (includes unicode international characters)
+                                </li>
+                                <li>
+                                    <code>/P{L}/u</code> // any non-letter (letter includes unicode international characters)
+                                </li>
+                                <li>
+                                    <code>/p{Script=Hangul}/u</code> // any character from the given writing system
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <code>/\d\d:\d\d/</code> // can mean hh:mm time
+                        </li>
+                        <li>
+                            <code>/[\d.]/</code> // any digit or period character; special regex operators put between brackets are instead read as standard characters
+                        </li>
+                        <li>
+                            <code>/[^01]/</code> // caret means "not," and this specific regex tests whether the value contains any character that isn't 0 or 1
+                        </li>
+                        <li>
+                            <code>/\d+/</code> // plus means 1 or more of the preceding character definition; this matches any length of digits but not an empty input
+                        </li>
+                        <li>
+                            <code>/\d*/</code> // asterisk means 0 or more of the preceding character definition; this matches any length of digits or no digits at all
+                        </li>
+                        <li>
+                            <code>/\d?/</code> // question mark means optional, so 0 or 1 instance of the preceding character is allowed; this matches a no-digit or 1-digit input; /colou?r/
+                        </li>
+                        <li>
+                            <code>/\d{2, 4}-\d{3}/</code> // brackets mean the specified amount of characters must be present; this matches a pattern of 2 to 4 digits, then a hyphen, then 3 digits, no more & no less
+                        </li>
+                        <li>
+                            <code>/\d{5,}/</code> // comma with no entry means open-ended range; this matches 5 or more digits (but {,5} does NOT mean 5 or fewer; must use {0,5} for the lower-than range)
+                        </li>
+                        <li>
+                            <code>/boo+(hoo+)+/</code> // parentheses group up the inner expression for the sake of the next operator; this matches "boo+" (+ applies to o) followed by "hoo+" (+ applies to o) followed by any number of "hoo+" patterns (+ applies to all of hoo+)
+                        </li>
+                        <li>
+                            <code>/db/i</code> // trailing i means case-insensitive; this matches "db" or "Db" or "dB" or "DB"
+                        </li>
+                        <li>
+                            <code>new RegExp('an', 'i')</code> // this is how to add trailing flags to the regular RegExp constructor
+                        </li>
+                        <li>
+                            <code>new RegExp('an', 'gi')</code> // this regular expressions can have multiple trailing flags just by adding their flag characters
+                        </li>
+                        <li>
+                            <code>/\d+/.exec(string)</code> // like test, but returns null for non-matching strings and an array-like object with various properties for matching strings
+
+                            <ul>
+                                <li>
+                                    <code>const obj = /\d+/.exec('abc123xyz456')</code> // obj = ['123', index: 3, input: 'abc123xyz456', groups: undefined]; obj[0] = '123'; obj[0] is always the first whole match in the string
+                                </li>
+                                <li>
+                                    <code>const obj = /\d+/.exec('abcxyz')</code> // obj = null
+                                </li>
+                                <li>
+                                    <code>const obj = /'([^']*)'/.exec("she said 'hello'")</code> // obj[0] = "'hello'"; obj[1] = 'hello'; the second item matches the inner subexpression, in this case ([^']*)
+                                </li>
+                                <li>
+                                    <code>/bad(ly)?/.exec('bad')</code> // obj[0] = 'bad'; obj[1] = undefined; the inner expression wasn't in the string
+                                </li>
+                                <li>
+                                    <code>/(\d)+/.exec('123')</code> // obj[0] = '123'; obj[1] = '3'; obj[n] for subexpressions is always the last match in the string for that subexpression
+                                </li>
+                                <li>
+                                    <code>/(?:na)+/.exec('banana')</code> // obj[0] = 'nana'; the "?:" operator means to not include the expression in the returned array-like object, so there is no obj[1] here
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            // Date construction...
+
+                            <ul>
+                                <li>
+                                    <code>new Date()</code> // gives current date & time with timezone; example: Fri Feb 02 2024 18:03:06 GMT+0100 (CET)
+                                </li>
+                                <li>
+                                    <code>new Date(2009, 11, 9)</code> // Wed Dec 09 2009 00:00:00 GMT+0100 (CET) -- !! MONTHS ARE INDEXED FROM 0, BUT DAYS ARE INDEXED FROM 1
+                                </li>
+                                <li>
+                                    <code>new Date(2009, 11, 9, 12, 59, 59, 999)</code> // Wed Dec 09 2009 12:59:59 GMT+0100 (CET) -- AM/PM not included
+                                </li>
+                                <li>
+                                    <code>new Date(2009, 11, 9).getTime()</code> // 1260334800000 -- UNIX time
+                                </li>
+                                <li>
+                                    <code>new Date(1260334800000)</code> // Wed Dec 09 2009 00:00:00 GMT+0100 (CET) -- single-argument Date constructor always takes its argument to be UNIX time
+                                </li>
+                                <li>
+                                    <code>const date = new Date(); date.getFullYear(); date.getMonth(); date.getDate(); date.getHours(); date.getMinutes(), date.getSeconds()</code> // all give numbers, the same ones used in a constructor to reconstruct it
+                                </li>
+                                <li>
+                                    <code>[fullMatch, month, day, year] = /(\d{1,2})-(\d{1,2})-(\d{4})/.exec("1-30-2003"); new Date(year, month - 1, day);</code> // Thu Jan 30 2003 00:00:00 GMT+0100 (CET)
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <code>/(\d{1,2})-(\d{1,2})-(\d{4})/.exec("100-1-30000")</code> // ['00-1-3000', '00', '1', '3000', index: 1, input: '100-1-30000', groups: undefined] -- it matches... this wants to define a better boundary
+
+                            <ul>
+                                <li>
+                                    <code>/^\d+$/</code> // pseudo-character "^" defines beginning of the string, "$" defines the end; this expression matches strings starting and ending with a digit sequence
+                                </li>
+                                <li>
+                                    <code>/^!/</code> // matches strings that start with !
+                                </li>
+                                <li>
+                                    <code>/x^/</code> // matches nothing; this represents an x before the beginning of the string
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <code>/a(?=e)/.exec("braeburn")</code> // ['a'] -- fails if 'e' is missing, but doesn't include it in the matched string
+                        </li>
+                        <li>
+                            <code>/a(?=e)e/.exec("braeburn")</code> // ['ae'] -- still passes, but includes e because (?=e) just didn't move the string position forward when it was matching, then it encountered the last e, where it DID move the position forward
+                        </li>
+                        <li>
+                            <code>/a(?! )/.exec("a b")</code> // null -- negative look ahead, only matches if the parameter DOESN'T match
+                        </li>
+                        <li>
+                            <code>/a(?! )/.exec("ab")</code> // ['a'] -- did not match the space after a pattern, so it returned the matched "a" substring
+                        </li>
+                        <li>
+                            <code>/\d+ (pig|cow|chicken)s?/.test('15 pigs')</code> true -- digits, then space, then (pig or cow or chicken), then an optional "s"
+                        </li>
+                        <li>
+                            <code>/\d+ (pig|cow|chicken)s?/.test('15 pugs')</code> false -- pipe character "|" is an "OR" operator for expressions & sub-expressions
+                        </li>
+                        <li>
+                            <code>/^([01]+b|[\da-f]+h|\d+)$/</code> // first part means sequence of 0s & 1s followed by "b," second part means digits OR letters a through f followed by "h," and third part means sequence of digits; binary, hex, and decimal
+                        </li>
+                        <li>
+                            <code>/^([01]+|[\da-f]+|\d+)$/.test(1234)</code> // will match the MIDDLE expression, as the regex tests from the start of the string, trying the different rules in sequence on each character one by one 
+                        </li>
+                        <li>
+                            <code>/([01]+)+b/.test(10010110...)</code> // due to the regex implementation, this can take a long time; <a href="https://eloquentjavascript.net/09_regexp.html#p-mPh4K2VFPK" target="_blank">read this for more details</a> 
+                        </li>
+                        <li>
+                            <code>'papa'.replace(/p/, 'm') = 'pama'; 'papa'.replace(/p/g, 'm') = 'mama';</code> // "g" flag at the end means "global," to it applies the regex to all matches in the string
+                        </li>
+                        <li>
+                            <code>'Liskov, Barbara\nMcCarthy, John'.replace(/(\p{L}+), (\p{L}+)/gu, "$2 $1")</code> // converts "(last name), (first name)" to "(first name) (last name)" with the "$#" strings representing the parenthetical subexpressions
+                        </li>
+                        <li>
+                            <code>'123abc456xyz'.replace(/[a-z]+/g, "|$&|") = '123|abc|456|xyz|'</code> // the "$&" expression refers to an entire matched expression in the string
+                        </li>
+                        <li>
+                            <code>'1 lemon, 2 cabbages, 3 eggs'.replace(/(\d+) (\p{L}+),?/gu, (match, amount, ingredient) => { return ingredient + ": " + amount + ";" }) = 'lemon: 1; cabbages: 2; eggs: 3;'</code> // injects args from the regex into the function, "match" being the whole expression; can simplify JSONification!
+                        </li>
+                        <li>
+                            <code>'1 /* a */+/* b */ 1'.replace(/\/\/.*|\/\*[^]*?\*\//g, "");</code> // the [^]* will match all characters (characters not in the empty set) until the end before backtracking to find the next part of the match; adding "?" makes it check each character for the next rule instead of reaching the end of this rule before backtracking; works with any repetition operator (?+, *?, ??, {1, 2}?)
+                        </li>
+                        <li>
+                            <code>/[\\[.+*?(){|^$]/g</code> // matches any character literal that's represented between the first & last brackets, like \, [, ., +, and *
+                        </li>
+                        <li>
+                            <code>'   letters'.search(/\S/) = 3</code>; search function finds the first index in a string that matches a given regular expression
+                        </li>
+                        <li>
+                            <code>let exp = /y/g; exp.lastIndex = 3; exp.exec('xyzzy').index == 4; exp.lastIndex == 5;</code> // regex object lastIndex property can be used to change where exec searches from in a string, and it's modified after a pattern is found using exec
+                        </li>
+                        <li>
+                            // the above only works with /g or /y options; /y only matches if the match starts at lastIndex, and /g works if the match starts at OR AFTER the lastIndex value
+                        </li>
+                        <li>
+                            // lastIndex starts at 0, so /g searches the whole string from index 0 by default; resets to 0 when it doesn't find a further match & and its exec returns null
+                        </li>
+                        <li>
+                            <code>'Banana'.match(/an/g)</code> // with /g, this finds ALL substrings matching the regular expression and returns them after an array; this returns ['an', 'an']
+                        </li>
+                        <li>
+                            <code>'Banana'.matchAll(/an/g)</code> // with /g, this finds all matching substrings AND returns an iterator containing exec results for each match; [['an', index: 1, ...], ['an', index: 3, ...]]
+                        </li>
+                        <li>
+                            <code>'Banana'.match(/an/) == /an/.exec('Banana')</code> // these two return identical results without the /g flag on the regex, incl. subexpression matches at any added array indices
+                        </li>
+                        <li>
+                            <code>'123|abc|456|def'.split(/\|/)</code> // can use a regular expression to define what to split a string along the lines of; /\r?\n/ is particularly useful for separating the lines from a file
+                        </li>
+                        <li>
+                            <code>/\[.]/.test("[🌹]"); /\[.]/u.test("[🌹]")</code> // without u, this returns false, but with u, this returns true, because the character being tested is 2 code points; u flag for Unicode is needed to treat these characters properly
+                        </li>
+                    </ul>
+                </p>
+
+                <p>
+                    And that's pretty much everything. A shorter list of just 
+                    the basics is in 
+                    <a href="https://eloquentjavascript.net/09_regexp.html#h-ErccPg/l98" target="_blank">the 
+                    summary to this chapter</a>. The book suggests the tool 
+                    <a href="https://www.debuggex.com/" target="_blank">Debuggex</a> 
+                    for quick quality assurance of regular expressions, to 
+                    ensure that a regex will work as intended.
                 </p>
 
                 <h2>
