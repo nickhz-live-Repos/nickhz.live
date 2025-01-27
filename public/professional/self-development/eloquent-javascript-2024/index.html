@@ -1432,14 +1432,15 @@ console.log(box.content);
 
                 <p>
                     It's a one-line solution for otherwise many-line problems. 
-                    Sure, it's general-use code that tends to run more slowly 
-                    than using purpose-built code where it's applicable, but 
-                    it wraps up a lot of functionality into a tiny package.
+                    Sure, it's general-use code and has the common pitfalls 
+                    when compared against purpose-built code where it's 
+                    applicable, but it wraps a LOT of functionality into a 
+                    relatively tiny package.
                 </p>
 
                 <p>
-                    Here are some concepts for regular expressions in 
-                    JavaScript:
+                    Here's a long list of concepts for regular expressions in 
+                    JavaScript, enough to take me from zero to practical:
 
                     <ul>
                         <li>
@@ -1703,28 +1704,156 @@ console.log(box.content);
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 9.1 - Regexp Golf
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/09_regexp.html#i-vDM8PzwQWU" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box. 
+                            </p>
+
+                            <pre>verify(/ca[rt]/,
+    ["my car", "bad cats"],
+    ["camper", "high art"]);
+
+verify(/pr?op/,
+    ["pop culture", "mad props"],
+    ["plop", "prrrop"]);
+
+verify(/ferr(et|y|ari)/,
+    ["ferret", "ferry", "ferrari"],
+    ["ferrum", "transfer A"]);
+
+verify(/\wious(\s|$)/,
+    ["how delicious", "spacious room"],
+    ["ruinous", "consciousness"]);
+
+verify(/\s[.,:;]/,
+    ["bad punctuation ."],
+    ["escape the period"]);
+
+verify(/\w{6,}/,
+    ["Siebentausenddreihundertzweiundzwanzig"],
+    ["no", "three small words"]);
+
+verify(/(^|\s)[^\P{L}eE]+(\s|$)/u,
+    ["red platypus", "wobbling nest"],
+    ["earth bed", "bedrøvet abe", "BEET"]);
+
+
+function verify(regexp, yes, no) {
+    // Ignore unfinished exercises
+    if (regexp.source == "...") return;
+    for (let str of yes) if (!regexp.test(str)) {
+        console.log(`Failure to match '${str}'`);
+    }
+    for (let str of no) if (regexp.test(str)) {
+        console.log(`Unexpected match for '${str}'`);
+    }
+}
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 9.2 - Quoting Style
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <label for="exercise-9-2-1">When the below text box contains apostrophes that aren't being used to form contractions, the button will convert those apostrophes into quotation marks.</label>
+                            <br />
+                            <input type="text" id="exercise-9-2-1" value="'I'm the cook,' he said, 'it's my job.'" style="width: 100%;" />
+                            <br />
+                            <button id="exercise-9-2-2">REPLACE QUOTATION MARKS</button>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 9.3 - Numbers Again
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <label for="exercise-9-3-input">Enter a number in decimal format (can be scientific notation):</label>
+                            <br />
+                            <input type="text" id="exercise-9-3-input" value="-1.3e12" />
+                            <br />
+                            <br />
+                            IS THE ABOVE A NUMBER? <code id="exercise-9-3"></code>
+                            <br />
+                            <br />
+                            <details>
+                                <summary style="font-size: 1.2rem;">
+                                    Testing values from the textbook
+                                </summary>
+
+                                <p>
+                                    Should be numbers:
+                                </p>
+
+                                <ul>
+                                    <li>
+                                        1
+                                    </li>
+                                    <li>
+                                        -1
+                                    </li>
+                                    <li>
+                                        +15
+                                    </li>
+                                    <li>
+                                        1.55
+                                    </li>
+                                    <li>
+                                        .5
+                                    </li>
+                                    <li>
+                                        5.
+                                    </li>
+                                    <li>
+                                        1.3e2
+                                    </li>
+                                    <li>
+                                        1E-4
+                                    </li>
+                                    <li>
+                                        1e+12
+                                    </li>
+                                </ul>
+
+                                <p>
+                                    Should not be numbers:
+                                </p>
+
+                                <ul>
+                                    <li>
+                                        1a
+                                    </li>
+                                    <li>
+                                        +-1
+                                    </li>
+                                    <li>
+                                        1.2.3
+                                    </li>
+                                    <li>
+                                        1+1
+                                    </li>
+                                    <li>
+                                        1e4.5
+                                    </li>
+                                    <li>
+                                        .5.
+                                    </li>
+                                    <li>
+                                        1f5
+                                    </li>
+                                    <li>
+                                        .
+                                    </li>
+                                </ul>
+                            </details>
                         </details>
                     </li>
                 </ul>
@@ -2402,6 +2531,15 @@ console.log(box.content);
         <script src="chapter-6-exercises.js"></script>
 
         <script src="chapter-7-exercises.js"></script>
+
+        <!-- 
+            Chapter 8 exercises run based on code embedded in the textbook 
+            site, if not inputs that are functions. Function inputs as UI 
+            elements put full control of the page onto the UI, which I don't 
+            want for this page.
+        -->
+
+        <script src="chapter-9-exercises.js"></script>
 
         <script title="chapter  exercises">
             /*
