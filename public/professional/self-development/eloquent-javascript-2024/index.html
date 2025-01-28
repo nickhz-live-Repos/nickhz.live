@@ -2084,7 +2084,8 @@ function verify(regexp, yes, no) {
 
                             <p>
                                 This exercise uses modular JS files and is 
-                                demonstrated through my creation of 
+                                demonstrated through my creation of the 
+                                modules 
                                 <a href="./chapter-10-exercises-graph.js" target="_blank">chapter-10-exercises-graph.js</a>
                                 and <a href="./chapter-10-exercises-road-graph.js" target="_blank">chapter-10-exercises-road-graph.js</a>, 
                                 along with the &lt;script title="Chapter 10 
@@ -2169,12 +2170,165 @@ function verify(regexp, yes, no) {
                 </summary>
 
                 <blockquote>
-
+                    MEANWHILE,
                 </blockquote>
 
                 <p>
-                    --
+                    I sort of understand Promises, await, and callback 
+                    functions going into this, enough that I actually use them 
+                    in my coding, but going by the depth of the last chapters, 
+                    I'm up for some new surprises. And I know enough to know 
+                    that Promises & async await deserve their own sections in 
+                    my notes...
                 </p>
+
+                <p>
+                    Callback functions:
+                </p>
+
+                <ul>
+                    <li>
+                        <code>setTimeout(() => { ... }, 1000)</code> // runs the inner function after 1 second
+                    </li>
+                    <li>
+                        <code>myCallbackRunner(() => { ... }, "conditions")</code> // custom-made callback function; takes the function to run after the callback is fulfilled, along with the data needed to define whatever conditions will trigger the function
+                    </li>
+                    <li>
+                        // a function that calls an asynchronous function becomes asynchronous itself...
+                    </li>
+                </ul>
+
+                <p>
+                    Promises:
+                </p>
+
+                <ul>
+                    <li>
+                        // a Promise is a receipt for a potentially future value; a Promise is called "resolved" when its value becomes available
+                    </li>
+                    <li>
+                        <code>promise.then(something => { ... }); promise.then(sameThing => { ... });</code> // the same promise can resolve into multiple then functions, and it will send them all the value that it resolved to
+                    </li>
+                    <li>
+                        <code>Promise.resolve(15).then( value => console.log(value + 1) )</code> // Promise.resolve will wrap the given value in a Promise that resolves to the given value; this Promise outputs 16 to the console
+                    </li>
+                    <li>
+                        <code>Promise.resolve(() => { stuff that takes a long time })</code> // may use this to use the value of a Promise after its argument completes
+                    </li>
+                    <li>
+                        <code>new Promise(resolve => { myCallbackRunner(arg => resolve(arg), "conditions") })</code> // Promise constructor takes a function that takes a function that returns the result value from a callback function
+
+                        <ul>
+                            <li>
+                                <code>let resolver = callback => setTimeout(arg => callback(arg), 30000);</code> // 30-second timer
+                            </li>
+                            <li>
+                                <code>let prom = new Promise(resolver);</code>
+                            </li>
+                            <li>
+                                <code>let callback = arg => { if(arg === undefined) console.log("setTimeout doesn't send args to its callback!"); };</code>
+                            </li>
+                            <li>
+                                <code>prom.then(callback);</code>
+                            </li>
+                            <li>
+                                // after the above, the Promise will resolve 30 seconds after its creation, outputting the message to the console at that point
+                            </li>
+                            <li>
+                                <code>prom.then(callback);</code> // after this, the same Promise will supply its result immediately to any callback functions chained to it; this prints the message immediately, because the Promise has already resolved by the time it's called
+                            </li>
+                            <li>
+                                // the Promise gave its callback functions the return value that the callback runner (in this case, setTimeout) would normally give them when they're called as standard callback functions
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <code>promise.then(arg => arg + 1).then(argPlusOne => { ... })</code> // promise chaining; the initial promise injects its callback runner's argument into the first then function as the argument to the then function, after which it returns a Promise that can be further chained to inject the result of the previous then function
+                    </li>
+                    <li>
+                        // the code in any "then" call executes immediately as its input becomes available
+                    </li>
+                    <li>
+                        <code>promise.then(arg => return new Promise(callback => ...)).then(arg2 => 'arg2 is not a Promise!')</code> // Promises returned by the functions given to "then" send their Promise's resolution value, not the Promise itself, to the next "then" call
+                    </li>
+                    <li>
+                        <code>Promise.reject()</code> // returns an immediately rejected Promise
+                    </li>
+                    <li>
+                        <code>promise.then(...).catch(reason => {...})</code> // when a Promise is rejected / throws an exception, it passes the exception / "reason" to the nearest "catch" call; "catch" returns another Promise after handling the Promise's rejection reason
+                    </li>
+                    <li>
+                        <code>promise.then(arg => {...}, reason => {...})</code> // the "then" call can take a second argument, a reject handler, to handle the error in case a Promise had an unhandled rejection reason before it
+                    </li>
+                    <li>
+                        <code>new Promise((callback, reject) => setTimeout((arg, err) => { if(err) reject(err); else callback(arg); }, 30000));</code> // Promise constructor also takes an error handler in the form of a second function argument to the function passed as an argument to the constructor, along with a second argument added to the callback
+                    </li>
+                    <li>
+                        <code>new Promise(...).then(...).catch(...).then(...)</code> // if the initial Promise is rejected and its then handler doesn't include error handling, the reason passes to the catch handler, whose return value is passed to the next then handler
+                    </li>
+                    <li>
+                        <code>new Promise((successHandler, errorHandler) => { console.log(successHandler); console.log(errorHandler); })</code> // immediately logs 2 functions that return undefined; the Promise constructor implicitly injects these functions into the argument function upon being called
+                    </li>
+                    <li>
+                        // but how does it know to inject any error arguments into callback functions used as arguments to internal function calls... could be native code, as the function injections above are also determined by the browser
+                    </li>
+                    <li>
+                        <code>new Promise(arg => 5); new Promise(arg => arg(5));</code> // the former will never be fulfilled, but the latter is always fulfilled; the inner function's argument MUST be used for a Promise to fulfill, and static returns should be done with Promise.resolve
+                    </li>
+                    <li>
+                        <code>Promise.reject('abc').catch(arg => console.log(arg));</code> // Promise.reject is the counterpart to Promise.resolve; creates a rejected promise with the specified return value, so this one just console.logs "abc"
+                    </li>
+                    <li>
+                        <code>Promise.all(arr.map(item => new Promise(resolver => ...)))</code> // Promise.all converts an arrat of promises that returns a single promise that resolves into an array of results
+                    </li>
+                    <li>
+                        // never operate directly on an external binding in Promise.all; only the initial value of that binding will be used in every array item calculation, even when other Promise stacks change that value in their own scopes
+                    </li>
+                    <li>
+                        <code>Promise.resolve("Promise resolved").then(console.log); console.log("End of the main script");</code> // End of the main script executes before the Promise callback executes; this is because Promise actions are added to a queue in an outer JavaScript event loop that runs events in the order they're added
+                    </li>
+                </ul>
+
+                <p>
+                    Async & await
+                </p>
+
+                <ul>
+                    <li>
+                        <code>async function readFile(filename) { try {await new Promise(...); return 'success'; } catch(reason) { throw new Error('failure'); } };</code> // async function returns a Promise but writes like a synchronous function
+                    </li>
+                    <li>
+                        <code>await new Promise(...)</code> // await can ONLY be used in async functions; it awaits the resolution of any Promise value and either returns the resolution value or throws the reason from a rejection, continuing with the rest of the code after it's done waiting
+                    </li>
+                    <li>
+                        <code>class MyThing { async someMethod(arg) { ... } }</code> // a method can also be async
+                    </li>
+                    <li>
+                        <code>let somePromise = new Promise(...); ...; let someResolution = await somePromise;</code> // can declare a Promise to create the Promise & request its resolution, then await its resolution on another line
+                    </li>
+                </ul>
+
+                <p>
+                    Miscellaneous
+                </p>
+
+                <ul>
+                    <li>
+                        <code>function* generator(arg) { ... while(...){ yield val; } }</code> // generator functions, covered above in chapter 2; this works asynchronously, as it suspends execution between yields, waiting for a read from its current yield before running to the next one
+                    </li>
+                    <li>
+                        <code>for(let value of generator(1)) { ... }</code> // the yields from a generator function can be treated as an iterator; the generator RETURNS a custom iterator, whose next value is the next yield of the function
+                    </li>
+                    <li>
+                        <code>MyClass.prototype[Symbol.iterator] = function*() { ... };</code> // a generator function can be attached as a method to a Symbol.iterator binding in a class, to quickly turn that class into an iterable
+                    </li>
+                    <li>
+                        // async functions can be thought of as a type of generator that produces a Promise when called and resolves on return or rejects on throw; it suspends execution during an await, which either resolves to a value or throws an exception before resuming the async function
+                    </li>
+                    <li>
+                        // asynchronous code runs on its own call stack, not on the main thread; keeps exceptions thrown in them from ever reaching a catch statement outside of a Promise or async function
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 11 Exercises
@@ -2184,28 +2338,171 @@ function verify(regexp, yes, no) {
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 11.1 - Quiet Times
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/11_async.html#i-ClYVKLhQj7" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box 
+                                (visible on scrolling down).
+                            </p>
+
+                            <pre>async function activityTable(day) {
+    let logFileList = (await textFile("camera_logs.txt")).split(/\n\r?/);
+    let result = new Array();
+    for(const logFileName of logFileList) {
+        let activityHours = (await textFile(logFileName))
+            .split(/\n\r?/)
+            .map(timestamp => new Date(+timestamp))
+            .filter(date => date.getDay() == day)
+            .map(date => date.getHours())
+        ;
+        let readingsForEachHour = new Array(24).fill(0);
+        for(const hourReading of activityHours) {
+            readingsForEachHour[hourReading]++;
+        }
+        result.push(readingsForEachHour);
+    }
+    
+    result = result.reduce(
+        (totals, hourReadings) => {
+        for(let i = 0; i < totals.length; i++) {
+            totals[i] += hourReadings[i];
+        }
+    
+        return totals;
+        }
+    );
+    
+    return result;
+}
+    
+activityTable(1)
+    .then(table => console.log(activityGraph(table)))
+;
+
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 11.2 - Real Promises
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/11_async.html#i-06NEZgn6XD" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>function activityTable(day) {
+    return textFile("camera_logs.txt")
+        .then(logsFileContent => logsFileContent.split(/\n\r?/))
+        .then(logFileList => Promise.all(
+            function*() { 
+                for(const logFileName of logFileList) 
+                    yield textFile(logFileName); 
+            }() // immediately invoked to return promise iterator
+        ))
+        .then(logFilesContent => {
+            const hourLists = new Array();
+            for(const log of logFilesContent) {
+                const hourOfEachActivation =
+                log.split(/\n\r?/)
+                    .map(timestamp => new Date(+timestamp))
+                    .filter(date => date.getDay() == day)
+                    .map(date => +date.getHours())
+                ;
+                let totalsForEachHour = new Array(24).fill(0);
+                for(const hourReading of hourOfEachActivation) {
+                    totalsForEachHour[hourReading]++;
+                }
+        
+                hourLists.push(totalsForEachHour);
+            }
+        
+            return hourLists.reduce(
+                (totals, hourReadings) => {
+                    for(let i = 0; i < totals.length; i++) {
+                        totals[i] += hourReadings[i];
+                    }
+            
+                    return totals;
+                }, new Array(24).fill(0)
+            );
+        })
+    ;
+};
+
+activityTable(6)
+    .then(table => console.log(activityGraph(table)))
+;
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 11.3 - Building Promise.all
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/11_async.html#i-Ug+Dv9Mmsw" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>function Promise_all(promises) {
+    return new Promise((resolve, reject) => {
+        if(promises.length === 0)
+        resolve([]);
+    
+        const incomplete = Symbol('incomplete');
+        const result = 
+            new Array(promises.length).fill(incomplete)
+        ; // if the result contains this symbol, it's incomplete
+    
+        for(let i = 0; i < promises.length; i++) {
+            promises[i].then(
+                res => { result[i] = res; if(!result.includes(incomplete)) resolve(result); },
+                err => { reject(err); }
+            );
+        }
+    });
+};
+    
+// Test code.
+Promise_all([]).then(array => {
+    console.log("This should be []:", array);
+});
+function soon(val) {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(val), Math.random() * 500);
+    });
+};
+Promise_all([soon(1), soon(2), soon(3)]).then(array => {
+    console.log("This should be [1, 2, 3]:", array);
+});
+Promise_all([soon(1), Promise.reject("X"), soon(3)])
+    .then(array => {
+        console.log("We should not get here");
+    })
+    .catch(error => {
+        if (error != "X") {
+            console.log("Unexpected failure:", error);
+        } else {
+            console.log("This should be X:", error);
+        }
+    })
+;</pre>
                         </details>
                     </li>
                 </ul>
@@ -2219,7 +2516,7 @@ function verify(regexp, yes, no) {
                 </summary>
 
                 <blockquote>
-
+                    
                 </blockquote>
 
                 <p>
