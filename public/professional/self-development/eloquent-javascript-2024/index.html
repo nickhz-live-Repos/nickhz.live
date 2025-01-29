@@ -2516,11 +2516,35 @@ Promise_all([soon(1), Promise.reject("X"), soon(3)])
                 </summary>
 
                 <blockquote>
-                    
+                    Yo, dawg, I heard you like programming languages.
                 </blockquote>
 
                 <p>
-                    --
+                    I'd call this one a more proper textbook project, since it 
+                    mostly just uses knowledge from earlier in the book. There 
+                    are some other JavaScript Error types this uses, like 
+                    <code>SyntaxError</code> and <code>TypeError</code>, but 
+                    other than that, it's almost all an application of 
+                    previous concepts, sprinkled in with some theory.
+                </p>
+
+                <p>
+                    This chapter introduces syntax trees, parsers, 
+                    interpreters, and compilation, all in terms of the work 
+                    that's done in this chapter. The parser turns the raw code 
+                    into a syntax tree, the evaluator executes the code 
+                    defined by the syntax tree, and that all adds up to an 
+                    interpreter for the "Egg" language built in this chapter. 
+                    Lastly, compilation is taking it a step further and 
+                    preprocessing the executable code into a further optimized 
+                    version of the interpreted code, frontloading as much of 
+                    that processing as possible and outputting a compiled 
+                    version of the code that runs faster than the language 
+                    just being interpreted. For example, code in the Egg 
+                    language from this chapter might compile into JavaScript, 
+                    and instead of running the Egg code directly, you would 
+                    compile it into JavaScript code and then run that 
+                    JavaScript code instead of the Egg interpreter.
                 </p>
 
                 <h2>
@@ -2531,28 +2555,157 @@ Promise_all([soon(1), Promise.reject("X"), soon(3)])
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 12.1 - Arrays
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/12_language.html#i-uQzJv9I1Z6" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>topScope.array = (...args) => args;
+
+topScope.length = arr => arr.length;
+
+topScope.element = (arr, index) => arr[index];
+
+run(`
+do(define(sum, fun(array,
+    do(define(i, 0),
+        define(sum, 0),
+        while(<(i, length(array)),
+            do(define(sum, +(sum, element(array, i))),
+                define(i, +(i, 1)))),
+        sum))),
+    print(sum(array(1, 2, 3))))
+`);
+// → 6
+
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 12.2 - Closure
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This is a brainstorming exercise rather than a 
+                                coding exercise.
+                            </p>
+
+                            <p>
+                                The JavaScript-language function represented 
+                                by the Egg-language function runs a recursive 
+                                sub-evaluation that passes local-scope 
+                                bindings to its arguments in place of the 
+                                program's higher scope. This higher scope is 
+                                the prototype of the local scope by way of any 
+                                higher scopes (including that from other 
+                                functions!) being passed in as the second 
+                                argument to the "fun" special form definition 
+                                before being used as the prototype of the 
+                                function's local scope through the local scope 
+                                effectively being defined by 
+                                <code>Object.create(higherScope)</code>. This 
+                                makes a function's scope visible to all of its 
+                                embedded functions, as well as functions 
+                                embedded in those sub-functions, recursively.
+                            </p>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 12.3 - Comments
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/12_language.html#i-/OBuIOX390" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>function skipSpace(string) {
+    let first = string.search(/\S/);
+    if (first == -1) return "";
+    
+    let result = string.slice(first);
+    if(result[0] === '#') {
+        result = result.slice(/^.*?(\n\r?|$)/.exec(result)[0].length);
+        if(!result.length) return "";
+        result = skipSpace(result);
+    }
+    
+    return result;
+};
+
+console.log(parse("# hello\nx"));
+// → {type: "word", name: "x"}
+
+console.log(parse("a # one\n   # two\n()"));
+// → {type: "apply",
+//    operator: {type: "word", name: "a"},
+//    args: []}
+
+</pre>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+                                Exercise 12.4 - Fixing Scope
+                            </summary>
+
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/12_language.html#i-Y9ZDMshYCQ" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>specialForms.set = (args, scope) => {
+    if (args.length != 2 || args[0].type != "word") {
+        throw new SyntaxError("Incorrect use of set");
+    }
+    const binding = args[0].name;
+    let currentScope = scope;
+    do {
+        if(Object.hasOwn(currentScope, binding)) {
+            break;
+        } else {
+            currentScope = Object.getPrototypeOf(currentScope);
+        }
+    
+        if(currentScope === null) {
+            throw new ReferenceError(`Binding "${binding}" wasn't defined before set was called on it.`);
+        }
+    } while(true);
+    
+    let value = evaluate(args[1], scope);
+    
+    currentScope[binding] = value;
+    return value;
+};
+
+run(`
+do(define(x, 4),
+    define(setx, fun(val, set(x, val))),
+    setx(50),
+    print(x))
+`);
+// → 50
+run(`set(quux, true)`);
+// → Some kind of ReferenceError
+
+</pre>
                         </details>
                     </li>
                 </ul>
