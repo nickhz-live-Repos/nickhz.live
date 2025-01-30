@@ -1,4 +1,6 @@
 /**
+ * Made by Nick Hernandez, January 2nd, 2025
+ * 
  * Allows an HTML selector element to select which elements should be 
  * visible within a specified parent element. Run this function with a 
  * selector's onchange event, the ID attribute of the element containing 

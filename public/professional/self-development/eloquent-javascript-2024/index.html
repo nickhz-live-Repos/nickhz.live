@@ -2776,8 +2776,53 @@ run(`set(quux, true)`);
                 </blockquote>
 
                 <p>
-                    --
+                    
                 </p>
+
+                <ul>
+                    <li>
+                        <code>this === window</code> // the window is the top-level element that browser javascript runs in
+                    </li>
+                    <li>
+                        <code>document === window.document</code> // the document is the .html document; it represents the document file, NOT the &lt;html&gt; tag
+                    </li>
+                    <li>
+                        <code>document.documentElement</code> // this is the representation of the &lt;html&gt; tag
+                    </li>
+                    <li>
+                        <code>document.body; document.head;</code> // these represent the &lt;body&gt; and &lt;head&gt; tags, respectively
+                    </li>
+                    <li>
+                        <code>document.nodeType === Node.DOCUMENT_NODE; document.body.nodeType === Node.ELEMENT_NODE;</code> // the document and all of its sub-elements (incl. items like the &lt;!DOCTYPE html&gt; and the text strings between HTML tags) are types of nodes; all possible node type values can be seen by using Object.keys(Node)
+                    </li>
+                    <li>
+                        <code>document.getElementsBy...; element.getElementsBy...</code> // element querying methods are applied to all nodes, not just the document or the body; using it as a node method restricts the search to within that node
+                    </li>
+                    <li>
+                        <code>textNode.textContent === textNode.nodeValue</code> // for a text node, these are the same value
+                    </li>
+                    <li>
+                        <code>Array.from(getElementsByTagName('p')); Array.from({0: 'one'; 1: 'two', length: 2});</code> // can construct an array from an object with indexed values and a length property; this means it can convert a live NodeList to a plain array that doesn't live change when the DOM is modified
+                    </li>
+                    <li>
+                        <code>element.dataset['attribute'] === element.getAttribute('data-attribute')</code> // 2 ways to get custom "data" attributes from an element; the latter also allows selection of custom attributes that are not marked as "data-"
+                    </li>
+                    <li>
+                        <code>element.getAttribute('class'); element.setAttribute('class', someClassName);</code> // with getAttribute, the className property uses its HTML name, "class"
+                    </li>
+                    <li>
+                        <code>element.offsetHeight >= element.clientHeight</code> // "client" dimension properties exclude the element border
+                    </li>
+                    <li>
+                        <code>element.getBoundingClientRect()</code> // returns an object holding dimensional parameters of the element WITH RESPECT TO THE CURRENT VIEWPORT
+                    </li>
+                    <li>
+                        <code>pageYOffset; pageXOffest;</code> // these give the vertical & horizontal scroll positions of the current viewport
+                    </li>
+                    <li>
+                        <code>element.querySelector('p > a')</code> // querySelector can be applied within a node
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 14 Exercises
@@ -2787,28 +2832,175 @@ run(`set(quux, true)`);
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 14.1 - Build a Table
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                Due to this exercise being a Web page, it's 
+                                being presented in an iframe, with the code 
+                                being in the "srcdoc" attribute of that 
+                                iframe.
+                            </p>
+
+                            <iframe srcdoc="
+                            <h1>Mountains</h1>
+
+                            <div id=&quot;diag&quot;></div>
+                            
+                            <div id=&quot;mountains&quot;></div>
+                            
+                            <script>
+                              const MOUNTAINS = [
+                                {name: &quot;Kilimanjaro&quot;, height: 5895, place: &quot;Tanzania&quot;},
+                                {name: &quot;Everest&quot;, height: 8848, place: &quot;Nepal&quot;},
+                                {name: &quot;Mount Fuji&quot;, height: 3776, place: &quot;Japan&quot;},
+                                {name: &quot;Vaalserberg&quot;, height: 323, place: &quot;Netherlands&quot;},
+                                {name: &quot;Denali&quot;, height: 6168, place: &quot;United States&quot;},
+                                {name: &quot;Popocatepetl&quot;, height: 5465, place: &quot;Mexico&quot;},
+                                {name: &quot;Mont Blanc&quot;, height: 4808, place: &quot;Italy/France&quot;}
+                              ];
+                            
+                              const mountainsParent = document.getElementById('mountains');
+                              
+                              const createTableFromData = (data) => {
+                                const table = document.createElement('table');
+                                const headerRow = document.createElement('tr');
+                                const headers = new Array();
+                                
+                                table.appendChild(headerRow);
+                                
+                                for(const datum of data) {
+                                  const dataRow = document.createElement('tr');
+                                  table.appendChild(dataRow);
+                                  
+                                  const rowContent = Array.from(
+                                    {length: headers.length}, 
+                                    item => document.createElement('td')
+                                  );
+                            
+                                  for(const dataCell of rowContent) {
+                                    dataRow.appendChild(dataCell);
+                                  }
+                                  
+                                  for(const property in datum) {
+                                    
+                                    if(!headers.includes(property)) {
+                                      const headerCell = document.createElement('th');
+                                      headerCell.innerText = property;
+                                      headerRow.appendChild(headerCell);
+                                      
+                                      headers.push(property);
+                            
+                                      const rows = Array.from(table.children).slice(1);
+                                      for(const row of rows) {
+                                        const newCell = document.createElement('td');
+                                        row.appendChild(newCell);
+                                        rowContent.push(newCell);
+                                      }
+                                    }
+                            
+                                    const dataCell = rowContent[headers.indexOf(property)];
+                                    dataCell.innerText = datum[property];
+                                  }
+                                }
+                            
+                                return table;
+                              };
+                              
+                              mountainsParent.appendChild(createTableFromData(MOUNTAINS));
+                            </script>
+                            " style="resize: both"></iframe>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 14.2 - Elements by Tag Name
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                Due to this exercise being a Web page, it's 
+                                being presented in an iframe, with the code 
+                                being in the "srcdoc" attribute of that 
+                                iframe.
+                            </p>
+
+                            <iframe srcdoc="
+                            <h1>Heading with a <span>span</span> element.</h1>
+                            <p>A paragraph with <span>one</span>, <span>two</span>
+                              spans.</p>
+
+                            <script>
+                            function byTagName(node, tagName) {
+                              let result = new Array();
+
+                              for(const childNode of node.children) {
+                                if(childNode.nodeName.toLowerCase() == tagName) {
+                                  result.push(childNode);
+                                }
+
+                                result = result.concat(byTagName(childNode, tagName));
+                              }
+
+                              return result;
+                            };
+
+                            const appendReading = (data) => {
+                              const reading = document.createElement('div');
+                              reading.innerText = data;
+                        
+                              document.body.appendChild(reading);
+                            };
+
+                            appendReading(byTagName(document.body, &quot;h1&quot;).length);
+                            // → 1
+                            appendReading(byTagName(document.body, &quot;span&quot;).length);
+                            // → 3
+                            let para = document.querySelector(&quot;p&quot;);
+                            appendReading(byTagName(para, &quot;span&quot;).length);
+                            // → 2
+                            </script>
+                            " style="resize: both"></iframe>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 14.3 - The Cat's Hat
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                Due to this exercise being a Web page, it's 
+                                being presented in an iframe, with the code 
+                                being in the "srcdoc" attribute of that 
+                                iframe.
+                            </p>
+
+                            <iframe srcdoc="
+                            <style>body { min-height: 200px }</style>
+                            <img src=&quot;img/cat.png&quot; id=&quot;cat&quot; style=&quot;position: absolute&quot;>
+                            <img src=&quot;img/hat.png&quot; id=&quot;hat&quot; style=&quot;position: absolute&quot;>
+
+                            <script>
+                              let cat = document.querySelector(&quot;#cat&quot;);
+                              let hat = document.querySelector(&quot;#hat&quot;);
+
+                              let angle = 0;
+                              let lastTime = null;
+                              function animate(time) {
+                                if (lastTime != null) angle += (time - lastTime) * 0.001;
+                                lastTime = time;
+                                cat.style.top = (Math.sin(angle) * 40 + 40) + &quot;px&quot;;
+                                cat.style.left = (Math.cos(angle) * 200 + 230) + &quot;px&quot;;
+
+                                hat.style.top = (Math.sin(angle + Math.PI) * 40 + 40) + &quot;px&quot;;
+                                hat.style.left = (Math.cos(angle + Math.PI) * 200 + 230) + &quot;px&quot;;
+
+                                requestAnimationFrame(animate);
+                              }
+                              requestAnimationFrame(animate);
+                            </script>
+                            " style="resize: both"></iframe>
                         </details>
                     </li>
                 </ul>
