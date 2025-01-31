@@ -2772,11 +2772,12 @@ run(`set(quux, true)`);
                 </summary>
 
                 <blockquote>
-
+                    Yo, dawg, I heard you like docum--
                 </blockquote>
 
                 <p>
-                    
+                    It's still familiar territory for me, but this chapter 
+                    also draws out alternative ways to do some things.
                 </p>
 
                 <ul>
@@ -3014,12 +3015,111 @@ run(`set(quux, true)`);
                 </summary>
 
                 <blockquote>
-
+                    Listening is arguably the most critical mode of 
+                    communication.
                 </blockquote>
 
                 <p>
-                    --
+                    Event listeners, event handlers, event types, a bit of 
+                    event bubbling (though the text doesn't use that word 
+                    specifically), all stuff that I generally know but has 
+                    some extra detail that I want written down. Not all of 
+                    this is in the text, but reading the text did make me 
+                    think of including all the things that are here:
                 </p>
+
+                <ul>
+                    <li>
+                        <code>event.type</code> // holds whether an Event object is a "click" or a "mousedown" or a "keyup" etc.
+                    </li>
+                    <li>
+                        <code>event.stopPropagation()</code> // keeps an event from bubbling or capturing into the event handlers of parents or children
+                    </li>
+                    <li>
+                        <code>aDivWithButtonsInside.addEventListener('click', () => { event.target === aButtonInsideTheDiv })</code> // registering an event handler on a parent will pass in events whose event.target identifies a child that the event propagates from
+                    </li>
+                    <li>
+                        <code>event.preventDefault()</code> // used in an event handler, this prevents the event's default behavior, like changing the page on an &lt;a&gt; tag click or scrolling the page downward when the down arrow is pressed
+                    </li>
+                    <li>
+                        <code>if(event.ctrlKey && event.altKey && event.key == " ") ...</code> // an event holds information about whether shiftKey, ctrlKey, altKey, or metaKey was being pressed when the event was created
+                    </li>
+                    <li>
+                        <code>&lt;div tabindex&gt;</code> // the tabindex attribute allows an element to be focused by keyboard navigation, like links and inputs can be by default
+                    </li>
+                    <li>
+                        <code>event.type === 'input'; activeElement.value</code> // input events are said to be best for handling changes to input & textarea fields, and referencing their content is to be done with the dynamic activeElement property of the document
+                    </li>
+                    <li>
+                        <code>event.type === 'click'</code> // DETAIL: the click event fires after the mouseup event, on the most specific element that contained both the press and release of the mouse button
+                    </li>
+                    <li>
+                        <code>event.type === 'dblclick'</code> // DETAIL: the dblcick event fires AFTER THE SECOND CLICKEVENT
+                    </li>
+                    <li>
+                        <code>mouseEvent.clientX; mouseEvent.clientY;</code> // for mouse events, a "client" dimensional property is the px coordinate relative to the upper left of the viewport
+                    </li>
+                    <li>
+                        <code>mouseEvent.pageX; mouseEvent.pageY;</code> // for mouse events, a "page" dimensional property is the px coordinate relative to the upper left of the entire document
+                    </li>
+                    <li>
+                        <code>event.type === 'mousemove'; event.buttons</code> // mousemove events keep a binary identifier of buttons currently being pressed; LMB is +1, RMB is +2, and MMB is +4
+                    </li>
+                    <li>
+                        <code>event.type === 'touchstart'; event.type === 'touchmove'; event.type === 'touchend'</code> // TOUCH EVENTS ALSO FIRE MOUSE EVENTS AFTERWARD; can use preventDefault() to keep the mouse event from firing
+                    </li>
+                    <li>
+                        <code>touchEvent.touches[0]</code> // a touch event has an array-like "touches" property, the elements of which hold the clientX, clientY, pageX, and pageY properties for each touch
+                    </li>
+                    <li>
+                        <code>event.type === 'scroll'; event.preventDefault()</code> // scroll events happen AFTER the page has already scrolled, so page scrolling is not prevented by preventDefault()
+                    </li>
+                    <li>
+                        <code>innerHeight; innerWidth;</code> // dynamic window properties that give the dimensions of the viewport
+                    </li>
+                    <li>
+                        <code>pageYOffset; pageXOffset;</code> // dynamic window properties that give how far the viewport has scrolled; gives coordinate from the top left of the document to the top left of the viewport
+                    </li>
+                    <li>
+                        <code>event.type === 'focus'; event.type === 'blur';</code> // fires when an element is focused or unfocused; THIS EVENT DOES NOT BUBBLE TO OTHER ELEMENTS IN ITS NODE HIERARCHY BY DEFAULT
+                    </li>
+                    <li>
+                        <code>event.type === 'load'</code> // fires on the window & document.body when the page elements have completely loaded, and also fires on elements (like &lt;script&gt; and &lt;img&gt;) when they finish loading external files; THIS EVENT DOES NOT BUBBLE
+                    </li>
+                    <li>
+                        <code>event.type === 'beforeunload'</code> // fires when a page is closed or navigated away from; when its preventDefault() is called and event.returnValue is set to a string, the browser requests confirmation on whether the user want to leave the page
+                    </li>
+                    <li>
+                        // the event loop runs async, and an event fires, its listener only fires after the event loop is done being tied up with other work
+                    </li>
+                    <li>
+                         // web workers operate outside the page's event loop, and the script it runs should have its own message listener
+
+                         <ul>
+                            <li>
+                                IN page script: <code>let worker = new Worker('script.js'); worker.addEventListener('message', event => { event.data; }); worker.postMessage(...args);</code> // the page should invoke the worker, tell it which script to run, listen for its message, and post messages to it to work off of
+                            </li>
+                            <li>
+                                IN script.js: <code>addEventListener('message', event => { postMessage(event.data) });</code> // web worker has its own global scope and works entirely through messages; it receives a copy of the postMessaged data, not the data itself, and data can only be in a JSONable format
+                            </li>
+                            <li>
+                                // because a web worker has its own global scope, it can't know things like the mouse position or modify window-scoped things like DOM elements
+                            </li>
+                         </ul>
+                    </li>
+                    <li>
+                        // for events that fire rapidly (like mousemove and keydown), limiting how often the event-handling code fires is called debouncing the event
+                    </li>
+                    <li>
+                        <code>clearTimeout(setTimeoutReturnValue); clearInteral(setIntervalReturnValue); cancelAnimationFrame(requestAnimationFrameReturnValue);</code> // functions that nullify timer triggers
+                    </li>
+                    <li>
+                        <code>element.removeEventListener('click', listenerFunction)</code> // does what it says, removing the instruction of addEventListener()
+                    </li>
+                    <li>
+                        <code>element.dispatchEvent(new Event('click'))</code> // can programmatically activate event handlers on an element by using that element's dispatchEvent() method with a <i>synthetic</i> Event as its argument; this method is fired by the browser by default, so this is 1 to 1 with a user-supplied event
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 15 Exercises
@@ -3029,28 +3129,170 @@ run(`set(quux, true)`);
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 15.1 - Balloon
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                Press the up & down arrow keys in this frame! 
+                                If you pop it, click to reset it.
+                            </p>
+
+                            <iframe srcdoc="
+                            <p id=&quot;balloon&quot;>🎈</p>
+
+                            <script>
+                              const element = document.getElementById('balloon');
+                              const initialSize = getComputedStyle(element).fontSize;
+                              const limitSize = parseFloat(initialSize) * 3;
+                              element.style.fontSize = initialSize;
+
+                              function reset(event) {
+                                element.innerText = '🎈';
+                                element.style.fontSize = initialSize;
+                                document.removeEventListener('click', reset);
+                                document.addEventListener('keydown', inflate);
+                              };
+
+                              function inflate(event) {
+                                let newSize = parseFloat(element.style.fontSize);
+                                if(event.key === 'ArrowUp') {
+                                  newSize *= 1.1;
+                                } else if(event.key === 'ArrowDown') {
+                                  newSize *= 0.9;
+                                } else {
+                                  return;
+                                }
+                                event.preventDefault();
+                                
+                                element.style.fontSize = newSize + 'px';
+
+                                if(newSize > limitSize) {
+                                  element.innerText = '💥';
+                                  document.removeEventListener('keydown', inflate);
+                                  document.addEventListener('click', reset);
+                                }
+                              };
+                            
+                              document.addEventListener('keydown', inflate);
+                            </script>
+                            "></iframe>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 15.2 - Mouse Trail
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                Move the mouse around inside this frame!
+                            </p>
+
+                            <iframe srcdoc="
+                              <head>
+                              <style>
+                                  .trail { /* className for the trail elements */
+                                    position: absolute;
+                                    height: 6px; width: 6px;
+                                    border-radius: 3px;
+                                    background: teal;
+                                  }
+                                  body {
+                                    height: 300px; cursor: none;
+                                  }
+                                </style>
+                              </head>
+                              
+                              <body>
+                                <script>
+                                  const LIMIT = 20;
+                                  const trailers = Array.from(
+                                    {length: LIMIT}, 
+                                    item => { 
+                                      const element = document.createElement('div');
+                                      element.className = 'trail';
+                                      document.body.appendChild(element);
+                              
+                                      return element;
+                                    }
+                                  );
+                                  let counter = 0;
+                              
+                                  document.body.addEventListener('mousemove', event => {
+                                    const trailer = trailers[counter % LIMIT].style;
+                              
+                                    trailer.top = (event.pageY - 3) + 'px';
+                                    trailer.left = (event.pageX - 3) + 'px';
+                              
+                                    counter++;
+                                  });
+                                </script>
+                              </body>
+                            "></iframe>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 15.3 - Tabs
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                Click the buttons in the frame to switch 
+                                between 3 sets of content.
+                            </p>
+
+                            <iframe srcdoc="
+                            <tab-panel>
+                                <div data-tabname=&quot;one&quot;>Tab one</div>
+                                <div data-tabname=&quot;two&quot;>Tab two</div>
+                                <div data-tabname=&quot;three&quot;>Tab three</div>
+                              </tab-panel>
+                              <script>
+                                function asTabs(node) {
+                                  const tabs = Array.from(node.children);
+                                  const buttons = Array.from(
+                                    {length: tabs.length}, 
+                                    item => document.createElement('button')
+                                  );
+                              
+                                  const toggle = (toggledElement, toggler) => event => {
+                                    for(let i = 0; i < tabs.length; i++) {
+                                      tabs[i].style.display = 'none';
+                                      buttons[i].style.removeProperty('filter');
+                                    }
+                              
+                                    if(toggler) {
+                                      toggler.style.filter = 'invert(1)';
+                                    }
+                              
+                                    toggledElement.style.removeProperty('display');
+                                  };
+                              
+                                  for(let i = tabs.length - 1;  i >= 0; i--) {
+                                    const tab = tabs[i];
+                                    const tabBtn = buttons[i];
+                                    
+                                    tabBtn.innerText = tab.getAttribute('data-tabname');
+                                    node.prepend(tabBtn);
+                              
+                                    tabBtn.addEventListener('click', toggle(tab, tabBtn));
+                                  }
+                              
+                                  toggle(tabs[0], buttons[0])();
+                                }
+                                asTabs(document.querySelector(&quot;tab-panel&quot;));
+                              </script>
+                            "></iframe>
+
+                            <p>
+                                I think it's less cool than 
+                                <a href="../../../wip/" target="_blank">the 
+                                ones I make in pure CSS</a>, but it does have 
+                                a function function in the function that 
+                                returns a function to use in a higher-order 
+                                function. It's Functional&trade;!
+                            </p>
                         </details>
                     </li>
                 </ul>
