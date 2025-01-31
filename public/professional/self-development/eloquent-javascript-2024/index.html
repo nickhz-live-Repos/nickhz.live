@@ -64,25 +64,20 @@
                     since I have this website, I figure this is a good place 
                     to host my notes in an environment where I can actually 
                     execute JavaScript. I didn't have a place to put it, 
-                    though, so I added <a href="../../" target="_blank">an 
-                    extra index page</a> to branch my site structure off into 
-                    a 
-                    <a href="../?a=html-css-js&b=eloquent-javascript-2024" target="_blank">self-development 
-                    page</a>, where I have the link to this page. It doesn't 
-                    take long to actually make pages, but because they're my 
-                    pages, I get to choose to give them novel creative 
-                    designs, which adds artistic & troubleshooting processes 
-                    on top of the coding. 
+                    though, so I changed my site structure to add 
+                    <a href="../../" target="_blank">supporting</a> 
+                    <a href="../?a=html-css-js&b=eloquent-javascript-2024" target="_blank">pages</a> 
+                    that lead to this one.
                 </p>
 
                 <p>
-                    All of this just to start studying, not that any of that 
-                    was necessary. I enjoy the content of the work and the 
-                    learning involved, if that's not made apparent by the 
-                    existence of this page. What kind of fool works without 
-                    being told? One who's curious or creative or otherwise 
-                    self-driven... that kind of fool! And now, I'll fool 
-                    around with the content of this book. 
+                    All this just to start studying? Yes. I enjoy the content 
+                    of the work and the learning involved, plus an investment 
+                    in myself pays dividends in the future. What kind of fool 
+                    works without being told? One who's curious or creative or 
+                    future focused or otherwise self-driven... that kind of 
+                    fool! And now, I'll fool around with the content of this 
+                    book. 
                 </p>
 
                 <figure>
@@ -3015,7 +3010,7 @@ run(`set(quux, true)`);
                 </summary>
 
                 <blockquote>
-                    Listening is arguably the most critical mode of 
+                    Listening is arguably the most important part of 
                     communication.
                 </blockquote>
 
@@ -3306,12 +3301,43 @@ run(`set(quux, true)`);
                 </summary>
 
                 <blockquote>
-
+                    "The gravity strength, jumping speed, and other constants 
+                    in the game were determined by simply trying out some 
+                    numbers and seeing which ones felt right. You can try 
+                    experimenting with them." And that, I did.
                 </blockquote>
 
                 <p>
-                    --
+                    It all feels so disconnected until it all comes together. 
+                    I think it would be better presented as one big long 
+                    script that can be used as a reference during the reading, 
+                    or even better: emphasize that the reader should write out 
+                    this program in order to understand it best. 
                 </p>
+
+                <p>
+                    At least for me, seeing the program all in one place is 
+                    more readable than seeing little bits of it interspersed 
+                    throughout the chapter. It makes all the arguments sent to 
+                    the functions less cryptic. I guess there's a meta-lesson 
+                    there, about the risks of over-modularization, but 
+                    learning the lesson in real time by having to reference 
+                    other parts of the page for each line of code made the 
+                    exercises probably more painful than they needed to be. 
+                    Albeit, over time spent with custom library-like code like 
+                    this, you get used to the names & abstractions & structure 
+                    of it, just not if it's a library that's only relevant for 
+                    one chapter in a textbook. You just don't spend enough 
+                    time with it to really know it holistically before you 
+                    have to work with it, and it's like working with an alien 
+                    toolbox. But we soldier on.
+                </p>
+
+                <ul>
+                    <li>
+                        <code>element.scrollLeft; element.scrollTop;</code> // these are modifiable scroll readings WITHIN an element; if the element has content overflow and the scroll bars within the element are not at their default position, this can read and change the positions of their inner scrollbars
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 16 Exercises
@@ -3321,28 +3347,221 @@ run(`set(quux, true)`);
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 16.1 - Game Over
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/16_game.html#i-tFsh86eaJC" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>&lt;link rel="stylesheet" href="css/game.css"&gt;
+
+&lt;body&gt;
+&lt;script&gt;
+  async function runGame(plans, Display) {
+    const initialLives = 3;
+    let lives = initialLives;
+    
+    for (let level = 0; level &lt; plans.length;) {
+      console.log('Current lives: ' + lives);
+      let status = await runLevel(new Level(plans[level]),
+                                    Display);
+      if (status == "won") level++;
+      else if (status == "lost") {
+        lives--;
+      }
+
+      if(lives &lt; 0) {
+        console.log('Game over!');
+        level = 0;
+        lives = initialLives;
+      }
+    }
+    console.log("You've won!");
+  };
+  runGame(GAME_LEVELS, DOMDisplay);
+&lt;/script&gt;
+&lt;/body&gt;
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 16.2 - Pausing the Game
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/16_game.html#i-cNfzuXtVqI" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>
+&lt;link rel="stylesheet" href="css/game.css"&gt;
+
+&lt;body&gt;
+&lt;script&gt;
+  function runLevel(level, Display) {
+    let display = new Display(document.body, level);
+    let state = State.start(level);
+    let ending = 1;
+    
+    return new Promise(resolve =&gt; {
+      const arrowListeners = Object.create(null);
+      let paused = false;
+      let arrows = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
+
+      const animCallback = time =&gt; {
+        if(paused) {
+          return false;
+        }
+        
+        state = state.update(time, arrows);
+        display.syncState(state);
+        if (state.status == "playing") {
+          return true;
+        } else if (ending &gt; 0) {
+          ending -= time;
+          return true;
+        } else {
+          display.clear();
+          resolve(state.status);
+          window.removeEventListener('keyup', pauser);
+          untrackKeys();
+          return false;
+        }
+      };
+
+      const pauser = event =&gt; {
+        if(event.key === 'Escape') {
+          paused = !paused;
+
+          if(!paused) {
+            runAnimation(animCallback);
+          }
+        }
+      };
+        
+      window.addEventListener('keyup', pauser);
+
+      function trackKeys(keys) {
+        let down = Object.create(null);
+        function track(event) {
+          if (keys.includes(event.key)) {
+            down[event.key] = event.type == "keydown";
+            event.preventDefault();
+          }
+        };
+        arrowListeners['keydown'] = track;
+        arrowListeners['keyup'] = track;
+
+        for(const eventType in arrowListeners) {
+          window.addEventListener(eventType, arrowListeners[eventType]);
+        }
+        return down;
+      };
+
+      function untrackKeys() {
+        for(const eventType in arrowListeners) {
+          window.removeEventListener(eventType, arrowListeners[eventType]);
+        }
+      };
+        
+      runAnimation(animCallback);
+    });
+  };
+  runGame(GAME_LEVELS, DOMDisplay);
+&lt;/script&gt;
+&lt;/body&gt;
+                            </pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 16.3 - A Monster
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                Eloquent JavaScript site. My solution is below 
+                                and can be pasted & run on the code section 
+                                near the bottom of 
+                                <a href="https://eloquentjavascript.net/16_game.html#i-tKK8cGG5os" target="_blank">this 
+                                page</a>.
+                            </p>
+
+                            <pre>
+&lt;link rel="stylesheet" href="css/game.css"&gt;
+&lt;style&gt;.monster { background: purple }&lt;/style&gt;
+                                
+&lt;body&gt;
+  &lt;script&gt;
+    // Complete the constructor, update, and collide methods
+    class Monster {
+      constructor(pos, speed) {
+        this.pos = pos;
+         this.speed = speed;
+      }
+                                
+      get type() { return "monster"; }
+                                
+      static create(pos) {
+        return new Monster(pos.plus(new Vec(0, -1)), new Vec(-2, 0));
+      }
+                                
+      update(time, state) {
+        let newPos = this.pos.plus(this.speed.times(time));
+        let newSpeed = this.speed;
+        if (state.level.touches(newPos, this.size, "wall")) {
+          newSpeed = newSpeed.times(-1);
+        }
+                                
+        return new Monster(newPos, newSpeed);
+      }
+                                
+      collide(state) {
+        const playerVulnerableY = 
+          state.player.pos.y + state.player.size.y * 0.6
+        ;
+                                
+        if(playerVulnerableY &lt; this.pos.y) {
+          let filtered = state.actors.filter(a =&gt; a != this);
+          return new State(state.level, filtered, state.status);
+        }
+                                        
+        return new State(state.level, state.actors, "lost");
+      }
+    }
+                                
+    Monster.prototype.size = new Vec(1.2, 2);
+                                
+    levelChars["M"] = Monster;
+                                
+    runLevel(new Level(`
+..................................
+.################################.
+.#..............................#.
+.#..............................#.
+.#..............................#.
+.#...........................o..#.
+.#..@...........................#.
+.##########..............########.
+..........#..o..o..o..o..#........
+..........#...........M..#........
+..........################........
+..................................
+`), DOMDisplay);
+  &lt;/script&gt;
+&lt;/body&gt;
+</pre>
                         </details>
                     </li>
                 </ul>
