@@ -2777,7 +2777,7 @@ run(`set(quux, true)`);
 
                 <ul>
                     <li>
-                        <code>this === window</code> // the window is the top-level element that browser javascript runs in
+                        <code>this === window</code> // the window is the top-level element that browser JavaScript runs in
                     </li>
                     <li>
                         <code>document === window.document</code> // the document is the .html document; it represents the document file, NOT the &lt;html&gt; tag
@@ -2799,6 +2799,9 @@ run(`set(quux, true)`);
                     </li>
                     <li>
                         <code>Array.from(getElementsByTagName('p')); Array.from({0: 'one'; 1: 'two', length: 2});</code> // can construct an array from an object with indexed values and a length property; this means it can convert a live NodeList to a plain array that doesn't live change when the DOM is modified
+                    </li>
+                    <li>
+                        <code>element.remove()</code> // entirely removes the element and all of its children from the DOM
                     </li>
                     <li>
                         <code>element.dataset['attribute'] === element.getAttribute('data-attribute')</code> // 2 ways to get custom "data" attributes from an element; the latter also allows selection of custom attributes that are not marked as "data-"
@@ -3575,11 +3578,111 @@ run(`set(quux, true)`);
                 </summary>
 
                 <blockquote>
-
+                    This one might be the most exciting chapter for me! The 
+                    browser yields many under-explored artforms. Up to this 
+                    point, have I been drawing without a canvas?
                 </blockquote>
 
                 <p>
-                    --
+                    I've had my eyes on SVG & canvas. The book doesn't go much 
+                    into SVG, which is understandable since JavaScript isn't a 
+                    requirement for its use. Canvas is the mainstay, but 
+                    there's enough covered to think that one chapter in a 
+                    textbook is more of just an introduction than anything 
+                    else. It's a welcome one, since one of the troubles with 
+                    learning Canvas is having an idea of where to start, but 
+                    now that I've peeked at the 
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D" target="_blank">Canvas 
+                    2d context API</a>, I realize that this chapter actually 
+                    covers a significant chunk of what it can do. Its power 
+                    comes from getting creative with the toolset, which I 
+                    thought would've been bigger for all that it's capable of. 
+                    But it really goes to show how effective this chapter is 
+                    at throwing you into canvas concepts.
+                </p>
+
+                <ul>
+                    <li>
+                        <code>&lt;svg xmlns="http://www.w3.org/2000/svg"&gt;</code>// SVG uses a an HTML-embeddable XML namespace separate from the rest of the document; xmlns makes the element & its children into a different namespace
+                    </li>
+                    <li>
+                        // elements like circle & rect that are SVG-only tags can be interacted with through the DOM like regular HTML elements
+                    </li>
+                    <li>
+                        <code>&lt;canvas width="300" height="150"&gt;&lt;/canvas&gt;</code> // canvas more directly interacts with pixels without keeping whole mathematical constructs like SVG; its default size is 300px wide by 150px tall, and it's transparent by default
+                    </li>
+                    <li>
+                        <code>const ctx = canvasElement.getContext("2d")</code> // standard code for interacting with the canvas; it's entirely JS interfaces, with the specific interface depending on the getContext arg ("2d", "webgl", "webgpu", "webgl2", ...)
+                    </li>
+                    <li>
+                        // the chapter is about the "2d" context, which is the one context preferred for 2d canvas rendering; the other main ones focus on 3d rendering
+                    </li>
+                    <li>
+                        <code>ctx.fillStyle = "red"; ctx.strokeStyle = "blue"; ctx.lineWidth = 5;</code> // 2d canvas sets up with relevant properties of the context being set before a command to draw things to the screen
+                    </li>
+                    <li>
+                        <code>ctx.fillRect(x, y, width, height); ctx.strokeRect(x, y, width, height);</code> // stroke draws an outline, fill makes the color occupy the defined inner space
+                    </li>
+                    <li>
+                        <code>ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineTo(x3, y3); ctx.stroke(); ctx.fill();</code> // beginpath starts a new path whose elements will all be stroked or filled together, moveTo lifts the pen and places it at the specified position, lineTo moves to the specified position without lifting the pen, and the stroke & fill will color in the lines or the closed space between them
+                    </li>
+                    <li>
+                        <code>ctx.quadraticCurveTo(controlPointx, controlPointy, nextPointX, nextPointY)</code> // paths from current point to nextPoint by first moving directly toward controlPoint & curving such that its arrival at nextPoint points directly away from controlPoint
+                    </li>
+                    <li>
+                        <code>ctx.bezierCurveTo(ctrlPt1x, ctrlPt1y, ctrlPt2x, ctrlPt2y, nextPointX, nextPointY)</code> // like the above, but there's one control point for the current point and another control point for the next point
+                    </li>
+                    <li>
+                        <code>ctx.closePath()</code> // takes the path along a straight line to close the figure (often to the last moveTo element)
+                    </li>
+                    <li>
+                        <code>ctx.arc(centerX, centerY, radius, startAngleRadians, endAngleRadians)</code> // draws an arc of a circle from the specified figure; angle at 0 means the rightmost end of the circle, and angle at pi/2 means the bottom of the circle
+                    </li>
+                    <li>
+                        // to start a new path so that filling & stroking doesn't affect other elements, call beginPath() again
+                    </li>
+                    <li>
+                        <code>ctx.font = "italic 28px monospace"; ctx.fillText('abc', 10, 50); ctx.strokeText('123', 10, 100)</code> // can draw text; coordinates specify the bottom left of the text by default, but this can change with textAlign and textBaseline properties
+                    </li>
+                    <li>
+                        <code>imgElement.addEventListener('load', () => ctx.drawImage(imgElement, x, y));</code> // can draw bitmaps of images onto the canvas
+                    </li>
+                    <li>
+                        <code>ctx.clearRect(x, y, width, height)</code> // clears the canvas within the specified rectangle
+                    </li>
+                    <li>
+                        <code>ctx.drawImage(img, xInImg, yInImg, widthInImg, heightInImg, xInCanvas, yInCanvas, widthInCanvas, heightInCanvas);</code> // 9-arg spritesheet-type image draw; specifies rectangle w/ respect to top left of the image to select a crop area, then specifies rectangle w/ respect to the top left of the canvas to select a draw location for the cropped image
+                    </li>
+                    <li>
+                        <code>ctx.drawImage(otherCanvas, ...)</code> // can also draw from another canvas element, from an SVG, or even from a video frame
+                    </li>
+                    <li>
+                        <code>ctx.scale(xMultiplicand, yMultiplicand); ctx.translate(xDisplacement, yDisplacement); ctx.rotate(clockwiseRadians);</code> // applies transformations to any draw definitions (like stroke or arc or even other transforms) that come after it; everything happens about the origin, which starts at the top left corner but can move with translate method calls
+                    </li>
+                    <li>
+                        // TRANSFORMS STACK WITH ONE ANOTHER; rotate pi/2 & translate right will move the origin (and all subsequent draws) DOWNWARD, while translate right then rotate pi/2 will move the origin (& subsequent draws) RIGHTWARD
+                    </li>
+                    <li>
+                        <code>ctx.save(); ctx.translate(20, 20); ctx.fillRect(10, 10, 10, 10); ctx.restore(); ctx.fillRect(10, 10, 10, 10);</code> // save() bookmarks the current transform state, and restore() recovers it; this code moves the origin to (20, 20), draws a rectangle at (10, 10) with respect to it ((30, 30) with respect to the default position), then recovers the origin being at (0, 0) before drawing a rectangle at (10, 10) ((10, 10) with respect to the default position)
+                    </li>
+                    <li>
+                        <code>ctx.resetTransform()</code> // fully resets all transformations; origin is back at the top-left, x is right & y is down, and everything is at the same scale
+                    </li>
+                    <li>
+                        <code>ctx.scale(-1, 0.1)</code> // mirrors elements about the x-axis but squishes them close along the y-axis; intuitively does the same about the y-axis & can be used to mirror about the origin with both args negative
+                    </li>
+                    <li>
+                        // graphics interface recommendations are to use HTML/DHTML for textful elements, SVG for scalable custom-shaped elements that provide much of the functionality that comes with HTML tags, and canvas to leverage per-pixel rendering tasks (esp. postprocessing or using large numbers of elements)
+                    </li>
+                </ul>
+
+                <p>
+                    After this, I'm more confident in exploring the other 
+                    powerful browser rendering techs instead of just 
+                    defaulting to DHTML & CSS3 for artistic Web pages. And 
+                    there are some visual effects I've seen that are suddenly 
+                    a lot less mysterious now. Maybe I'll be making mysteries 
+                    for those after me to ponder, too!
                 </p>
 
                 <h2>
@@ -3590,28 +3693,271 @@ run(`set(quux, true)`);
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 17.1 - Shapes
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <iframe srcdoc="
+<canvas width=&quot;600&quot; height=&quot;200&quot;></canvas>
+<script>
+  let cx = document.querySelector(&quot;canvas&quot;).getContext(&quot;2d&quot;);
+  cx.strokeStyle = 'black';
+
+  const next = () => cx.translate(100, 0);
+
+  const drawTrapezoid = () => {
+    cx.beginPath();
+    cx.moveTo(30, 80);
+    cx.lineTo(70, 80);
+    cx.lineTo(90, 120);
+    cx.lineTo(10, 120);
+    cx.closePath();
+    cx.stroke();
+  };
+
+  const drawRhombus = () => {
+    cx.save();
+    cx.fillStyle = 'red';
+    cx.translate(50, 100);
+    cx.rotate(Math.PI / 4);
+    cx.fillRect(-25, -25, 50, 50);
+    cx.restore();
+  };
+
+  const drawZigZag = () => {
+    cx.beginPath();
+
+    let [x, y] = [10, 65];
+    cx.moveTo(x, y);
+    
+    for(let i = 0; i < 12; i++) {
+      x = 100 - x;
+      y += 6;
+      
+      cx.lineTo(x, y);
+    }
+
+    cx.stroke();
+  };
+
+  const drawSpiral = () => {
+    cx.save();
+    cx.translate(50, 100);
+    cx.rotate(Math.PI / 4);
+    
+    cx.beginPath();
+    cx.moveTo(0, 0);
+    let length = 1;
+    let scale = 1.03;
+    let rotation = 0.14;
+    let delRotation = rotation / 500;
+    for(let i = 0; i < 100; i++) {
+      cx.lineTo(length, 0);
+      cx.translate(length, 0);
+      cx.rotate(rotation);
+
+      length *= scale;
+      rotation *= 1.01;
+    }
+
+    cx.stroke();
+    cx.restore();
+  };
+
+  const drawStar = () => {
+    cx.save();
+
+    cx.fillStyle = 'purple';
+    cx.translate(50, 100);
+    cx.beginPath();
+    cx.moveTo(50, 0);
+    for(let i = 0; i < 8; i++) {
+      cx.rotate(Math.PI / 4);
+      cx.quadraticCurveTo(0, 0, 50, 0);
+    }
+
+    cx.fill();
+
+    cx.restore();
+  };
+
+  drawTrapezoid();
+  next();
+  drawRhombus();
+  next();
+  drawZigZag();
+  next();
+  drawSpiral();
+  next();
+  drawStar();
+</script>
+                            " width="600" height="200"></iframe>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 17.2 - The Pie Chart
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <iframe srcdoc="
+<canvas width=&quot;600&quot; height=&quot;300&quot;></canvas>
+<script>
+  const results = [
+    {name: &quot;Satisfied&quot;, count: 1043, color: &quot;lightblue&quot;},
+    {name: &quot;Neutral&quot;, count: 563, color: &quot;lightgreen&quot;},
+    {name: &quot;Unsatisfied&quot;, count: 510, color: &quot;pink&quot;},
+    {name: &quot;No comment&quot;, count: 175, color: &quot;silver&quot;}
+  ];
+
+  let cx = document.querySelector(&quot;canvas&quot;).getContext(&quot;2d&quot;);
+  let total = results
+    .reduce((sum, {count}) => sum + count, 0);
+  let currentAngle = -0.5 * Math.PI;
+  let centerX = 300, centerY = 150;
+
+  // Add code to draw the slice labels in this loop.
+  cx.font = 'bold 20px monospace';
+  for (let result of results) {
+    let sliceAngle = (result.count / total) * 2 * Math.PI;
+    let textPositionAngle = currentAngle + sliceAngle / 2;
+    
+    cx.beginPath();
+    cx.arc(centerX, centerY, 100,
+           currentAngle, currentAngle + sliceAngle);
+    currentAngle += sliceAngle;
+    cx.lineTo(centerX, centerY);
+    cx.fillStyle = result.color;
+    cx.fill();
+
+    cx.fillStyle = 'black';
+    cx.textBaseline = 
+      textPositionAngle <= Math.PI && textPositionAngle > 0 
+      ? 
+      'top'
+      :
+      'middle'
+    ;
+    cx.textAlign = 
+      textPositionAngle > Math.PI / 2
+      ?
+      'end'
+      :
+      'start'
+    ;
+    cx.fillText(
+      result.name, 
+      centerX + 110 * Math.cos(textPositionAngle),
+      centerY + 110 * Math.sin(textPositionAngle)
+    );
+  }
+</script>
+                            " width="600" height="300"></iframe>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 17.3 - A Bouncing Ball
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <iframe srcdoc="
+<canvas width=&quot;400&quot; height=&quot;400&quot;></canvas>
+<script>
+  let cx = document.querySelector(&quot;canvas&quot;).getContext(&quot;2d&quot;);
+  cx.fillStyle = 'purple';
+
+  const ball = Object.create(null);
+  ball.radius = 50;
+  ball.speed = 200;
+  ball.angle = 2 * Math.PI * Math.random();
+  ball.position = {
+    x: ball.radius + Math.random() * (400 - 2 * ball.radius),
+    y: ball.radius + Math.random() * (400 - 2 * ball.radius)
+  };
+  ball.velocity = {
+    x: ball.speed * Math.cos(ball.angle),
+    y: ball.speed * Math.sin(ball.angle)
+  };
+
+  let lastTime = null;
+  function frame(time) {
+    if (lastTime != null) {
+      updateAnimation(Math.min(100, time - lastTime) / 1000);
+    }
+    lastTime = time;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  function updateAnimation(step) {
+    let [xAddend, yAddend] = 
+      [ball.velocity.x * step, ball.velocity.y * step]
+    ;
+
+    let [desiredX, desiredY] = 
+      [
+        ball.position.x + xAddend,
+        ball.position.y + yAddend
+      ]
+    ;
+
+    if(desiredX + ball.radius > 400) {
+      ball.velocity.x = -ball.velocity.x;
+      xAddend = desiredX + ball.radius - 400;
+    } else if(desiredX - ball.radius < 0) {
+      ball.velocity.x = -ball.velocity.x;
+      xAddend = ball.radius - desiredX;
+    }
+
+    if(desiredY + ball.radius > 400) {
+      ball.velocity.y = -ball.velocity.y;
+      yAddend = desiredY + ball.radius - 400;
+    } else if(desiredY - ball.radius < 0) {
+      ball.velocity.y = -ball.velocity.y;
+      yAddend = ball.radius - desiredY;
+    }
+
+    ball.position.x += xAddend;
+    ball.position.y += yAddend;
+
+    cx.clearRect(0, 0, 400, 400);
+
+    cx.beginPath();
+    cx.arc(ball.position.x, ball.position.y, ball.radius,
+           0, 7)
+    ;
+    cx.fill();
+  };
+</script>
+                            " width="500", height="500"></iframe>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+                                Exercise 17.4 - Precomputed Mirroring
+                            </summary>
+
+                            <p>
+                                This is a design brainstorming exercise rather 
+                                than a coding exercise.
+                            </p>
+
+                            <p>
+                                To avoid having to re-compute a mirrored 
+                                element for canvas, you can just overlay a DOM 
+                                element. Or better yet, overlay another canvas 
+                                and preload the transform by applying it to 
+                                that instead. But for even better performance 
+                                with visual elements animating in quantity, 
+                                you might just use a gif image or other 
+                                lightweight animated image format like apng.
+                            </p>
+
+                            <p>
+                                The title of this exercise feels like a 
+                                hint...
+                            </p>
                         </details>
                     </li>
                 </ul>
@@ -3625,7 +3971,7 @@ run(`set(quux, true)`);
                 </summary>
 
                 <blockquote>
-
+                    
                 </blockquote>
 
                 <p>
