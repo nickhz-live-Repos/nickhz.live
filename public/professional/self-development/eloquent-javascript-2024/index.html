@@ -4178,13 +4178,10 @@ a=abc&b=123
                             </summary>
 
                             <p>
-                                This exercise has domain dependencies on the 
-                                textbook site. Because there is no 
-                                "Access-Control-Allow-Origin" property on the 
-                                requested resource's response header, the 
-                                browser does not allow this script to run from 
-                                my domain, or any domain outside the 
-                                textbook's website. 
+                                Hosting this exercise here would be 
+                                hotlinking a resource from the Eloquent 
+                                JavaScript site, so it is not demonstrated 
+                                here. 
                                 <a href="https://eloquentjavascript.net/18_http.html#i-uaWwL8WGXf" target="_blank">Here's 
                                 the link to the exercise</a>, and below is my 
                                 solution that can be pasted into the code box.
@@ -4327,12 +4324,51 @@ for(const type of mediaTypes) {
                 </summary>
 
                 <blockquote>
-
+                    Redux?
                 </blockquote>
 
                 <p>
-                    --
+                    This is the last of the browser JavaScript chapters. The 
+                    project structure here echoes a React application with 
+                    the component-based structure & state management, and I 
+                    don't think that's an accident. Looking back at previous 
+                    editions, then sure enough, this structure only came about 
+                    when React hit the author's lips. I can appreciate the 
+                    thoughtfulness of directing the skill in a way that's 
+                    marketable. 
                 </p>
+
+                <p>
+                    That said, I believe that knowledge of plain JavaScript, 
+                    like from this book, will get a lot more mileage than 
+                    knowledge of any particular UI library or framework that's 
+                    built on top of JavaScript. Over the course of this book, 
+                    I've learned more about all the frontend frameworks at 
+                    once. It's fine enough to see how a stateful frontend 
+                    application is structured without so many layers of 
+                    abstraction, but I put this architecture firmly in the 
+                    category of being a preference or tool rather than being 
+                    the right way to do things. It's one methodology out of 
+                    the many that can be composed with this knowledge.
+                </p>
+
+                <ul>
+                    <li>
+                        <code>newState = {...oldState, ...stateUpdates}</code> // this overrides same-named properties in the old state to create a merged state
+                    </li>
+                    <li>
+                        <code>for(const {property1, property2} of someObject) { ... }</code> // object destructure as for-of loop iteration entry
+                    </li>
+                    <li>
+                        <code>linkElement.href = canvasElement.toDataURL(); linkElement.download = 'image.png'; link.click();</code> // can get an image URL from a canvas element, choose a file name for it, and click on a link leading to that URL to save an image from a canvas
+                    </li>
+                    <li>
+                        <code>canvasContext.getImageData(0, 0, canvasWidth, canvasHeight).data</code> // can get image data from a canvas with this; data is a 1D array of color & alpha channels per pixel ([R1, G1, B1, A1, R2, G2, B2, A2, R3, ...] where each number denotes a pixel, value 0-255), and this may be prepared with a canvas context that has a drawImage, to get all data from a raw image
+                    </li>
+                    <li>
+                        <code>number.toString(16)</code> // changes the radix or base of a number; easy conversion to hex
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 19 Exercises
@@ -4342,28 +4378,297 @@ for(const type of mediaTypes) {
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 19.1 - Keyboard Bindings
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/19_paint.html#i-BUum8+bZXE" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>
+&lt;div&gt;&lt;/div&gt;
+&lt;script&gt;
+  // The original PixelEditor class. Extend the constructor.
+  class PixelEditor {
+    constructor(state, config) {
+      let {tools, controls, dispatch} = config;
+      this.state = state;
+
+      const toolKeyMap = Object.create(null);
+      for(const tool in tools) {
+        toolKeyMap[tool[0].toLowerCase()] = tool;
+      }
+
+      this.canvas = new PictureCanvas(state.picture, pos =&gt; {
+        let tool = tools[this.state.tool];
+        let onMove = tool(pos, this.state, dispatch);
+        if (onMove) {
+          return pos =&gt; onMove(pos, this.state, dispatch);
+        }
+      });
+      this.controls = controls.map(
+        Control =&gt; new Control(state, config));
+      this.dom = elt("div", { 
+        tabIndex: 0,
+        onkeydown: event =&gt; { 
+          let selectedTool = null;
+          
+          if(event.key === 'z' && event.ctrlKey || event.metaKey) {
+            event.preventDefault();
+            dispatch({undo: true});
+          } else if(event.key in toolKeyMap) {
+            event.preventDefault();
+            dispatch({tool: toolKeyMap[event.key]});
+          }
+        }
+      }, this.canvas.dom, elt("br"),
+                     ...this.controls.reduce(
+                       (a, c) =&gt; a.concat(" ", c.dom), []));
+    }
+    syncState(state) {
+      this.state = state;
+      this.canvas.syncState(state.picture);
+      for (let ctrl of this.controls) ctrl.syncState(state);
+    }
+  }
+
+  document.querySelector("div")
+    .appendChild(startPixelEditor({}));
+&lt;/script&gt;
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 19.2 - Efficient Drawing
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/19_paint.html#i-N6J15nL9us" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>
+&lt;div&gt;&lt;/div&gt;
+&lt;script&gt;
+  const picDiff = (oldPic, newPic) =&gt; {
+    const xLimit = Math.min(oldPic.width, newPic.width);
+    const yLimit = Math.min(oldPic.height, newPic.height);
+    const diff = [];
+
+    for(let x = 0; x &lt; xLimit; x++) {
+      for(let y = 0; y &lt; yLimit; y++) {
+        if(oldPic.pixel(x, y) !== newPic.pixel(x, y)) {
+          diff.push({x, y});
+        }
+      }
+    }
+
+    return diff;
+  };
+  
+  // Change this method
+  PictureCanvas.prototype.syncState = function(picture) {
+    if (this.picture == picture) return;
+
+    let diff = null;
+    if(this.picture) {
+      diff = picDiff(this.picture, picture);
+    }
+    
+    this.picture = picture;
+    drawPicture(this.picture, diff, this.dom, scale);
+  };
+
+  function firstDraw(picture, cx, scale) {
+    for (let y = 0; y &lt; picture.height; y++) {
+      for (let x = 0; x &lt; picture.width; x++) {
+        cx.fillStyle = picture.pixel(x, y);
+        cx.fillRect(x * scale, y * scale, scale, scale);
+      }
+    }
+  }
+
+  // You may want to use or change this as well
+  function drawPicture(picture, diff, canvas, scale) {
+    let cx = canvas.getContext("2d");
+
+    if(!diff) {
+      canvas.width = picture.width * scale;
+      canvas.height = picture.height * scale;
+      firstDraw(picture, cx, scale);
+    } else {
+      for(const coord of diff) {
+        cx.fillStyle = picture.pixel(coord.x, coord.y);
+        cx.fillRect(coord.x * scale, coord.y * scale, scale, scale);
+      }
+    }
+  }
+
+  document.querySelector("div")
+    .appendChild(startPixelEditor({}));
+&lt;/script&gt;
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 19.3 - Circles
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/19_paint.html#i-lH0RbmdIJo" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>
+&lt;div&gt;&lt;/div&gt;
+&lt;script&gt;
+  function circle(start, state, dispatch) {
+    function drawCircle(pos) {
+      let diff = {x: Math.abs(pos.x - start.x), y: Math.abs(pos.y - start.y)};
+      let rSquared = diff.x * diff.x + diff.y * diff.y;
+      let[maxX, maxY] = [state.picture.width, state.picture.height];
+
+      let drawn = [];
+      for(let x = 0; x &lt; maxX; x++) {
+        for(let y = 0; y &lt; maxY; y++) {
+          const xDiff = Math.abs(x - start.x);
+          const yDiff = Math.abs(y - start.y);
+          if(xDiff * xDiff + yDiff * yDiff &lt;= rSquared) {
+            drawn.push({x, y, color: state.color});
+          }
+        }
+      }
+      
+      dispatch({picture: state.picture.draw(drawn)});
+    }
+    drawCircle(start);
+    return drawCircle;
+  }
+
+  let dom = startPixelEditor({
+    tools: {...baseTools, circle}
+  });
+  document.querySelector("div").appendChild(dom);
+&lt;/script&gt;
+                            </pre>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+                                Exercise 19.4 - Proper Lines
+                            </summary>
+
+                            <p>
+                                This exercise has in-page dependencies on the 
+                                textbook site. 
+                                <a href="https://eloquentjavascript.net/19_paint.html#i-gbSk/YiRrs" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>
+&lt;div&gt;&lt;/div&gt;
+&lt;script&gt;
+  // The old draw tool. Rewrite this.
+  function draw(start, state, dispatch) {
+    function getSubLine(lastX, lastY, thisX, thisY, state) { // (pos)
+      const [xDiff, yDiff] = 
+        [thisX - lastX, thisY - lastY]
+      ;
+      let [xFactor, yFactor] = [
+        xDiff &gt;= 0 ? 1 : -1,
+        yDiff &gt;= 0 ? 1 : -1
+      ];
+      const abslope = Math.abs(yDiff) / Math.abs(xDiff);
+      
+      let drawn = [];
+
+      if(abslope &lt;= 1) {
+        let limit = Math.abs(xDiff);
+        yFactor = xFactor * yDiff / xDiff;
+        for(let i = 0; i &lt; limit; i++) {
+          drawn.push({x: lastX + i * xFactor, y: lastY + Math.round(i * yFactor), color: state.color})
+        }
+      } else {
+        let limit = Math.abs(yDiff);
+        xFactor = yFactor * xDiff / yDiff;
+        for(let i = 0; i &lt; limit; i++) {
+          drawn.push({x: lastX + Math.round(i * xFactor), y: lastY + i * yFactor, color: state.color})
+        }
+      }
+      
+      return drawn;
+    }
+    
+    function drawPixel({x, y}, state) {
+      let drawn = [];
+      if(state.lastDrawn && Date.now() - state.lastDrawn &lt; 200) {
+        drawn = getSubLine(
+          state.lastX, state.lastY, x, y, state
+        );
+      }
+      drawn.push({x, y, color: state.color});
+      
+      dispatch({picture: state.picture.draw(drawn), lastX: x, lastY: y, lastDrawn: Date.now()});
+    }
+    drawPixel(start, state);
+    return drawPixel;
+  }
+
+  function line(start, state, dispatch) {
+    function drawLine(pos) {
+      const [xDiff, yDiff] = 
+        [pos.x - start.x, pos.y - start.y]
+      ;
+      let [xFactor, yFactor] = [
+        xDiff &gt;= 0 ? 1 : -1,
+        yDiff &gt;= 0 ? 1 : -1
+      ];
+      const abslope = Math.abs(yDiff) / Math.abs(xDiff);
+      
+      let drawn = [];
+
+      if(abslope &lt;= 1) {
+        let limit = Math.abs(xDiff);
+        yFactor = xFactor * yDiff / xDiff;
+        for(let i = 0; i &lt; limit; i++) {
+          drawn.push({x: start.x + i * xFactor, y: start.y + Math.round(i * yFactor), color: state.color})
+        }
+      } else {
+        let limit = Math.abs(yDiff);
+        xFactor = yFactor * xDiff / yDiff;
+        for(let i = 0; i &lt; limit; i++) {
+          drawn.push({x: start.x + Math.round(i * xFactor), y: start.y + i * yFactor, color: state.color})
+        }
+      }
+      
+      dispatch({picture: state.picture.draw(drawn)});
+    }
+    drawLine(start);
+    return drawLine;
+  }
+
+  let dom = startPixelEditor({
+    tools: {draw, line, fill, rectangle, pick}
+  });
+  document.querySelector("div").appendChild(dom);
+&lt;/script&gt;
+</pre>
                         </details>
                     </li>
                 </ul>
@@ -4558,27 +4863,10 @@ for(const type of mediaTypes) {
 
         <script title="chapter  exercises">
             /*
-                attempting cross-origin request for chapter 18 exercises...
-
-                currently thinking this won't work, but if working in quality 
-                taught me anything, it's to "trust, but verify"
+                
             */
             {
-                const mediaTypes = [
-                    'text/plain', 
-                    'text/html', 
-                    'application/json', 
-                    'application/rainbows+unicorns'
-                ];
-
-                for(const type of mediaTypes) {
-                    fetch('https://eloquentjavascript.net/author', { method: 'GET', headers:{Accept: type} })
-                        .then(response => response.text())
-                        .then(text => { 
-                            console.log(`For ${type}:\n\n${text}\n\n==========\n\n`);
-                        })
-                    ;
-                }
+                
             };
 
             /*
