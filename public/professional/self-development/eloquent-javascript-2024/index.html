@@ -3948,10 +3948,7 @@ run(`set(quux, true)`);
                                 element for canvas, you can just overlay a DOM 
                                 element. Or better yet, overlay another canvas 
                                 and preload the transform by applying it to 
-                                that instead. But for even better performance 
-                                with visual elements animating in quantity, 
-                                you might just use a gif image or other 
-                                lightweight animated image format like apng.
+                                that instead.
                             </p>
 
                             <p>
@@ -3971,12 +3968,203 @@ run(`set(quux, true)`);
                 </summary>
 
                 <blockquote>
-                    
+                    Now, let's take a look under the hood.
                 </blockquote>
 
                 <p>
-                    --
+                    I think that starting with the actual text of the protocol 
+                    communications is a great way to start when teaching 
+                    fetch. A lot of confusion can be avoided with a concrete 
+                    grounding like this, demystifying what lies beneath what's 
+                    being taught.
                 </p>
+
+                <ul>
+                    <li>
+                        // this is what an HTTP GET request looks like
+                        <pre>
+GET /18_http.html HTTP/1.1
+Host: eloquentjavascript.net
+User-Agent: Your browser's name
+</pre>
+                    </li>
+                    <li>
+                        // this is what's meant by making a GET, POST, PUT, DELETE, PATCH, (...) request; this bit of text declares the method
+                    </li>
+                    <li>
+                        <code>GET /18_http.html HTTP/1.1</code> // HTTP request method, then the resource, then the protocol version
+                    </li>
+                    <li>
+                        // this is what an HTTP GET response looks like
+                        <pre>
+HTTP/1.1 200 OK
+Content-Length: 87320
+Content-Type: text/html
+Last-Modified: Fri, 13 Oct 2023 10:05:41 GMT
+
+&lt;!DOCTYPE html&gt;
+... the rest of the HTML document
+</pre>
+                    </li>
+                    <li>
+                        // a response body need not be an HTML document; it can be just about anything
+                    </li>
+                    <li>
+                        <code>HTTP/1.1 200 OK</code> // protocol version, response code, human-readable response message
+                    </li>
+                    <li>
+                        // HEADERS are the "name: value" pairs present in both requests above (like "<code>Host: eloquentjavascript.net</code>" & "<code>Content-Length: 87320</code>" bytes)
+                    </li>
+                    <li>
+                        <code>Content-Type: text/html</code> // this header tells the browser how to handle displaying the body content
+                    </li>
+                    <li>
+                        // some request types (incl. GET & DELETE) don't require bodies, and some response types (incl. error responses) also don't have bodies; this is technically a soft rule but is typically what Web software is built to support
+                    </li>
+                    <li>
+                        // HTML form element constructs translate into HTTP requests
+
+                        <pre>
+&lt;form method="GET" action="example/message.html"&gt;
+    &lt;input name="a" value="abc"&gt;
+    &lt;input name="b" value="123"&gt;
+    &lt;button type="submit"&gt;
+&lt;/form&gt;
+</pre>
+                        ^ BECOMES:
+                        
+                        <pre>
+GET /example/message.html?a=abc&b=123 HTTP/1.1
+</pre>
+
+                    "GET" from the form method, "/example/message.html" from the form action, "a" & "abc" from the first input, "b" & "123" from the second input, and "HTTP/1.1" version is always added by the browser
+                    </li>
+                    <li>
+                        <code>&lt;form action="example/message.html"&gt;</code> // when no method or "GET" is specified, the inputs are packed into search params / a "query string" (like <code>?a=abc&b=123</code> above)
+                    </li>
+                    <li>
+                        <code>encodeURIComponent("Yes?"); decodeURIComponent("Yes%3F");</code> // the "URL encoding" for characters can be dealt with using these native JavaScript encoder & decoder functions
+                    </li>
+                    <li>
+                        // HTTP methods with bodies handle form-to-HTTP translation differently
+
+                        <pre>
+&lt;form method="POST" action="example/message.html"&gt;
+    &lt;input name="a" value="abc"&gt;
+    &lt;input name="b" value="123"&gt;
+    &lt;button type="submit"&gt;
+&lt;/form&gt;
+</pre>
+                                                    ^ BECOMES:
+                                                    
+                                                    <pre>
+POST /example/message.html HTTP/1.1
+Content-length: 24
+Content-type: application/x-www-form-urlencoded
+
+a=abc&b=123
+</pre>
+                    </li>
+                    <li>
+                        <code>fetch("example/data.txt").then(httpResponse => { ... })</code> // the fetch interface returns a promise that resolves into an object representing an HTTP response
+                    </li>
+                    <li>
+                        <code>httpResponse.status === 200; httpResponse.headers.get("Content-Type") === "text/plain"</code> // the httpResponse object has various identifiers for the items in the plain-text response
+                    </li>
+                    <li>
+                        <code>httpResponse.headers.get("cOnTeNt-TyPe") === "text/plain"</code> // httpResponse objects' header names are not case sensitive
+                    </li>
+                    <li>
+                        <code>fetch("...").then(errorResponse => { ... }, rejection => { ... })</code> // server-side error responses will also RESOLVE a promise, and the inability to get a response will REJECT a promise
+                    </li>
+                    <li>
+                        <code>fetch("...").then(response => response.text()).then(text => console.log(text))</code> // httpResponse.text() gets the response body as text, returned as a Promise because headers may resolve before the full text body does
+                    </li>
+                    <li>
+                        <code>fetch("...").then(r => r.json()).then(json => console.log(json), err => console.log('not valid json'))</code> // similar to the above but for JSON; rejects the Promise if the response isn't valid JSON
+                    </li>
+                    <li>
+                        <code>fetch("...", { method: "DELETE" }).then(httpResponse => { ... })</code> // fetch sends GET requests by default; can change this by adding a config object that sets a different "method" value
+                    </li>
+                    <li>
+                        <code>fetch("...", { method: "POST", headers: {Range: "bytes=8-19", ...}, body: ...}).then(...)</code> // config object can also include header values & body data; body data can be in <a href="https://developer.mozilla.org/en-US/docs/Web/API/RequestInit#body" target="_blank">several different formats</a>
+                    </li>
+                    <li>
+                        <code>... headers: {Range: "bytes=8-19", ...} ...</code> // this becomes the header "Range: bytes=8-19", which means only the 8th through 19th characters of the response body are returned; the typically valid header values are listed <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers" target="_blank">right here</a>
+                    </li>
+                    <li>
+                        // some headers will be overridden or forbidden by the environment, such as "Date" or "Origin" headers
+                    </li>
+                    <li>
+                        <code>Access-Control-Allow-Origin: *</code> // if this header is present in a RESPONSE FROM THE SERVER, it tells the browser that it can request from any origin / domain; this is not default behavior, as <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank">CORS</a> usually disallows this
+                    </li>
+                    <li>
+                        // REMOTE PROCEDURE CALLS are function call requests made to another machine through HTTP & responded to with the return value of that function
+                    </li>
+                    <li>
+                        // the method used by my first backends (Java Servlets / Spring) doesn't technically use remote procedure calls, but instead uses the resources identified in the headers & bodies to configure the operation carried out by the server
+                    </li>
+                    <li>
+                        <code>https://</code> // HTTPS is a layer over HTTP, where before data exchange, the client verifies the server by first requesting a cryptographic certificate issued by a recognized certificate authority, before using cryptography to encode every request that leaves the client or server and only be able to decode it when it gets to its destination
+                    </li>
+                    <li>
+                        // HTML form elements are made selectable through keyboard & tabbing elements; they gain focus & blur listening
+                    </li>
+                    <li>
+                        <code>document.activeElement</code> // the currently focused element in a document; can be useful for HTML forms
+                    </li>
+                    <li>
+                        <code>&lt;input type="text" autofocus /&gt;</code> // the "autofocus" attribute marks a field as focused when the page is loaded; useful for a form-centric page
+                    </li>
+                    <li>
+                        <code>&lt;input type="text" tabindex="1" /&gt;&lt;a href="./"&gt;link&lt;/a&gt;&lt;input type="text" tabindex="2" /&gt;</code> // "tabindex" allows the keyboard selection order to be manually set; tabbing after selecting the first input in this will skip the link and jump to the second input
+                    </li>
+                    <li>
+                        <code>&lt;br tabindex="0" /&gt;</code> // can add tabindex to make any element focusable, and tabIndex="0" can be used to avoid changing the focus order from that
+                    </li>
+                    <li>
+                        <code>&lt;input type="text" disabled /&gt;</code> // disables the element; usable on any form element
+                    </li>
+                    <li>
+                        <code>formElement.elements === {0: inputElement, 1: otherInputElement, nameOfInputElement: inputElement, nameOfOtherInputElement: otherInputElement, ...}</code> // form elements contain an array-like map-like formElement.elements property, detailing the elements used as form controls / inputs, indexed by their "name" attributes
+                    </li>
+                    <li>
+                        <code>&lt;button type="submit"&gt;Click&lt;/ button&gt;</code> // button type="submit" will submit a form's contents, and so will hitting the enter key while the form is focused
+                    </li>
+                    <li>
+                        <code>formElement.addEventListener("submit", submitEvent => { ... })</code> // can use this to fire an action upon form submit; can preventDefault() on the submit event to keep the browser from navigating to the page specified in the form action, with UI instead updated through fetch & DOM manipulation while staying on the page
+                    </li>
+                    <li>
+                        <code>textElement.selectionStart; textElement.selectionEnd;</code> // in a text element (like textarea or input type="password"), these indicate where the cursor / selection is
+                    </li>
+                    <li>
+                        <code>document.querySelectorAll("[name=color]");</code> // selects ALL elements whose "name" attribute is as specified ("color" in this case)
+                    </li>
+                    <li>
+                        <code>&lt;select name="my-selection" multiple&gt;&lt;option value="a"&gt;Alpha&lt;/option&gt;&lt;option value="b"&gt;Beta&lt;/option&gt;&lt;/ select&gt;</code> // select element with "multiple" allows multiple select options to be chosen
+                    </li>
+                    <li>
+                        <code>selectElement.value = lastSelectedOption.value</code> // a select element's "value" property only holds one option's value even when "multiple" is enabled; to check all, one may get the options from the array-like <code>selectElement.options</code> and check the <code>optionElement.selected</code> attribute of every returned option
+                    </li>
+                    <li>
+                        <code>&lt;input type="file" multiple /&gt;</code> // file inputs support a "multiple" attribute
+                    </li>
+                    <li>
+                        <code>inputTypeFileElement.addEventListener("change", event => { input.files[0].name; input.files[0].type })</code> // an input type="file" tag can access the selected file's properties through its "change" event listener
+                    </li>
+                    <li>
+                        <code>let reader = new FileReader(); reader.addEventListener("load", () => { reader.result; }); reader.readAsText(file);</code> // the above CANNOT DIRECTLY ACCESS FILE CONTENT; this requires an asynchronous wrapper to fetch the data, such as a FileReader with a "load" event listener and the file content being assigned to the reader.result property
+                    </li>
+                    <li>
+                        <code>reader.addEventListener("error", () => { reader.error; });</code> // if a file reader fails its operations, it fires an "error" event, and the content of the error can be accessed through the reader.error property
+                    </li>
+                    <li>
+                        <code>localStorage.setItem(key, value); localStorage.getItem(key) === value; localStorage.removeItem(key);</code> // basic usage of localStorage, which stores data between reloads; different domains also get different localStorage scopes
+                    </li>
+                    <li>
+                        <code>sessionStorage.setItem(...); ...</code> // sessionStorage works similarly to localStorage but resets when the session ends (usually just when the browser closes)
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 18 Exercises
@@ -3986,28 +4174,146 @@ run(`set(quux, true)`);
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 18.1 - Content Negotiation
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise has domain dependencies on the 
+                                textbook site. Because there is no 
+                                "Access-Control-Allow-Origin" property on the 
+                                requested resource's response header, the 
+                                browser does not allow this script to run from 
+                                my domain, or any domain outside the 
+                                textbook's website. 
+                                <a href="https://eloquentjavascript.net/18_http.html#i-uaWwL8WGXf" target="_blank">Here's 
+                                the link to the exercise</a>, and below is my 
+                                solution that can be pasted into the code box.
+                            </p>
+
+                            <pre>
+const mediaTypes = [
+  'text/plain', 
+  'text/html', 
+  'application/json', 
+  'application/rainbows+unicorns'
+];
+
+for(const type of mediaTypes) {
+  fetch('/author', { method: 'GET', headers:{Accept: type} })
+    .then(response => response.text())
+    .then(text => { 
+      console.log(`For ${type}:\n\n${text}\n\n==========\n\n`);
+    })
+  ;
+}
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 18.2 - A JavaScript Workbench
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                Below is my solution; it can be pasted into 
+                                the code area in the exercise section 
+                                <a href="https://eloquentjavascript.net/18_http.html#i-wTXvIH5Wds" target="_blank">here 
+                                on the textbook site</a>.
+                            </p>
+
+                            <pre>
+&lt;textarea id="code"&gt;return "hi";&lt;/textarea&gt;
+&lt;button id="button" onclick="executeWorkbench()"&gt;Run&lt;/button&gt;
+&lt;pre id="output"&gt;&lt;/pre&gt;
+
+&lt;script&gt;
+  const code = document.getElementById('code');
+  const button = document.getElementById('button');
+  const output = document.getElementById('output');
+                                
+  const executeWorkbench = () =&gt; {
+    try {
+      output.style.removeProperty('color');
+      output.innerText = Function('', code.value)();
+    } catch(e) {
+      output.style.color = 'red';
+      output.innerText = e;
+    }
+  }
+&lt;/script&gt;
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 18.3 - Conway's Game of Life
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <iframe srcdoc="
+<div id=&quot;grid&quot;></div>
+<button id=&quot;next&quot; onclick=&quot;iterateCells()&quot;>Next generation</button>
+<p id=&quot;readout&quot;></p>
+
+<script>
+    const grid = document.getElementById('grid');
+    const [w, h] = [15, 10];
+    const cells = Array.from({length: h}, item => new Array(w));
+
+    // populates checkboxes / cells
+    for(let i = 0; i < cells.length; i++) {
+    for(let j = 0; j < cells[i].length; j++) {
+        const cell = document.createElement('input');
+        cell.type = 'checkbox';
+        cell.checked = Math.random() < 0.5;
+
+        grid.appendChild(cell);
+        
+        cells[i][j] = cell;
+    }
+    grid.appendChild(document.createElement('br'));
+    }
+
+    const isAlive = (row, col) => {
+    return cells[row]?.[col]?.checked;
+    }
+
+    // suffers from having been reworked a couple times
+    const iterateCells = () => {
+    const cellStates = Array.from({length: h}, item => new Array(w));
+    
+    for(let row = 0; row < cells.length; row++) {
+        for(let col = 0; col < cells[row].length; col++) {
+        let count = 0;
+
+        count += isAlive(row - 1, col - 1) ? 1 : 0;
+        count += isAlive(row - 1, col) ? 1 : 0;
+        count += isAlive(row - 1, col + 1) ? 1 : 0;
+        count += isAlive(row, col - 1) ? 1 : 0;
+        count += isAlive(row, col + 1) ? 1 : 0;
+        count += isAlive(row + 1, col - 1) ? 1 : 0;
+        count += isAlive(row + 1, col) ? 1 : 0;
+        count += isAlive(row + 1, col + 1) ? 1 : 0;
+
+        if(count < 2 || count > 3) {
+            cellStates[row][col] = false;
+        } else if(count === 3) {
+            cellStates[row][col] = true;
+        } else {
+            cellStates[row][col] = cells[row][col].checked;
+        }
+        }
+    }
+
+    for(let row = 0; row < cells.length; row++) {
+        for(let col = 0; col < cells[row].length; col++) {
+        cells[row][col].checked = cellStates[row][col];
+        }
+    }
+    };
+</script>
+" width="400" height="250"></iframe>
                         </details>
                     </li>
                 </ul>
@@ -4252,10 +4558,27 @@ run(`set(quux, true)`);
 
         <script title="chapter  exercises">
             /*
-            
+                attempting cross-origin request for chapter 18 exercises...
+
+                currently thinking this won't work, but if working in quality 
+                taught me anything, it's to "trust, but verify"
             */
             {
+                const mediaTypes = [
+                    'text/plain', 
+                    'text/html', 
+                    'application/json', 
+                    'application/rainbows+unicorns'
+                ];
 
+                for(const type of mediaTypes) {
+                    fetch('https://eloquentjavascript.net/author', { method: 'GET', headers:{Accept: type} })
+                        .then(response => response.text())
+                        .then(text => { 
+                            console.log(`For ${type}:\n\n${text}\n\n==========\n\n`);
+                        })
+                    ;
+                }
             };
 
             /*
