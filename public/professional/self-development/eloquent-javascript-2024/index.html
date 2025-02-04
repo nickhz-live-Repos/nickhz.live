@@ -4723,7 +4723,7 @@ for(const type of mediaTypes) {
                         <code>process.argv = ['node', '/tmp/showargv.js', 'one', '--and', 'two', '-f', '7 8']</code> // this is the argv value from a "showargv.js" script, if the script is invoked with the above command in Node
                     </li>
                     <li>
-                        <code>my-script.mjs</code> // the .mjs extension is for ES modules in Node; they mark support for imports and exports and exclude the "require" function binding
+                        <code>my-script.mjs</code> // the .mjs extension is for ES modules in Node; they mark support for imports and exports and don't need the "require" function binding for modular scripting designs
                     </li>
                     <li>
                         <code>import { thing } from "node:fs"</code> // when the item being imported is not at a file path, Node looks for built-in modules or a node_modules directory; "node:fs" is a built-in filesystem module, so it imports from that
@@ -4819,10 +4819,10 @@ for(const type of mediaTypes) {
                         // NPM documentation declares that all packages, <a href="https://docs.npmjs.com/creating-and-publishing-scoped-public-packages" target="_blank">scoped</a>, <a href="https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages" target="_blank">unscoped</a>, or <a href="https://docs.npmjs.com/creating-and-publishing-private-packages" target="_blank">private</a>, require an NPM user account
                     </li>
                     <li>
-                        <code>import {readFile} from "node:fs"; readFile("file.txt", "utf8", (err, txt) => { if(error) throw error; console.log(txt) });</code> // from Node Filesystem module "node:fs"; readFile takes in a file name, a file character encoding, and a callback function that'll operate on the file's contents
+                        <code>import {readFile} from "node:fs"; readFile("file.txt", "utf8", (error, txt) => { if(error) throw error; console.log(txt) });</code> // from Node Filesystem module "node:fs"; readFile takes in a file name, a file character encoding, and a callback function that'll operate on the file's contents, with the callback operating AFTER the file data returns
                     </li>
                     <li>
-                        <code>readFile("file.txt", (err, bytes) => { if(error) throw error; console.log(`Total bytes: ${bytes.length}\nFirst byte: ${bytes[0]}`) });</code> // with 2 arguments (no character encoding), the file content is read as an array-like object of 8-bit bytes, a "Buffer" type of object
+                        <code>readFile("file.txt", (error, bytes) => { if(error) throw error; console.log(`Total bytes: ${bytes.length}\nFirst byte: ${bytes[0]}`) });</code> // with 2 arguments (no character encoding), the file content is read as an array-like object of 8-bit bytes, a "Buffer" type of object
                     </li>
                     <li>
                         <code>import {writefile} from "node:fs"; writeFile("file.txt", "Some file content!", err => console.log(err));</code> // writeFile does what it says; all text is written with UTF-8 character encoding
@@ -4834,7 +4834,7 @@ for(const type of mediaTypes) {
                         <code>import {readFile} from "node:fs/promises"; readFile("file.txt", "utf8").then(text => console.log(text))</code> // the "node:fs/promises" subpackage restructures node:fs functions to explicitly use Promises
                     </li>
                     <li>
-                        <code>import {readFileSync} from "node:fs"; console.log(readFileSync("file.txt", "utf8"));</code> // node:fs functions have synchronous variants THAT CAUSE ALL PROGRAM OPERATIONS TO WAIT, UP UNTIL THE OPERATION FINISHES
+                        <code>import {readFileSync} from "node:fs"; console.log(readFileSync("file.txt", "utf8"));</code> // node:fs functions have synchronous variants THAT CAUSE ALL PROGRAM OPERATIONS TO WAIT UNTIL THE node:fs OPERATION FINISHES
                     </li>
                     <li>
                         <code>import {createServer} from "node:http";</code> // this function is all it takes to create a simple HTTP server
@@ -5012,28 +5012,28 @@ import {lookup} from "mime-types";
 
 methods.GET = async function(request) {
     <code>// the function described above</code>
-	let path = urlPath(request.url);
-	let stats;
+    let path = urlPath(request.url);
+    let stats;
 
-	try {
+    try {
         <code>// checks if file exists and whether it's a directory</code>
-		stats = await stat(path);
-	} catch(error) {
+        stats = await stat(path);
+    } catch(error) {
         <code>// error.code "ENOENT" means stat didn't find the file</code>
-		if(error.code != "ENOENT") throw error;
-		else return {status: 404, body: "File not found"};
-	}
+        if(error.code != "ENOENT") throw error;
+        else return {status: 404, body: "File not found"};
+    }
 
-	if(stats.isDirectory()) {
+    if(stats.isDirectory()) {
         <code>// newline-separated files in the requested path</code>
-		return {body: (await readdir(path)).join("\n")};
-	} else {
+        return {body: (await readdir(path)).join("\n")};
+    } else {
         <code>// returns the file reader for the given path, along with the MIME type associated with the file extension</code>
-		return {
-			body: createReadStream(path),
-			type: lookup(path)
-		};
-	}
+        return {
+            body: createReadStream(path),
+            type: lookup(path)
+        };
+    }
 };
 </pre>
                     </li>
@@ -5114,28 +5114,107 @@ function pipeStream(from, to) {
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 20.1 - Search Tool
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise runs in a live Node.js 
+                                environment.
+                            </p>
+
+                            <pre>
+import {stat, readFile, readdir} from 'node:fs';
+import {sep} from 'node:path';
+
+const regex = new RegExp(process.argv[2]);
+const fileNames = process.argv.slice(3);
+const encoding = 'utf8';
+
+console.log(`\nFILES WHOSE CONTENT MATCHES WITH REGEX "${regex}":\n`);
+
+const doGrep = (files) => {
+    for(const filePath of files) {
+        stat(filePath, (err, stats) => {
+            if(err) {
+                console.log(err);
+                return;
+            }
+
+            if(stats.isFile()) {
+                readFile(filePath, encoding, (err, text) => {
+                    if(err) {
+                        console.warn(err);
+                        return;
+                    } else if(regex.test(text)) {
+                        console.log(filePath);
+                    }
+                });
+            } else if(stats.isDirectory()) {
+                readdir(filePath, (err, folderContents) => {
+                    if(err) {
+                        console.warn(err);
+                        return;
+                    }
+
+                    folderContents = folderContents.map((entry) => filePath + sep + entry);
+
+                    doGrep(folderContents);
+                });
+            }
+        });
+    }
+};
+
+doGrep(fileNames);
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 20.2 - Directory Creation
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <p>
+                                This exercise runs in a live Node.js 
+                                environment, and to run it, it should be 
+                                pasted into the 
+                                <a href="https://eloquentjavascript.net/code/file_server.mjs" target="_blank">file_server.mjs 
+                                file that's on the textbook site</a>. This 
+                                code will allow the server script to execute 
+                                the "MKDIR" HTTP method on the given URL path 
+                                (i.e., the command <code>curl -X MKDIR 
+                                http://localhost:8000/my-directory</code> 
+                                while the script runs will allow the script to 
+                                create a "my-directory" folder).
+                            </p>
+
+                            <pre>
+import {mkdir} from "node:fs/promises";
+
+methods.MKCOL = async function(request) {
+    let path = urlPath(request.url);
+    try {
+        await stat(path);
+    } catch(error) {
+        if(error.code != "ENOENT") throw error;
+        await mkdir(path);
+    }
+
+    return {status: 204};
+};
+</pre>
                         </details>
                     </li>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 20.3 - A Public Space on the Web
                             </summary>
 
-                            <code id="exercise-"></code>
+                            <pre>
+
+</pre>
                         </details>
                     </li>
                 </ul>
