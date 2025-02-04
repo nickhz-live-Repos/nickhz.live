@@ -2290,7 +2290,7 @@ function verify(regexp, yes, no) {
 
                 <ul>
                     <li>
-                        <code>async function readFile(filename) { try {await new Promise(...); return 'success'; } catch(reason) { throw new Error('failure'); } };</code> // async function returns a Promise but writes like a synchronous function
+                        <code>async function readFile(filename) { try {await new Promise(...); return 'success'; } catch(reason) { throw new Error('failure'); } };</code> // ANY FUNCTION MARKED "async" RETURNS A PROMISE; it just writes like a synchronous function
                     </li>
                     <li>
                         <code>await new Promise(...)</code> // await can ONLY be used in async functions; it awaits the resolution of any Promise value and either returns the resolution value or throws the reason from a rejection, continuing with the rest of the code after it's done waiting
@@ -2324,6 +2324,12 @@ function verify(regexp, yes, no) {
                         // asynchronous code runs on its own call stack, not on the main thread; keeps exceptions thrown in them from ever reaching a catch statement outside of a Promise or async function
                     </li>
                 </ul>
+
+                <p>
+                    ASYNC FUNCTIONS RETURN PROMISES. That's a big thing to not 
+                    forget, because an async function is a easier to interpret 
+                    than the Promise constructor
+                </p>
 
                 <h2>
                     Chapter 11 Exercises
@@ -4348,8 +4354,8 @@ for(const type of mediaTypes) {
                     application is structured without so many layers of 
                     abstraction, but I put this architecture firmly in the 
                     category of being a preference or tool rather than being 
-                    the right way to do things. It's one methodology out of 
-                    the many that can be composed with this knowledge.
+                    the one right way to do things. It's a single methodology 
+                    out of the many that can be composed with this knowledge. 
                 </p>
 
                 <ul>
@@ -4682,12 +4688,423 @@ for(const type of mediaTypes) {
                 </summary>
 
                 <blockquote>
-
+                    Into the last terminal.
                 </blockquote>
 
                 <p>
-                    --
+                    Having the client & server both speak the same language is 
+                    absolutely stellar for understanding what's going on in 
+                    the client-server interaction. For all the flak you can 
+                    give to server-side JavaScript, Node.js and browser 
+                    JavaScript are a powerful toolset when it comes to 
+                    learning & teaching about fullstack applications.
                 </p>
+
+                <ul>
+                    <li>
+                        <code>node hello-world.js</code> // runs the given JavaScript file and will output to the terminal; scripts run in Node have no global "this" binding by default, though some global objects like <code>process</code> are available in node
+                    </li>
+                    <li>
+                        <code>node</code> // without an argument, the Node command opens the Node console, which works similarly to the browser developer tools console; standalone lines of JavaScript can be entered & executed here
+                    </li>
+                    <li>
+                        <code>process.exit(0)</code> // in the Node console, this ends the console session and returns the command line to the context that called Node
+                    </li>
+                    <li>
+                        <code>process.exit(number)</code> // any code other than 0 is an error code
+                    </li>
+                    <li>
+                        <code>process.argv</code> // holds the command line arguments given to the running script
+                    </li>
+                    <li>
+                        <code>node showargv.js one --and two -f "7 8"</code> // outputs an array containing all the space-separated items in the command to Node, including the path to Node.exe and the .js file path
+                    </li>
+                    <li>
+                        <code>process.argv = ['node', '/tmp/showargv.js', 'one', '--and', 'two', '-f', '7 8']</code> // this is the argv value from a "showargv.js" script, if the script is invoked with the above command in Node
+                    </li>
+                    <li>
+                        <code>my-script.mjs</code> // the .mjs extension is for ES modules in Node; they mark support for imports and exports and exclude the "require" function binding
+                    </li>
+                    <li>
+                        <code>import { thing } from "node:fs"</code> // when the item being imported is not at a file path, Node looks for built-in modules or a node_modules directory; "node:fs" is a built-in filesystem module, so it imports from that
+                    </li>
+                    <li>
+                        <code>import { robot } from "robot"</code> // this looks for a JavaScript library in "node_modules/robot" that would commonly be installed into node_modules through Node Package Manager (NPM)
+                    </li>
+                    <li>
+                        // a Node library is just a module script that runs in Node; the below is an example
+
+                        <ul>
+                            <li>
+                                <code>export default (a, b) => a + b</code> // this is the content of "folder/add.mjs"
+                            </li>
+                            <li>
+                                <code>import adder from "./add.mjs"; console.log(adder(process.argv[2], process.argv[3]));</code> // this is the content of "folder/main.mjs"
+                            </li>
+                            <li>
+                                <code>node main.js 3 5</code> // 35 is the console output from this whenever Node is run from the "folder/" context
+                            </li>
+                            <li>
+                                // Node args are automatically cast to strings by default, and "add.mjs" is termed as a library
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        // Node Package Manager (NPM) is an online JavaScript module repository, and the "npm" command comes packaged with Node.js
+
+                        <ul>
+                            <li>
+                                <code>npm install ini</code> // installs the "ini" package from the NPM online repository; many packages are lightweight, and this install runs in less than a second, with it functionally just adding a 7kB "node_modules/ini/lib/ini.js" file with some documentation from its creator on how to use it
+                            </li>
+                            <li>
+                                <code>node</code> // packages installed through NPM can be accessed from JavaScript modules, but they can also be accessed through the node console after using the node command
+                            </li>
+                            <li>
+                                <code>const {parse} = require('ini'); parse('x = 1\ny = 2') === { x: '1', y: '2' }</code> // the "ini" module is a CommonJS module, not an ES module, and node supports both; this code require()s & uses the parse() function from the module.exports object in ini.js
+                            </li>
+                            <li>
+                                <code>npm config ls -l | grep config</code> // this can be used to see the default locations of the "npmrc" filesystem entry that can determine where the "node_modules" folder will be; different node projects typically package their own copies of "node_modules" folder to self-contain a project with its dependencies, but a base npmrc folder is used by the console
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <code>npm init</code> // creates a "package.json" file that each node project should have, in the directory where npm init was called
+                    </li>
+                    <li>
+                        <code>package name: @hernandezn/my-package</code> // putting the @ indicates that the package is within a scope, be it a user scope or an organization scope
+                    </li>
+                    <li>
+                        <code>... "dependencies": {"dijskstrajs": "^1.0.1", "random-item": "^1.0.0"}, ...</code> // if "npm install" runs with the package.json listing dependencies like this, the install will use these dependencies as the arguments; this list auto-updates when "npm install" runs WITH user-given arguments and installs a new dependency, so dependencies stay in sync
+                    </li>
+                    <li>
+                        <code>... "version": "1.0.0", ...</code> // package.json lists the program's own version and versions from its dependencies, using <a href="https://semver.org/" target="_blank">semantic versioning (#.#.#)</a>
+                    </li>
+                    <li>
+                        // general semantic versioning rules for each number in the version:
+
+                        <ul>
+                            <li>
+                                // MAJOR version for changes that break compatibility, to where code built on a previous version of the package would break
+                            </li>
+                            <li>
+                                // MINOR version for when non-breaking functionality additions are made
+                            </li>
+                            <li>
+                                // PATCH version for fixing bugs & crash cases / optimizations / other things that don't change the interface or dependencies
+                            </li>
+                            <li>
+                                // 0.#.# versions are to be considered unstable, where anything may change at any time
+                            </li>
+                            <li>
+                                // all versions 1.0.0 and above must have their versions incremented for ANY changes made; as a corollary, the code in any one version may never be changed
+                            </li>
+                            <li>
+                                // when a major or minor version increments, versions below it reset to 0
+                            </li>
+                            <li>
+                                // #.#.#-some-new.identifier.0.1-2 denotes a pre-release version with a hyphen followed by an alphanumeric identifier with hyphens and dots allowed
+                            </li>
+                            <li>
+                                // pre-release versions indicate instability & may be backwards-incompatible, while the mainline patch version will be the backward-compatible replacement; subsequent pre-release versions for the same patch version must be in alphabetical sort order, with letters coming after numbers
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <code>... "some-lib": "^2.3.4", ...</code> // caret before the dependency version indicates that any compatible version may be used; in this case, that's anything at or above 2.3.4 but not EXcluding anything 3.0.0 or above
+                    </li>
+                    <li>
+                        <code>npm publish</code> // publishes a directory that has a package.json to NPM, provided that the package name and version (both indicated in the package.json) aren't taken
+                    </li>
+                    <li>
+                        // NPM documentation declares that all packages, <a href="https://docs.npmjs.com/creating-and-publishing-scoped-public-packages" target="_blank">scoped</a>, <a href="https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages" target="_blank">unscoped</a>, or <a href="https://docs.npmjs.com/creating-and-publishing-private-packages" target="_blank">private</a>, require an NPM user account
+                    </li>
+                    <li>
+                        <code>import {readFile} from "node:fs"; readFile("file.txt", "utf8", (err, txt) => { if(error) throw error; console.log(txt) });</code> // from Node Filesystem module "node:fs"; readFile takes in a file name, a file character encoding, and a callback function that'll operate on the file's contents
+                    </li>
+                    <li>
+                        <code>readFile("file.txt", (err, bytes) => { if(error) throw error; console.log(`Total bytes: ${bytes.length}\nFirst byte: ${bytes[0]}`) });</code> // with 2 arguments (no character encoding), the file content is read as an array-like object of 8-bit bytes, a "Buffer" type of object
+                    </li>
+                    <li>
+                        <code>import {writefile} from "node:fs"; writeFile("file.txt", "Some file content!", err => console.log(err));</code> // writeFile does what it says; all text is written with UTF-8 character encoding
+                    </li>
+                    <li>
+                        <code>import {readdir, stat, rename, unlink} from "node:fs";</code> // several other node:fs methods, for reading directory content, viewing file metadata, renaming files, and deleting them
+                    </li>
+                    <li>
+                        <code>import {readFile} from "node:fs/promises"; readFile("file.txt", "utf8").then(text => console.log(text))</code> // the "node:fs/promises" subpackage restructures node:fs functions to explicitly use Promises
+                    </li>
+                    <li>
+                        <code>import {readFileSync} from "node:fs"; console.log(readFileSync("file.txt", "utf8"));</code> // node:fs functions have synchronous variants THAT CAUSE ALL PROGRAM OPERATIONS TO WAIT, UP UNTIL THE OPERATION FINISHES
+                    </li>
+                    <li>
+                        <code>import {createServer} from "node:http";</code> // this function is all it takes to create a simple HTTP server
+
+                        <pre>
+let server = createServer((request, response) => {
+    response.writeHead(200, {"Content-Type": "text/html"});
+    response.write(`&lt;h1&gt;Hello!&lt;/h1&gt;&lt;p&gt;This is ${request.url}&lt;/p&gt;`);
+    response.write(`&lt;footer&gt;Method: ${request.method}&lt;/footer&gt;`);
+    response.end();
+});
+server.listen(8000);
+console.log("Listening at post 8000...");
+                        </pre>
+
+                        <ul>
+                            <li>
+                                // writeHead() writes the HTTP response code & content type in the HTTP response header, response.write() takes the body of the HTTP response, and response.end() commits it to send back to the client
+                            </li>
+                            <li>
+                                // while the above is running on the local system, the HTML in the "write" argument will be served from <a href="http://localhost:8000" target="_blank">http://localhost:8000</a> or any subpage of it, like <a href="http://localhost:8000" target="_blank">http://localhost:8000/my/node-server</a>
+                            </li>
+                            <li>
+                                // the write() function may be called multiple times to update the response with further data (which concatenates onto the last writeline by default)
+                            </li>
+                            <li>
+                                // the function passed as an argument to createServer() is called every time a client connects to the server, so all client-to-server interaction may happen through the content of this function
+                            </li>
+                            <li>
+                                <code>request.url</code> // erves the requested resource path, not the fully qualified url; at "http://localhost:8000", <code>request.url</code> is "/", while at "http://localhost:8000/my/node-server", <code>request.url</code> is "/my/node-server"
+                            </li>
+                            <li>
+                                <code>request.method</code> // "GET" or "POST" or "DELETE" etc.
+                            </li>
+                            <li>
+                                <code>console.log(request.constructor.name); console.log(response.constructor.name);</code> // the request & response types are "IncomingMessage" and "ServerResponse", respectively
+                            </li>
+                            <li>
+                                <code>server.listen(8000)</code> // opens the 8000 port for server requests; in a simple live environment, this can just be 80, which would allow access over "http://localhost" without the port number, since 80 is the default port for HTTP requests
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <code>import { request } from "node:http";</code> // the function request() can be used to make HTTP requests from within Node, though fetch is still available in Node (and often simpler!)
+                    </li>
+                    <li>
+                        // the ServerResponse response type has a "writable stream" object interface that's common in Node, which includes the "write" method (that takes a string or Buffer to add to the stream, plus a callback function to run after the method call) and an "end" method (that takes similar arguments that do the same thing)
+                    </li>
+                    <li>
+                        <code>import { createWriteStream } from "node:fs";</code> // creates a writable stream object to a file, with the same write & end methods
+                    </li>
+                    <li>
+                        // the IncomingMessage request type has a "readable stream" object interface, which does much of its interaction by emitting events
+                    </li>
+                    <li>
+                        <code>request.on("data", dataChunk => response.write(dataChunk.toString())); request.on("end", () => response.end('stream ended'));</code> // readable streams' "on" method works like addEventListener; common events are "data" and "end" events that indicate when another data chunk has arrived or when the request has finished sending its data
+                    </li>
+                    <li>
+                        <code>import { createReadStream } from "node:fs";</code> // similar to the above; this readable stream has the same "on" method that listens for "data" and "end" events
+                    </li>
+                    <li>
+                        <code>on("data", dataChunk => ...)</code> // the dataChunk type is a binary Buffer that must be converted to the type it's meant to represent (like dataChunk.toString() does above)
+                    </li>
+                    <li>
+                        // all of the above can be applied to create basic operation as an asynchronous server and client, where the client can request a server resource with various HTTP methods, without reloading the page
+
+                        <ul>
+                            <li>
+                                // server-side code; <code>uppercase-server.mjs</code>
+                                <pre>
+import {createServer} from "node:http";
+
+createServer((request, response) => {
+  response.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Origin": "null"});
+  request.on("data", chunk =>
+    response.write(chunk.toString().toUpperCase()));
+  request.on("end", () => response.end());
+}).listen(8000);
+</pre>
+                            </li>
+                            <li>
+                                <code>"Access-Control-Allow-Origin": "null"</code> // this allows null origins (a common default for localsystem) to request from the server resource without a CORS restriction; this is opposed to <code>"Access-Control-Allow-Origin": "*"</code> which would also work because it allows the server resource to respond to requests from ALL client origins
+                            </li>
+                            <li>
+                                // client-side code; <code>uppercase-client.html</code>
+
+                                <pre>
+&lt;input type="text" id="text-entry" placeholder="enter some text" oninput="makeRequest()" /&gt;
+
+&lt;p id="output"&gt;&lt;/p&gt;
+&lt;script&gt;
+const input = document.getElementById("text-entry");
+const output = document.getElementById("output");
+
+const makeRequest = () =&gt; fetch("http://localhost:8000/", {
+  method: "POST",
+  body: input.value
+}).then(response =&gt; response.text()).then(text =&gt; output.innerText = text);
+// → UPPERCASE VALUE OF THE INPUT                                
+&lt;/script&gt;
+</pre>
+                            </li>
+                            <li>
+                                <code>node uppercase-server.mjs</code>
+                                <ul>
+                                    <li>
+                                        // in <code>uppercase-client.html</code>, typing into the input field activates the <code>makeRequest()</code> function
+                                    </li>
+                                    <li>
+                                        // the <code>makeRequest()</code> function fetches from <code>http://localhost:8000</code> with a POST request using a request body that's the value of the text from the input field
+                                    </li>
+                                    <li>
+                                        // the request arrives in <code>uppercase-server.mjs</code>, which writes HTTP response code 200, a "text/plain" content type, and a "null" allowed requester origin into the header
+                                    </li>
+                                    <li>
+                                        // in <code>uppercase-server.mjs</code>, the request is given a "data" listener that writes AND UPPERCASES each chunk from the request's body into the response as the request data arrives
+                                    </li>
+                                    <li>
+                                        // in <code>uppercase-server.mjs</code>, the request's "end" listener closes the response writeable stream to finish sending data back to the client
+                                    </li>
+                                    <li>
+                                        // back in <code>uppercase-client.html</code>, the response from <code>uppercase-server.mjs</code> streams into the fetch's Promise as the "response" object sent to the fetch Promise's "then" callback function
+                                    </li>
+                                    <li>
+                                        // when the response from <code>uppercase-server.mjs</code> ends, the text from the <code>response.text()</code> Promise is completed and sent to the next "then" callback
+                                    </li>
+                                    <li>
+                                        // the text from the response is then set as the innerText of the "output" element in <code>uppercase-client.html</code>, completing the server-client interaction
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <code>process.cwd()</code> // returns the current working directory of the node program running the command
+                    </li>
+                    <li>
+                        <code>import {resolve, sep} from "node:path";</code> // "resolve()" resolves file paths from URLs, and "sep" provides the file-path separator used in the host operating system
+
+                        <pre>
+import {resolve, sep} from "node:path";
+
+const basePath = process.cwd();
+
+function urlPath(url) {
+    <code>// "http://my-site/its/my%20file.txt" -&gt; "/its/my%20file.txt"</code>
+    let pathName = new URL(url, 'http://d').pathname;
+
+    <code>// "/its/my%20file.txt" -&gt; "/its/my file.txt"</code>
+    let decodedPathName = decodeURIComponent(pathName);
+
+    <code>// "/its/my file.txt" -&gt; "C:\Users\...\its\my file.txt"</code>
+    let filePath = resolve(decodedPathName.slice(1));
+
+    if(filePath != basePath && !filePath.startsWith(basePath + sep)) {
+        <code>// if the file path doesn't follow the base path, throw this object (notice it doesn't have to be declared an Error type)</code>
+        throw {status: 403, body: "Forbidden"};
+    }
+
+    return filePath;
+};
+
+</pre>
+                    </li>
+                    <li>
+                        <code>(JavaScript) resolve(relativePath) == (Java) File.getCanonicalPath(relativePath)</code> // the resolve function finds the absolute location of the given path argument, resolving anything like "../" and filesystem shortcuts, after which it can be compared against the Node program's desired working directory; this ensures that the requested resource stays within the desired filesystem bounds of the program
+                    </li>
+                    <li>
+                        <code>npm install mime-types@2.1.0</code> // this package contains a mapping between file types & MIME types
+
+                        <pre>
+import {createReadStream} from "node:fs";
+import {stat, readdir} from "node:fs/promises";
+import {lookup} from "mime-types";
+
+methods.GET = async function(request) {
+    <code>// the function described above</code>
+	let path = urlPath(request.url);
+	let stats;
+
+	try {
+        <code>// checks if file exists and whether it's a directory</code>
+		stats = await stat(path);
+	} catch(error) {
+        <code>// error.code "ENOENT" means stat didn't find the file</code>
+		if(error.code != "ENOENT") throw error;
+		else return {status: 404, body: "File not found"};
+	}
+
+	if(stats.isDirectory()) {
+        <code>// newline-separated files in the requested path</code>
+		return {body: (await readdir(path)).join("\n")};
+	} else {
+        <code>// returns the file reader for the given path, along with the MIME type associated with the file extension</code>
+		return {
+			body: createReadStream(path),
+			type: lookup(path)
+		};
+	}
+};
+</pre>
+                    </li>
+                    <li>
+                        // the above makes the firectory contents in the node directory requestable; .txt files & directories will output plain text to the browser, .pdf files will be handled accordingly by the browser, and HTML files will be rendered to the browser
+                    </li>
+                    <li>
+                        <code>stats.size(); stats.mtime(); stats.isDirectory()</code> // the stats return from a file has several useful diagnostic operations for the given file
+                    </li>
+                    <li>
+                        <code>if(stats.isDirectory()) await rmdir(path); else await unlink(path); return {status: 204};</code> // using this instead of the last conditional at the end of the above function gives a file & directory deleter; HTTP status code 204 means "no content"
+                    </li>
+                    <li>
+                        <code>import {createWriteStream} from "node:fs";</code> // can be used for a PUT method to write to files
+
+                        <pre>
+methods.PUT = async function(request) {
+    let path = urlPath(request.url);
+    await pipeStream(request, createWriteStream(path));
+    return {status: 204};
+};
+
+function pipeStream(from, to) {
+    return new Promise((resolve, reject) => {
+        <code>// applies "error" listeners to the request & the file path's writestream</code>
+        from.on("error", reject);
+        to.on("error", reject);
+
+        <code>// applies "finish" listener for when the write stream is to close</code>
+        to.on("finish", resolve);
+        
+        <code>// runs the data stream from the request body to the file content</code>
+        from.pipe(to);
+    });
+};                    
+</pre>
+                    </li>
+                    <li>
+                        // the above will write to the file path specified in the URL, with the content of that written file being the body of the request
+                    </li>
+                    <li>
+                        // the command-line tool "curl" (in UNIX-like systems & UNIX emulators like mingw) can be used to test endpoints by calling URLs with request specifications
+
+                        <ul>
+                            <li>
+                                <code>curl http://localhost:8000/file.txt</code> = <code>GET http://localhost:8000/file.txt</code> // default curl sends a GET request to the specified URL
+                            </li>
+                            <li>
+                                <code>curl -X PUT -d "some stuff to use as the body" http://localhost:8000/file.txt</code> = <code>PUT http://localhost:8000/file.txt ... some stuff to use as the body</code> // the content after "-d" is the body (-d for data) of the request
+                            </li>
+                            <li>
+                                <code>curl -X DELETE http://localhost:8000/file.txt</code> // sends a non-GET HTTP method without any data in the body
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p>
+                    As this chapter doesn't aim to provide an exhaustive 
+                    course on Node, here are important links provided by the 
+                    text to use & learn of these tools in greater depth:
+                </p>
+
+                <ul>
+                    <li>
+                        <a href="https://nodejs.org/" target="_blank">Node.js</a>
+                    </li>
+                    <li>
+                        <a href="https://www.npmjs.com/" target="_blank">Node Package Manager (NPM)</a>
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 20 Exercises
