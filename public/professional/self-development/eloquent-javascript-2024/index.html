@@ -4825,7 +4825,7 @@ for(const type of mediaTypes) {
                         <code>readFile("file.txt", (error, bytes) => { if(error) throw error; console.log(`Total bytes: ${bytes.length}\nFirst byte: ${bytes[0]}`) });</code> // with 2 arguments (no character encoding), the file content is read as an array-like object of 8-bit bytes, a "Buffer" type of object
                     </li>
                     <li>
-                        <code>import {writefile} from "node:fs"; writeFile("file.txt", "Some file content!", err => console.log(err));</code> // writeFile does what it says; all text is written with UTF-8 character encoding
+                        <code>import {writeFile} from "node:fs"; writeFile("file.txt", "Some file content!", err => console.log(err));</code> // writeFile does what it says; all text is written with UTF-8 character encoding
                     </li>
                     <li>
                         <code>import {readdir, stat, rename, unlink} from "node:fs";</code> // several other node:fs methods, for reading directory content, viewing file metadata, renaming files, and deleting them
