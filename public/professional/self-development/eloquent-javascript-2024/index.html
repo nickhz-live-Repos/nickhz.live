@@ -5355,10 +5355,90 @@ methods.MKCOL = async function(request) {
                             </ul>
 
                             <p>
-                                With this, the application now writes content 
-                                to file and reads it again upon restart, 
-                                preserving its contents after crashes & 
-                                restarts.
+                                With this, the application now reads from a 
+                                save file upon starting, and it writes to that 
+                                save file every time there's an update from a 
+                                user. This preserving the application contents 
+                                after crashes & restarts, fulfilling the 
+                                feature requested by this exercise.
+                            </p>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>
+                                Exercise 21.2 - Comment Field Resets
+                            </summary>
+
+                            <p>
+                                All of the changes I made for this exercise 
+                                are in the <code>renderTalk()</code> function 
+                                defined in 
+                                <code>public/skillsharing_client.js</code>:
+                            </p>
+
+                            <pre>let thisClientSubmitted = false;
+function renderTalk(talk, dispatch) {
+  const commentAttributes = {type: "text", name: "comment", oninput: event => { 
+    localStorage.setItem('commentInProgressTalk', talk.title);
+    localStorage.setItem('commentInProgressContent', event.target.value);
+  }};
+
+  if(talk.title === localStorage.getItem('commentInProgressTalk') && thisClientSubmitted === false) {
+    commentAttributes.value = localStorage.getItem('commentInProgressContent');
+  }
+  thisClientSubmitted = false;
+
+  const commentElement = elt("input", commentAttributes);
+
+  const submitCommentButton = elt("button", {type: "submit", onclick: event => {
+    thisClientSubmitted = true;
+  }}, "Add comment");
+
+  return elt(
+    "section", {className: "talk"},
+    elt("h2", null, talk.title, " ", elt("button", {
+      type: "button",
+      onclick() {
+        dispatch({type: "deleteTalk", talk: talk.title});
+      }
+    }, "Delete")),
+    elt("div", null, "by ",
+        elt("strong", null, talk.presenter)),
+    elt("p", null, talk.summary),
+    ...talk.comments.map(renderComment),
+    elt("form", {
+      onsubmit(event) {
+        event.preventDefault();
+        let form = event.target;
+        dispatch({type: "newComment",
+                  talk: talk.title,
+                  message: form.elements.comment.value});
+        form.reset();
+      }
+    }, commentElement, " ",
+       submitCommentButton));
+}
+</pre>
+
+                            <p>
+                                With this, the content & location of a comment 
+                                in progress is saved to local storage, and if 
+                                that location is encountered when the page 
+                                re-renders, it restores that comment from 
+                                local storage to the client's comment box. 
+                                Because it uses local storage, it's also 
+                                refresh-safe.
+                            </p>
+
+                            <p>
+                                Additionally, because local storage is shared 
+                                when two clients are on one system, the UI tracks 
+                                whether a comment was submitted from that 
+                                particular client, rescinding the content of the 
+                                comment box only whenever the comment was 
+                                submitted by this client. This lets the comment 
+                                box continue to empty itself upon submit.
                             </p>
                         </details>
                     </li>
@@ -5373,7 +5453,7 @@ methods.MKCOL = async function(request) {
                 </summary>
 
                 <blockquote>
-
+                    
                 </blockquote>
 
                 <p>
