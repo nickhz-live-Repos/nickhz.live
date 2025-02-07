@@ -53,8 +53,9 @@
                 </summary>
 
                 <p>
-                    This is a self-study effort from January 2025. The scripts 
-                    I wrote for the chapter exercises are at the bottom of 
+                    This is a self-study effort from January 2025. Scripts 
+                    I wrote for the applicable chapter exercises are at the 
+                    bottom of 
                     <a href="https://github.com/Hernandezn/nickhz.live/blob/main/public/professional/self-development/eloquent-javascript-2024/index.html" target="_blank">this 
                     page's source code</a>.
                 </p>
@@ -1311,7 +1312,7 @@ console.log(b.has("a"));
                         </ul>
                     </li>
                     <li>
-                        <code>debugger;</code> // sets a break point in the program; pauses the program and allows you to inspect the values of variable bindings at that point
+                        <code>debugger;</code> // sets a break point in the program; in a debug-enabled environment (like the browser's F12 developer tools), this pauses the program and allows you to inspect the values of variable bindings at that point
                     </li>
                     <li>
                         <code>try { ... } finally { ... }</code> // a finally block does not stop an exception from propagating; it runs, then the exception continues up the call stack until caught
@@ -3950,16 +3951,16 @@ run(`set(quux, true)`);
                             </p>
 
                             <p>
+                                The title of this exercise feels like a 
+                                hint...
+                            </p>
+
+                            <p>
                                 To avoid having to re-compute a mirrored 
                                 element for canvas, you can just overlay a DOM 
                                 element. Or better yet, overlay another canvas 
                                 and preload the transform by applying it to 
                                 that instead.
-                            </p>
-
-                            <p>
-                                The title of this exercise feels like a 
-                                hint...
                             </p>
                         </details>
                     </li>
@@ -5274,7 +5275,8 @@ methods.MKCOL = async function(request) {
                     creation function that takes the tag name, tag attributes, 
                     and child elements has led to messy code, but I think it's 
                     pretty clean, so clean that it's easy to know how to make 
-                    it cleaner.
+                    it cleaner. They've basically built the JSX that underlies 
+                    React.
                 </p>
 
                 <ul>
@@ -5452,47 +5454,87 @@ function renderTalk(talk, dispatch) {
                     Reflection
                 </summary>
 
-                <blockquote>
-                    
-                </blockquote>
-
                 <p>
-                    --
+                    I would recommend this book to others who want to learn 
+                    JavaScript. I still believe I was fairly capable with 
+                    browser JS from the beginning, but now, it feels like I've 
+                    completed a toolbox that I didn't even know was 
+                    incomplete! It's handed me a lot of leads for moving 
+                    forward with, too. I think the intended route here is 
+                    React, but I'm also interested in websockets and SVG. It's 
+                    made several concepts like canvas & asynchronous code more 
+                    approachable, too.
                 </p>
 
-                <h2>
-                    
-                </h2>
+                <p>
+                    Because JavaScript is supported by the ecosystems built on 
+                    it, the more complete knowledge of the pure language can 
+                    feel like having all the cheat codes. I can imagine how 
+                    more things must work behind the scenes now, like how JSX 
+                    could be implemented similarly to how the Egg programming 
+                    language from chapter 12 was, or how React & Angular 
+                    components are essentially just the stateful class 
+                    components created in the final chapter & handled as ES 
+                    modules, with the syntactic sugar of JSX added to them. I 
+                    can see through things that were once arcane, and it's 
+                    thanks to the understanding from this book.
+                </p>
 
-                <ul>
-                    <li>
-                        <details>
-                            <summary>
+                <p>
+                    The application from the final chapter was a logical 
+                    conclusion, a webapp whose UI doesn't even render without 
+                    the browser running a mess of JavaScript. The mainstream 
+                    Web UI frameworks have reached similar conclusions before, 
+                    too, and I personally don't agree with it. There are 
+                    performance reasons & bad-practice reasons & probably 
+                    environmental reasons that can support me on that, but my 
+                    personal core for being against it is that JavaScript 
+                    should be reserved for the good stuff. It's the ace in the 
+                    hole for making the impossible possible in Web UI, and 
+                    when you make it handle every menial little task on the 
+                    browser, you spread its capability thin and can undersell 
+                    to yourself what JavaScript is truly capable of. It's 
+                    powerful, and there's less & less thought about that power 
+                    as people abstract it away into Web frameworks that 
+                    regularly try to put it in your head that you need an 
+                    entire JavaScript framework for an interactive 
+                    application. I don't need a single line of JavaScript for 
+                    <a href="../" target="_blank">this page</a> to work. The 
+                    frameworks make applications that are maintainable & easy 
+                    to collaborate on. They're tools that help the bottom 
+                    line, not a statement on the one right way to do things. 
+                    Converging on it as if it IS the one right way to do 
+                    things is probably getting at least a little caught up in 
+                    the current trends, but as it's also being taught as a 
+                    professional skill to help people get further along in 
+                    the actual software industry, I think that part of it is 
+                    commendable.
+                </p>
 
-                            </summary>
+                <p>
+                    The last project did feel more like a victory lap than 
+                    anything, and it makes me glad that I overcomplicated the 
+                    final exercise from chapter 20, rebuilding that from 
+                    scratch & adding my own new features instead of sticking 
+                    strictly to the book. It gave me the chance to compose 
+                    everything from the whole text together into a program 
+                    that's truly my own, where I took it as a problem 
+                    statement to create a solution for rather than as a 
+                    LeetCode-esque exercise to figure out an abstract 
+                    algorithm. I now have an extensible application that works 
+                    as my own custom & quickly searchable file manager, and 
+                    it's thanks to the application requested by this book. 
+                    With some polish, it can even become something you can 
+                    sell to people, and that crosses a line from being a 
+                    textbook exercise to being a peek into the vision of an 
+                    engineer, the vision of the one who wrote this book.
+                </p>
 
-                            <code id="exercise-"></code>
-                        </details>
-                    </li>
-                    <li>
-                        <details>
-                            <summary>
-
-                            </summary>
-
-                            <code id="exercise-"></code>
-                        </details>
-                    </li>
-                    <li>
-                        <details>
-                            <summary>
-
-                            </summary>
-
-                            <code id="exercise-"></code>
-                        </details>
-                    </li>
-                </ul>
+                <p>
+                    I have my own visions, too: problems to solve and 
+                    solutions to be made. And with this book now behind me, 
+                    I'm definitively better prepared for that future.
+                </p>
             </details>
         </main>
 
@@ -5532,29 +5574,6 @@ function renderTalk(talk, dispatch) {
             console.log('CHAPTER 10 EXERCISE 2 OUTPUT IS ABOVE');
         </script>
 
-        <script title="chapter  exercises">
-            /*
-                
-            */
-            {
-                
-            };
-
-            /*
-            
-            */
-            {
-
-            };
-
-            /*
-            
-            */
-            {
-
-            };
-        </script>
-
 
         <!--
             I did little Leetcode Java during this, too, just as sanity checks 
@@ -5583,6 +5602,8 @@ function renderTalk(talk, dispatch) {
             public boolean subWordBreaks(String subWord, List<String> wordDict) {
                 return subWord.length() == 0 || wordBreak(subWord, wordDict);
             }
+
+            Sanity checked.
         -->
     </body>
 </html>
