@@ -157,13 +157,13 @@
                         <code>2.998e8</code> // yields 299800000
                     </li>
                     <li>
-                        <code><var>x</var> = <var>a</var> && <var>b</var>;</code> // where a is not boolean; only gives b if a is truthy, and gives back the falsey a otherwise
+                        <code><var>x</var> = <var>a</var> && <var>b</var>;</code> // "guard operator" where a is not boolean; only gives b if a is truthy, and gives back the falsey a otherwise
                     </li>
                     <li>
-                        <code><var>x</var> = <var>a</var> || <var>b</var>;</code> // where a is not boolean; gives a if it's truthy, and gives the default value b otherwise
+                        <code><var>x</var> = <var>a</var> || <var>b</var>;</code> // "default operator" where a is not boolean; gives a if it's truthy, and gives the default value b otherwise
                     </li>
                     <li>
-                        <code><var>x</var> = <var>a</var> ?? <var>b</var>;</code> // where a is not boolean; gives a if it's not null or undefined (so can give falsey a values like 0 or ""), and gives the default value b otherwise
+                        <code><var>x</var> = <var>a</var> ?? <var>b</var>;</code> // "nullish coalescing operator" where a is not boolean; gives a if it's not null or undefined (so can give falsey a values like 0 or ""), and gives the default value b otherwise
                     </li>
                     <li>
                         <code>NaN != NaN</code>
@@ -5253,39 +5253,113 @@ methods.MKCOL = async function(request) {
                 </blockquote>
 
                 <p>
-                    --
+                    This bit was essentially a meta-exercise in interpreting a 
+                    front & backend project that's already pre-written. That's 
+                    an important professional skill to have, sure, but I also 
+                    appreciate it as victory lap for the reader to be able to 
+                    say, "yes, I know JavaScript."
                 </p>
+
+                <p>
+                    This chapter's entire project is somewhat less complicated 
+                    than the one I wrote for chapter 20's final exercise, but 
+                    that's at least partly because it offloads much of the 
+                    complexity with its structure and its dependencies. I 
+                    might have skill, but the author Marijn has skill AND 
+                    experience.
+                </p>
+
+                <p>
+                    They assert that creating UI elements using an element 
+                    creation function that takes the tag name, tag attributes, 
+                    and child elements has led to messy code, but I think it's 
+                    pretty clean, so clean that it's easy to know how to make 
+                    it cleaner.
+                </p>
+
+                <ul>
+                    <li>
+                        // CommonJS modules imported through NPM can be implemented through the "import" clause instead of needing the "requires" function; this adds forward compatibility from CommonJS to ES modules
+                    </li>
+                    <li>
+                        <code>request.headers['if-none-match']</code> // ON SERVER-SIDE; Node stores request header keys as LOWERCASE values
+                    </li>
+                    <li>
+                        <code>await new Promise(resolve => setTimeout(resolve, 500));</code> // putting this statement in an async function is a simple way to force it to wait
+                    </li>
+                </ul>
 
                 <h2>
                     Chapter 21 Exercises
                 </h2>
 
+                <p>
+                    These exercises are modifications for 
+                    <a href="https://eloquentjavascript.net/code/skillsharing.zip" target="_blank">the 
+                    skill-sharing application code outlined in this 
+                    chapter</a>.
+                </p>
+
                 <ul>
                     <li>
                         <details>
                             <summary>
-
+                                Exercise 21.1 - Disk Persistence
                             </summary>
 
-                            <code id="exercise-"></code>
-                        </details>
-                    </li>
-                    <li>
-                        <details>
-                            <summary>
+                            <p>
+                                This solution can be defined in a few parts:
+                            </p>
 
-                            </summary>
+                            <ul>
+                                <li>
+                                    I created a <code>save-data.json</code> 
+                                    file in the <code>skillsharing</code> 
+                                    directory and gave it only an empty object 
+                                    as content:
 
-                            <code id="exercise-"></code>
-                        </details>
-                    </li>
-                    <li>
-                        <details>
-                            <summary>
+                                    <pre>{}</pre>
+                                </li>
+                                <li>
+                                    In <code>skillsharing_server.mjs</code>, I 
+                                    added this import statement to the top:
 
-                            </summary>
+                                    <pre>import {readFile, writeFile} from 'node:fs/promises';</pre>
+                                </li>
+                                <li>
+                                    In <code>skillsharing_server.mjs</code>, I 
+                                    replaced this code:
 
-                            <code id="exercise-"></code>
+                                    <pre>new SkillShareServer({}).start(8000);
+</pre>
+
+                                    with this code:
+
+                                    <pre>(async () => {
+  const talks = JSON.parse(await readFile('save-data.json'));
+
+  console.log(talks);
+
+  new SkillShareServer(talks).start(8000);
+})();
+</pre>
+                                </li>
+                                <li>
+                                    In <code>skillsharing_server.mjs</code>, I 
+                                    added this line to the 
+                                    <code>SkillShareServer.prototype.updated</code> 
+                                    function:
+
+                                    <pre>writeFile('save-data.json', JSON.stringify(this.talks)).catch(err => { console.log('Couldn\'t write to file!'); console.log(String(err)); });</pre>
+                                </li>
+                            </ul>
+
+                            <p>
+                                With this, the application now writes content 
+                                to file and reads it again upon restart, 
+                                preserving its contents after crashes & 
+                                restarts.
+                            </p>
                         </details>
                     </li>
                 </ul>
@@ -5307,7 +5381,7 @@ methods.MKCOL = async function(request) {
                 </p>
 
                 <h2>
-                    Chapter 4 Exercises
+                    
                 </h2>
 
                 <ul>
