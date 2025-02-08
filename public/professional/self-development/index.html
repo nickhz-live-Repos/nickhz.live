@@ -66,6 +66,9 @@
                 <label for="amazon-web-services">
                     Amazon Web Services (AWS)
                 </label>
+                <label for="node">
+                    Node.JS
+                </label>
                 <label for="java">
                     Java
                 </label>
@@ -99,13 +102,13 @@
                             Eloquent JavaScript Textbook by Marijn Haverbeke
                         </h3>
                         <i>
-                            Began Jan-2025 (Ongoing) <span id="current-work">CURRENT ACTIVE TASK</span>
+                            Jan-2025 <!--<span id="current-work">CURRENT ACTIVE TASK</span>-->
                         </i>
                         <hr />
                         <p>
-                            Click for details on my independent refresher & 
-                            review work out of a JavaScript textbook updated 
-                            in 2024
+                            Click for details on my independent exhaustive 
+                            JavaScript study work out of a 2024 textbook on 
+                            the language
                         </p>
                     </label>
                 </div>
@@ -118,7 +121,7 @@
                     <hr />
                     <label for="this-websites-infrastructure">
                         <h3>
-                            This Website's AWS Resources
+                            This Website's Root-Domain AWS Resources
                         </h3>
                         <i>
                             Began Jan-2025 (Ongoing)
@@ -166,6 +169,26 @@
                         <hr />
                         <p>
                             Click for details about this website's Git, including deploy-on-push Github Action via YAML for continuous deployment
+                        </p>
+                    </label>
+                </div>
+
+                <input type="radio" name="skill-selection" id="node" />
+                <div class="skill-overview">
+                    <h1>
+                        Node.JS
+                    </h1>
+                    <hr />
+                    <label for="live-filesystem">
+                        <h3>
+                            Live Filesystem
+                        </h3>
+                        <i>
+                            Feb-2025
+                        </i>
+                        <hr />
+                        <p>
+                            Click for details on a live filesystem management tool I made in Node.JS
                         </p>
                     </label>
                 </div>
@@ -227,7 +250,7 @@
                 <input type="radio" name="praxis-selection" id="this-websites-infrastructure" />
                 <div class="praxis-exhibit">
                     <h1>
-                        This Website's AWS Infrastructure
+                        This Website's AWS Root-Domain Infrastructure
                     </h1>
                     <hr />
                     <p>
@@ -263,7 +286,7 @@
 
                     <p>
                         <i><b>I documented the exact steps I took to deploy this 
-                        site 
+                        site domain 
                         <a href="journal/devlog/1#how-i-made-this-site" target="_blank">here 
                         on my development log.</a></b></i>
                     </p>
@@ -353,8 +376,60 @@
                     </h1>
                     <hr />
                     <p>
-                        I reviewed my JavaScript fundamentals and reintroduced 
-                        myself to Node.js, using this textbook as a guide.
+                        I read through & coded along with this entire textbook 
+                        that covers JavaScript in both the browser and 
+                        Node.JS. I refreshed & further contextualized concepts 
+                        I was familiar with, learned several concepts I was 
+                        unfamiliar with, and coded my own programs after every 
+                        lesson. I have these programs to show in the 
+                        "Exercises" subsections on the page linked here:
+                    </p>
+
+                    <blockquote>
+                        <b><a href="./professional/self-development/eloquent-javascript-2024" target="_blank">My 
+                        full self-study guide & notes detailing my 
+                        engagement with the entire textbook</a></b>
+                    </blockquote>
+
+                    <p>
+                        I created the above page to track my progress, to host 
+                        my code, and to use the notes I took there as future 
+                        reference material for myself.
+                    </p>
+
+                    <p>
+                        I plan to use this refreshed knowledge as a 
+                        springboard for further self-development projects, 
+                        like:
+                        
+                        <ul>
+                            <li>
+                                self-study on JS-based Web frameworks like 
+                                Angular and React / Next.JS
+                            </li>
+                            <li>
+                                usage of my Node.JS practice as a vehicle to 
+                                create live backend Web applications / APIs & 
+                                have them deployed through a subdomain of this 
+                                website, using EC2 infrastructure, 
+                                CI/CD tools, and potentially Docker
+                            </li>
+                            <li>
+                                exploration of loose ends from the book, such 
+                                as websockets, SVG, HTTP2, and the publication 
+                                of my very own NPM packages
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p>
+                        All in all, this is a worthwhile investment as a 
+                        foundational work for future self-development. 
+                        According to past teammates & coworkers, I was already 
+                        particularly skilled with what JavaScript I knew, but 
+                        with this formal deep dive, I unlock a more complete 
+                        understanding of the many things that are built off of 
+                        JavaScript, present and future.
                     </p>
 
                     <figure>
@@ -364,14 +439,50 @@
                             <a href="https://eloquentjavascript.net/" target="_blank">full text made available online by the author</a>
                         </figcaption>
                     </figure>
+                </div>
+
+                <input type="radio" name="praxis-selection" id="live-filesystem" />
+                <div class="praxis-exhibit">
+                    <h1>
+                        Node.JS Live Filesystem
+                    </h1>
+                    <hr />
+                    <p>
+                        This is my first proper self-contained product using 
+                        only Node.JS without abstractions built on top of it. 
+                    </p>
 
                     <p>
-                        <b>
-                            I am currently working on this. I'm using 
-                            <a href="./professional/self-development/eloquent-javascript-2024">this 
-                            subpage</a> to track my progress until it's 
-                            complete.
-                        </b>
+                        The Live Filesystem is a basic live-hosted file 
+                        explorer & file manager that's accessible through an 
+                        also self-developed Web UI. It performs basic 
+                        functions of system file explorers like Windows 
+                        Explorer & Mac Finder, organizing the contents of a 
+                        system-selected internal folder & its subfolders and 
+                        allowing filesystem interactions from a live Web page. 
+                        The Node server will serve the files from its attached 
+                        filesystem when requested, and it also supports 
+                        manipulation of the files & folders in the system.
+                    </p>
+
+                    <p>
+                        At the time of writing, it's a simple proof of concept 
+                        for a self-authored Node.JS live Webapp with several 
+                        request types & filesystem interactions, but it's 
+                        entirely extensible and may serve as (at least 
+                        intellectual) groundwork for my further work with 
+                        Node.JS.
+                    </p>
+
+                    <p>
+                        The source code for this application is currently 
+                        <a href="https://github.com/Hernandezn/nickhz.live/tree/main/nodejs/live-filesystem-webapp" target="_blank">here 
+                        in my website's GitHub repo</a>. Its initial 
+                        requirements are outlined as 
+                        <a href="https://eloquentjavascript.net/20_node.html#i-TLRTlwK6ZU" target="_blank">this 
+                        exercise</a> at the bottom of a textbook chapter I was 
+                        studying, but I took the requirements & ran with them 
+                        to create an extended version of what was requested.
                     </p>
                 </div>
             </section>
