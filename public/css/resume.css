@@ -332,6 +332,7 @@ desktop css overrides
 
     #name-tag {
         left: 5dvh;
+        font-size: calc(12px + 0.4dvh);
     }
 
     #bg-top {
