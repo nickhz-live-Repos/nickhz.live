@@ -1,0 +1,66 @@
+<svg version="1.1"
+    width="60" height="60"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <path
+        d="
+            M 15 15
+            h 45
+            v -7.5
+            a 7.5 7.5 0 0 1 -7.5 -7.5
+            h -15
+            a 7.5 7.5 0 0 1 -15 0
+            h -7.5
+            Z
+        "
+        fill="white"
+    />
+
+    <g transform-origin="center" transform="rotate(90)">
+        <path
+            d="
+                M 15 15
+                h 45
+                v -7.5
+                a 7.5 7.5 0 0 1 -7.5 -7.5
+                h -15
+                a 7.5 7.5 0 0 1 -15 0
+                h -7.5
+                Z
+            "
+            fill="white"
+        />
+    </g>
+
+    <g transform-origin="center" transform="rotate(180)">
+        <path
+            d="
+                M 15 15
+                h 45
+                v -7.5
+                a 7.5 7.5 0 0 1 -7.5 -7.5
+                h -15
+                a 7.5 7.5 0 0 1 -15 0
+                h -7.5
+                Z
+            "
+            fill="white"
+        />
+    </g>
+
+    <g transform-origin="center" transform="rotate(270)">
+        <path
+            d="
+                M 15 15
+                h 45
+                v -7.5
+                a 7.5 7.5 0 0 1 -7.5 -7.5
+                h -15
+                a 7.5 7.5 0 0 1 -15 0
+                h -7.5
+                Z
+            "
+            fill="white"
+        />
+    </g>
+</svg>
