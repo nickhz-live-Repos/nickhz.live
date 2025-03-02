@@ -172,12 +172,12 @@ body > main {
     top: 17dvh;
 }
 
-#rotary-menu > a:nth-of-type(5) {
+#rotary-menu > a[href=archive] {
     top: 22dvh;
-
     
     background:
-        radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.25) 0%, rgba(0, 0, 255, 0.25) 10%, rgba(0, 0, 27, 0.251) 15%)
+        /* radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.25) 0%, rgba(0, 0, 255, 0.25) 10%, rgba(0, 0, 27, 0.251) 15%) */
+        linear-gradient(90deg, #22222240 15%, #ffffff40 15% 16%, #22222240 16%)
     ;
 }
 
@@ -371,7 +371,7 @@ input:checked + .tab-content {
     margin-right: 5px;
 }
 
-#sitemap-wip {
+/* #sitemap-wip {
     box-shadow: none;
 
     background:
@@ -384,6 +384,12 @@ input:checked + .tab-content {
         0 0 4px black,
         0 0 4px black
     ;
+} */
+
+#sitemap-archive {
+    box-shadow: none;
+
+    background: #333333;
 }
 
 #sitemap-career {

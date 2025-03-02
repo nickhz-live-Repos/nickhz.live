@@ -42,46 +42,66 @@
                 height: 100%;
                 width: calc(100% - 5rem);
                 border-left: 1px solid white;
-            }
-
-            #poster-rack {
-                width: 100%;
-                height: 80%;
-                border-bottom: 1px solid white;
-            }
-
-            .page-poster {
                 box-sizing: border-box;
-                border: 1px solid grey;
-                height: 100%;
-                width: 100%;
+                padding: 1rem;
+                overflow-y: scroll;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
             }
 
-            .page-poster > a {
-                display: block;
-                height: 100%;
-                width: 100%;
-                box-sizing: border-box;
-                border: 1rem solid black;
+            .stamp-col {
+                display: flex;
+                flex-direction: column;
+                max-width: 90%;
             }
 
-            .page-poster > a > img {
+            fieldset {
+                margin-bottom: 2rem;
+                padding: 1rem;
+            }
+
+            fieldset:nth-child(even) {
+                border-radius: 0 10px;
+            }
+
+            fieldset:nth-child(odd) {
+                border-radius: 10px 0;
+            }
+
+            legend {
+                font-size: 1.5rem;
+            }
+
+            img {
                 max-width: 100%;
-                max-height: 100%;
+                box-sizing: border-box;
+                border: 10px solid white;
+                border-image: url("../img/stamp-border.svg") 15 / 15px round;
+
                 filter: grayscale(1) brightness(1.2);
                 transition: 0.3s;
-                position: relative;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
             }
 
-            .page-poster > a > img:hover {
+            img:hover {
                 filter: none;
             }
 
-            .poster-rack > input {
-                display: none;
+            a {
+                color: aqua;
+            }
+
+            #home-link {
+                position: fixed;
+                font-size: 1.5rem;
+                padding: 0.5rem;
+                text-shadow: 0 0 8px #333333, 0 0 8px #333333, 0 0 8px #333333, 0 0 8px #333333, 0 0 8px #333333, 0 0 8px #333333;
+            }
+
+            @media only screen and (min-width: 1000px) {
+                .stamp-col {
+                    max-width: 40%;
+                }
             }
         </style>
     </head>
@@ -90,21 +110,103 @@
             ARCHIVE
         </h1>
 
-        <!-- poster display -->
-
         <!-- ~~ thinking of a stamp collection instead... -->
         <main>
-            <main id="poster-rack">
-                <!-- <input type="radio" name="poster-selection" id="poster-1" checked /> -->
-                <section class="page-poster">
-                    <a>
-                        <img src="../img/archive/site-wip-jan-2025.png" alt="The site's archived Work-in-Progress items page, from January 2025."/>
+            <div class="stamp-col">
+                <fieldset>
+                    <legend>
+                        WIP Page (January 2025)
+                    </legend>
+
+                    <a href="wip/">
+                        <img src="../img/archive/site-wip-jan-2025.png" alt="The site's archived Work-in-Progress items page, from January 2025." />
                     </a>
-                </section>
-            </main>
-            <footer id="page-info">
+
+                    <p>
+                        This was the work-in-progress page. It was initially 
+                        created to present things I was still working on & to 
+                        provide sub-paths for me to use as little open 
+                        workshops while I worked on new pages. Then, it turned 
+                        into a rudimentary work & ideas tracker for myself, 
+                        with every link on the page leading to one of the 
+                        other existing routes on the site instead of any wip/ 
+                        subpages.
+                    </p>
+
+                    <p>
+                        Because of that transformation into a work tracker and 
+                        because my work flow doesn't include any wip/subpage 
+                        pages, I've removed this WIP page and begun using 
+                        Github Projects to organize my work instead.
+                    </p>
+
+                    <p>
+                        Even though the page is responsive & very animated, 
+                        there's no JavaScript on the page at all!
+                    </p>
+
+                    <p>
+                        <a href="wip/">Click to visit</a>
+                    </p>
+                </fieldset>
+            </div>
+
+            <div class="stamp-col">
                 
-            </footer>
+            </div>
         </main>
+
+        <a id="home-link" href="../">
+            &lt;&lt;Home
+        </a>
+
+        <script title="Responsive Column Collapse">
+            {
+                const cols = document.getElementsByClassName('stamp-col');
+                const originalSets = [Array.from(cols[0].children), Array.from(cols[1].children)];
+                let isCollapsed = false;
+
+                // collapses both columns into one
+                const collapse = () => {
+                    const sets = [cols[0].children, cols[1].children];
+                    const longerSet = sets[0].length > sets[1].length ? 0 : 1;
+                    const minSetLength = Math.min(sets[0].length, sets[1].length);
+
+                    const mergedSet = new Array();
+                    for(let i = 0; i < minSetLength; i++) {
+                        mergedSet.push(sets[0][i]);
+                        mergedSet.push(sets[1][i]);
+                    }
+
+                    for(let i = minSetLength, limit = sets[longerSet].length; i < limit; i++) {
+                        mergedSet.push(sets[longerSet][i]);
+                    }
+
+                    cols[0].replaceChildren(...mergedSet);
+                    cols[1].style.display = 'none';
+                };
+
+                // restores one-column display into two-column display
+                const uncollapse = () => {
+                    cols[0].replaceChildren(...originalSets[0]);
+                    cols[1].replaceChildren(...originalSets[1]);
+                    cols[1].style.removeProperty('display');
+                };
+
+                // calls the appropriate function if columns should un/collapse
+                const assessCollapse = () => {
+                    if(isCollapsed && window.innerWidth >= 1000) {
+                        isCollapsed = !isCollapsed;
+                        uncollapse();
+                    } else if(!isCollapsed && window.innerWidth < 1000) {
+                        isCollapsed = !isCollapsed;
+                        collapse();
+                    }
+                };
+
+                window.addEventListener('DOMContentLoaded', assessCollapse);
+                window.addEventListener('resize', assessCollapse);
+            };
+        </script>
     </body>
 </html>
