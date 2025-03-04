@@ -1,0 +1,68 @@
+<svg version="1.1"
+    width="30" height="45"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <!-- black cross -->
+    <path
+        d="
+            M 12 6
+            v -4
+
+            M 15 9
+            h 4
+
+            M 12 12
+            v 4
+
+            M 9 9
+            h -4
+        "
+        stroke="black"
+        fill="none"
+    />
+
+    <!-- white cross -->
+    <path
+        d="
+            M 13.75 7.25
+            l 2.82 -2.82
+
+            M 13.75 10.75
+            l 2.82 2.82
+
+            M 10.25 10.75
+            l -2.82 2.82
+
+            M 10.25 7.25
+            l -2.82 -2.82
+        "
+        stroke="white"
+        fill="none"
+    />
+
+    <!-- pointer cursor -->
+    <path
+        d="
+            M 10 32
+            v -12
+            a 2 2 0 0 1 4 0
+            v 9
+            v -3
+            a 2 2 0 0 1 4 0
+            v 3
+            v -2
+            a 2 2 0 0 1 4 0
+            v 2
+            v -1
+            a 2 2 0 0 1 4 0
+            v 7
+            c 0 11 -12 10 -16 5
+            l -5 -7
+            a 2 2 0 0 1 2.8 -2.8
+            l 2.2 3.2
+            Z
+        "
+        stroke="white"
+        fill="black"
+    />
+</svg>

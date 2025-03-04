@@ -56,6 +56,15 @@ body {
     left: calc(8dvh + 5px);
 }
 
+#backlinks-cursor-communique {
+    pointer-events: none;
+    position: fixed;
+    transform: rotate(-60deg);
+
+    bottom: 3dvh;
+    left: calc(16dvh + 10px);
+}
+
 #name-tag {
     position: absolute;
     height: 18dvh;
@@ -257,9 +266,12 @@ b {
     text-decoration: underline;
 }
 
-#mobile-top-spacer, 
-footer {
+#mobile-top-spacer {
     height: 35dvh;
+}
+
+footer {
+    height: 45dvh;
     text-align: center;
 }
 
@@ -328,6 +340,11 @@ desktop css overrides
 
     #parent-directory-button {
         left: calc(5dvh + 5px);
+    }
+
+    #backlinks-cursor-communique {
+        top: 1dvh;
+        left: 11dvh;
     }
 
     #name-tag {
