@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <!--
-    No, this is not made from a frontend framework, webpage template, or 
-    code-generation tool; I hand-coded this page, along with all pages on this 
-    website.
+    This is not made from a frontend framework, webpage template, or 
+    code-generation tool; I hand-coded this page as a small single-page 
+    application in HTML, CSS, and JS.
 
     The full source code for this website is here in my Github repository: 
 
     https://github.com/Hernandezn/nickhz.live
 -->
+
 <html>
     <head>
         <base href="../../" />
@@ -495,26 +496,65 @@
                 go to:
                 
                 https://nickhz.live/professional/self-development?a=html-css-js&b=eloquent-javascript-2024
+
+                now includes corollary functionality to swapp out the url 
+                parameters appropriately whenever the user selects an option 
+                on the page; allows the parametric link to be generated with 
+                the ease of a single click by the user
             */
             {
                 const skill = 
-                    new URLSearchParams(window.location.search).get('a')
+                    new URLSearchParams(window.location.search).get('skill')
                 ;
-                const exhibit = 
-                    new URLSearchParams(window.location.search).get('b')
+                const praxis = 
+                    new URLSearchParams(window.location.search).get('praxis')
                 ;
-                
-                const applyUrlSelection = (urlParameter, querySelectorForRadioInputs) => {
-                    const selections = document.querySelectorAll(querySelectorForRadioInputs);
-                    const selection = document.getElementById(urlParameter);
+                const skillInputs = document.querySelectorAll('#skill-sublist > input[type=radio]');
+                const praxisInputs = document.querySelectorAll('#skill-praxis > input[type=radio]');
 
-                    if(selections && Array.from(selections).indexOf(selection) >= 0) {
-                        selection.checked = true;
+                // evaluates any parameters in the url
+                const applyUrlSelection = (urlParameter, radioInputs) => {
+                    const urlSelection = document.getElementById(urlParameter);
+
+                    if(radioInputs && Array.from(radioInputs).indexOf(urlSelection) >= 0) {
+                        urlSelection.checked = true;
+                    }
+                };
+                const applySelections = () => {
+                    applyUrlSelection(skill, skillInputs);
+                    applyUrlSelection(praxis, praxisInputs);
+                }
+
+                // swaps out the url parameters when the user opens a category
+                const skillRegex = /skill=([^&]*)(?=&|$)/;
+                const praxisRegex = /praxis=([^&]*)(?=&|$)/;
+                const updateUrlParameter = (urlParamName, urlRegex, input) => {
+                    const newParam = `${urlParamName}=${input.id}`;
+
+                    if(!window.location.search) {
+                        // for if there aren't any existing parameters
+                        history.replaceState(null, '', window.location.pathname + '?' + newParam);
+                        return;
+                    }
+
+                    const paramProperties = urlRegex.exec(window.location.search);
+                    if(paramProperties === null) {
+                        // for if this is a new parameter
+                        history.replaceState(null, '', window.location.pathname + window.location.search + '&' + newParam);
+                    } else {
+                        // for if the parameter exists & must be replaced
+                        history.replaceState(null, '', window.location.pathname + window.location.search.replace(paramProperties[0], newParam));
                     }
                 };
 
-                applyUrlSelection(skill, '#skill-sublist > input[type=radio]');
-                applyUrlSelection(exhibit, '#skill-praxis > input[type=radio]');
+                // 
+                window.addEventListener('DOMContentLoaded', applySelections);
+                for(const skillInput of skillInputs) {
+                    skillInput.addEventListener('input', () => updateUrlParameter('skill', skillRegex, skillInput));
+                }
+                for(const praxisInput of praxisInputs) {
+                    praxisInput.addEventListener('input', () => updateUrlParameter('praxis', praxisRegex, praxisInput));
+                }
             };
         </script>
     </body>
