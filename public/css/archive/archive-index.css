@@ -1,0 +1,83 @@
+
+body {
+    background-color: hsl(0, 0%, 20%);
+    color: white;
+    /* overflow: hidden; */
+}
+
+#side-header {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+}
+
+body > main {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: calc(100% - 5rem);
+    border-left: 1px solid white;
+    box-sizing: border-box;
+    padding: 1rem;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.stamp-col {
+    display: flex;
+    flex-direction: column;
+    max-width: 90%;
+}
+
+fieldset {
+    margin-bottom: 2rem;
+    padding: 1rem;
+}
+
+fieldset:nth-child(even) {
+    border-radius: 0 10px;
+}
+
+fieldset:nth-child(odd) {
+    border-radius: 10px 0;
+}
+
+legend {
+    font-size: 1.5rem;
+}
+
+img {
+    max-width: 100%;
+    box-sizing: border-box;
+    border: 10px solid white;
+    border-image: url("../img/stamp-border.svg") 15 / 15px round;
+
+    filter: grayscale(1) brightness(1.2);
+    transition: 0.3s;
+}
+
+img:hover {
+    filter: none;
+}
+
+a {
+    color: aqua;
+}
+
+#home-link {
+    position: fixed;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    text-shadow: 0 0 8px #333333, 0 0 8px #333333, 0 0 8px #333333, 0 0 8px #333333, 0 0 8px #333333, 0 0 8px #333333;
+}
+
+@media only screen and (min-width: 1000px) {
+    .stamp-col {
+        max-width: 40%;
+    }
+}
