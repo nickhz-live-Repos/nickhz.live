@@ -19,19 +19,19 @@ body {
     position: absolute;
     background: hsl(43, 74%, 49%);
     border: 2px solid black;
-    padding: 1rem 3rem;
-    transform: perspective(5px) rotateX(-1deg);
-    left: -2.3rem;
+    box-sizing: border-box;
+    padding: 1rem 0;
     top: -1.3rem;
+    width: 100%;
     font-size: 2rem;
     font-style: italic;
     font-weight: bold;
-    border-radius: 15px;
-    z-index: 3;
+    border-radius: 10px;
+    z-index: 4;
+    text-align: center;
 }
 
 #title-ticker > * {
-    transform: perspective(5px) rotateX(1deg);
     position: relative;
 }
 
@@ -88,6 +88,7 @@ body {
 
 #self-development-content > * {
     height: 100%;
+    width: 100%;
     overflow-y: scroll;
     scrollbar-width: none;
     position: absolute;
@@ -114,8 +115,8 @@ label {
 */
 
 #skills-list {
-    width: 19.1%;
     background: hsl(43, 100%, 30%);
+    z-index: 3;
 }
 #skills-list > * {
     background-color: var(--skills-accent);
@@ -171,9 +172,8 @@ label {
 */
 
 #skill-sublist {
-    left: 19.1%;
-    width: 30.9%;
     background: var(--article-accent);
+    z-index: 2;
 }
 #skill-sublist > input[type=radio],
 #skill-sublist > input[type=radio] + .skill-overview,
@@ -222,9 +222,8 @@ label {
 */
 
 #skill-praxis {
-    left: 50%;
-    width: 50%;
     background: var(--section-accent);
+    z-index: 1;
 }
 .praxis-exhibit {
     padding: 1.3rem 1rem 0.3rem 1rem;
@@ -258,4 +257,54 @@ label {
 
 figure {
     text-align: center;
+}
+
+/*
+    mobile footer
+*/
+footer {
+    position: fixed;
+    width: 20vw;
+    height: 20vw;
+    background-color: hsl(43, 74%, 49%);
+    bottom: 0;
+    box-sizing: border-box;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-radius: 0 10px 10px 0;
+    opacity: 0.4;
+}
+
+/* 
+
+desktop css overrides 
+
+*/
+@media only screen and (min-width: 768px) {
+    #title-ticker {
+        padding: 1rem 3rem;
+        transform: perspective(5px) rotateX(-1deg);
+        left: -2.3rem;
+        top: -1.3rem;
+        width: unset;
+        border-radius: 15px;
+    }
+
+    #title-ticker > * {
+        transform: perspective(5px) rotateX(1deg);
+    }
+
+    #skills-list {
+        width: 19.1%;
+    }
+
+    #skill-sublist {
+        left: 19.1%;
+        width: 30.9%;
+    }
+
+    #skill-praxis {
+        left: 50%;
+        width: 50%;
+    }
 }

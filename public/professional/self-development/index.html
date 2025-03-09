@@ -30,7 +30,7 @@
 
         <!-- Style properties -->
         <link href="css/style.css" rel="stylesheet" />
-        <link href="css/self-development.css" rel="stylesheet" />
+        <link href="css/professional/self-development/self-development.css" rel="stylesheet" />
     </head>
     <body>
         <header id="title-ticker">
@@ -206,7 +206,7 @@
                     <p>
                         My source code for this website's frontend interface 
                         is in 
-                        <a href="https://github.com/Hernandezn/nickhz.live/tree/main/public" target="_blank">this 
+                        <a href="https://github.com/nickhz-live-Repos/nickhz.live/tree/main/public" target="_blank">this 
                         Github repo folder</a>. Coded, tested, and debugged 
                         using VSCode & Chromium-browser DevTools features.
                     </p>
@@ -281,7 +281,7 @@
                         domain routing management and basic CI/CD through a 
                         custom-restricted-policy IAM user account for this 
                         website's 
-                        <a href="https://github.com/Hernandezn/nickhz.live/tree/main/public" target="_blank">GitHub 
+                        <a href="https://github.com/nickhz-live-Repos/nickhz.live" target="_blank">GitHub 
                         code repository</a> through GitHub Actions.
                     </p>
 
@@ -333,7 +333,7 @@
                     <hr />
                     <p>
                         This website's code is version controlled through 
-                        <a href="https://github.com/Hernandezn/nickhz.live" target="_blank">this 
+                        <a href="https://github.com/nickhz-live-Repos/nickhz.live" target="_blank">this 
                         GitHub repository</a>.
                     </p>
                     <p>
@@ -361,7 +361,7 @@
                     </p>
                     <p>
                         Deployment automation is defined through 
-                        <a href="https://github.com/Hernandezn/nickhz.live/blob/main/.github/workflows/main.yml" target="_blank">YAML 
+                        <a href="https://github.com/nickhz-live-Repos/nickhz.live/blob/main/.github/workflows/main.yml" target="_blank">YAML 
                         configuration in a GitHub workflow</a>, which tells 
                         the remote runner to check out the code, to retrieve 
                         AWS credentials from secrets I set up in GitHub, and 
@@ -409,11 +409,11 @@
                                 Angular and React / Next.JS
                             </li>
                             <li>
-                                usage of my Node.JS practice as a vehicle to 
-                                create live backend Web applications / APIs & 
+                                usage of Node.JS as a vehicle for creating 
+                                live backend Web applications / APIs & 
                                 have them deployed through a subdomain of this 
                                 website, using EC2 infrastructure, 
-                                CI/CD tools, and potentially Docker
+                                CI/CD tools, and Docker
                             </li>
                             <li>
                                 exploration of loose ends from the book, such 
@@ -477,8 +477,8 @@
 
                     <p>
                         The source code for this application is currently 
-                        <a href="https://github.com/Hernandezn/nickhz.live/tree/main/nodejs/live-filesystem-webapp" target="_blank">here 
-                        in my website's GitHub repo</a>. Its initial 
+                        <a href="https://github.com/nickhz-live-Repos/node.nickhz.live/tree/main/misc/live-filesystem-webapp" target="_blank">here 
+                        in my website's Node subdomain GitHub repo</a>. Its initial 
                         requirements are outlined as 
                         <a href="https://eloquentjavascript.net/20_node.html#i-TLRTlwK6ZU" target="_blank">this 
                         exercise</a> at the bottom of a textbook chapter I was 
@@ -488,7 +488,13 @@
                 </div>
             </section>
         </main>
-        <script title="self-development page link script">
+
+        <!-- mobile-only footer button for column navigation -->
+        <footer id="mobile-nav" class="mobile-only">
+            <img src="img/professional/self-development/back-arrows.svg" alt="arrows pointing back to the previous panel" style="width: 100%; height: 100%;"/>
+        </footer>
+
+        <script title="Self-Development Page Link Script">
             /*
                 allows this page to open with specific panels selected, using 
                 url parameters for instance top open with the "html-css-js" 
@@ -555,6 +561,89 @@
                 for(const praxisInput of praxisInputs) {
                     praxisInput.addEventListener('input', () => updateUrlParameter('praxis', praxisRegex, praxisInput));
                 }
+            };
+        </script>
+
+        <script title="Self-development Page Mobile UI Script">
+            /*
+                an issue with a page where the 3-column layout is so inherent 
+                to its design is that the page must entirely rearrange when 
+                viewed from mobile; this script handles this rearrangement by 
+                presenting 1 column at a time with custom navigation functions 
+                to handle the movement between columns
+            */
+            {
+                const mobileState = Object.create(null);
+
+                const skillLabels = document.querySelectorAll('#skills-list > label');
+                const praxisLabels = document.querySelectorAll('.skill-overview > label');
+
+                const leftPanel = document.getElementById('skills-list');
+                const middlePanel = document.getElementById('skill-sublist');
+                const rightPanel = document.getElementById('skill-praxis');
+
+                const footerNav = document.getElementsByTagName('footer')[0];
+
+                mobileState.selectedPanel = leftPanel;
+                mobileState.isApplied = false;
+                mobileState.apply = function() {
+                    if(window.innerWidth < 768) {
+                        // for mobile, apply the mobile state
+                        switch(this.selectedPanel) {
+                            case leftPanel:
+                                leftPanel.style.removeProperty('display');
+                                middlePanel.style.removeProperty('display');
+                                footerNav.style.display = 'none';
+                                footerNav.style.removeProperty('background-color');
+                                break;
+                            case middlePanel:
+                                leftPanel.style.display = 'none';
+                                middlePanel.style.removeProperty('display');
+                                footerNav.style.removeProperty('display');
+                                footerNav.style.backgroundColor = 'hsl(43, 74%, 49%)';
+
+                                footerNav.onclick = () => switchSelectedPanel(leftPanel);
+                                break;
+                            case rightPanel:
+                                leftPanel.style.display = 'none';
+                                middlePanel.style.display = 'none';
+                                footerNav.style.removeProperty('display');
+                                footerNav.style.backgroundColor = 'hsl(0, 100%, 35%)';
+
+                                footerNav.onclick = () => switchSelectedPanel(middlePanel);
+                                break;
+                        }
+                    } else {
+                        // for desktop, un-apply the mobile state
+                        leftPanel.style.removeProperty('display');
+                        middlePanel.style.removeProperty('display');
+                    }
+                };
+
+                const switchSelectedPanel = (panelSelection) => {
+                    mobileState.selectedPanel = panelSelection;
+                    mobileState.apply();
+                }
+
+                for(const skillLabel of skillLabels) {
+                    skillLabel.addEventListener('click', () => {
+                        switchSelectedPanel(middlePanel);
+                    });
+                }
+
+                for(const praxisLabel of praxisLabels) {
+                    praxisLabel.addEventListener('click', () => {
+                        switchSelectedPanel(rightPanel);
+                    });
+                }
+
+                if(new URLSearchParams(window.location.search).get('praxis')) {
+                    switchSelectedPanel(rightPanel);
+                } else if(new URLSearchParams(window.location.search).get('skill')) {
+                    switchSelectedPanel(middlePanel);
+                }
+
+                window.addEventListener('resize', () => mobileState.apply());
             };
         </script>
     </body>
