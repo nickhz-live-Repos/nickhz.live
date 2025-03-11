@@ -152,11 +152,15 @@ body > main {
     backdrop-filter: blur(2px);
 }
 
-#rotary-menu > a:first-of-type {
+#rotary-menu > a[href=webtools] {
     top: 22dvh;
+
+    background: 
+        linear-gradient(hsla(0, 0%, 25%, 0.3) 20%, hsla(0, 0%, 100%, 0.3) 80%)
+    ;
 }
 
-#rotary-menu > a:nth-of-type(2) {
+#rotary-menu > a[href=professional] {
     top: 17dvh;
 
     background: 
@@ -181,7 +185,7 @@ body > main {
     ;
 }
 
-#rotary-menu > a:nth-of-type(6) {
+#rotary-menu > a[href=journal] {
     top: 37dvh;
 
     background:
@@ -330,7 +334,7 @@ body > main {
     left: 50%;
 }
 
-#device-info-button {
+#sub-sites-button {
     left: 70%;
 }
 
@@ -423,6 +427,21 @@ input:checked + .tab-content {
     ;
 }
 
+#sitemap-webtools {
+    box-shadow: none;
+
+    background:
+        linear-gradient(hsl(0, 0%, 25%), hsl(0, 0%, 100%))
+    ;
+
+    text-shadow:
+        0 0 8px black,
+        0 0 8px black,
+        0 0 4px black,
+        0 0 4px black
+    ;
+}
+
 .sitemap-entry > a {
     display: inline-block;
     text-align: center;
@@ -436,6 +455,10 @@ footer {
     opacity: 0.4;
     width: 95%;
     margin: auto;
+}
+
+fieldset {
+    border-radius: 8px;
 }
 
 /* 
@@ -566,7 +589,7 @@ desktop css overrides
         left: 30%;
     }
 
-    #device-info-button {
+    #sub-sites-button {
         left: 38.5%;
     }
 

@@ -68,23 +68,9 @@
                 min-height: calc(100dvh - 2rem - 99px);
             }
 
-            #tool-tray {
-                position: absolute;
-                right: 0;
-                height: 100%;
-                width: 90%;
-                border-radius: 10px 0 0 0;
-                box-sizing: border-box;
-                border: 5px groove hsl(0, 0%, 70%);
-                border-image: url("../img/webtools/gradient-border.svg") 10 / 5px 1 round;
-                border-bottom: none;
-                border-right: none;
-            }
-
-            #tools {
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(hsl(240, 5%, 65%), hsl(240, 5%, 25%));
+            a {
+                color: hsl(240, 40%, 50%);
+                text-shadow: 0 0 4px white;
             }
 
             #home-link {
@@ -93,12 +79,11 @@
                 background: linear-gradient(hsl(0, 0%, 50%), hsl(0, 0%, 100%));
                 padding: 0.5rem;
                 box-sizing: border-box;
-                width: 10%;
+                width: 20%;
                 height: 5rem;
                 border-radius: 0 10px 10px 0;
                 border-top: 4px groove hsl(0, 0%, 70%);
                 border-right: 5px groove hsl(0, 0%, 70%);
-                color: black;
                 font-size: large;
             }
 
@@ -116,6 +101,70 @@
 
             #home-link > div {
                 text-align: center;
+            }
+
+            #tool-tray {
+                position: absolute;
+                z-index: 1;
+                right: 0;
+                min-height: 100%;
+                width: 80%;
+                border-radius: 10px 0 0 0;
+                box-sizing: border-box;
+                box-shadow: -2px -2px 3px hsl(0, 0%, 25%);
+                background: linear-gradient(hsl(240, 5%, 65%), hsl(240, 5%, 25%));
+            }
+
+            #tools {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .webtool {
+                display: block;
+                position: relative;
+                margin: 1rem;
+                width: 300px;
+                background: linear-gradient(hsl(0, 0%, 50%), hsl(0, 0%, 100%));
+                border-radius: 15px;
+                box-sizing: border-box;
+                padding: 0.8rem;
+                border-top: 4px groove hsl(0, 0%, 70%);
+                border-right: 3px ridge hsl(0, 0%, 70%);
+                color: black;
+                text-shadow: none;
+            }
+
+            .webtool:hover {
+                filter:brightness(1.2);
+            }
+
+            .webtool:active {
+                filter: brightness(1.1);
+            }
+
+            .webtool > figure:first-child {
+                margin: 0;
+                width: 100%;
+                max-height: 200px;
+                text-align: center;
+            }
+
+            /* 
+
+            desktop css overrides 
+
+            */
+            @media only screen and (min-width: 768px) {
+                #tool-tray {
+                    width: 90%;
+                }
+
+                #home-link {
+                    width: 10%;
+                }
             }
         </style>
     </head>
@@ -137,17 +186,57 @@
         </header>
 
         <p style="margin-left: 1rem;">
-            Free, open-source, no ads, no trackers, no logins. Just little things I wished existed. By Nick Hernandez.
+            Free, 
+            <a href="https://github.com/nickhz-live-Repos/nickhz.live/tree/main/public/webtools" target="_blank">open-source</a>, 
+            no ads, no trackers, no signups or logins. Just little things I 
+            wished existed online without all the hustle. By 
+            <a href="https://github.com/Hernandezn" target="_blank">Nick Hernandez</a>.
         </p>
 
         <main id="page-content">
             <nav id="button-tray">
 
             </nav>
-            <nav id="tool-tray">
-                <div id="tools">
 
-                </div>
+            <nav id="tool-tray">
+                <section id="tools">
+                    <a class="webtool" aria-label="House of Quality Maker">
+                        <figure style="background-color: hsl(240, 20%, 50%);">
+                            <img src="../img/webtools/simple-pcb-traces.svg" alt="Placeholder Image" />
+                        </figure>
+
+                        <h3>
+                            (Placeholder) House of Quality Maker
+                        </h3>
+
+                        <p>
+                            A tool for creating a House of Quality diagram for 
+                            quality function deployment (QFD) in engineering & 
+                            product design disciplines.
+                        </p>
+                    </a>
+
+                    <a class="webtool" aria-label="Your Device">
+                        <figure style="background-color: black;">
+                            <img src="../img/webtools/simple-pcb-traces.svg" alt="Placeholder Image" />
+                        </figure>
+
+                        <h3>
+                            (Placeholder)
+                        </h3>
+
+                        <p>
+                            (TBD)
+                        </p>
+                    </a>
+                </section>
+
+
+                <!-- <div id="tools">
+                    <section>
+                        
+                    </section>
+                </div> -->
             </nav>
         </main>
 

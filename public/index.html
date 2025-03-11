@@ -65,13 +65,13 @@
         <!-- ROTARY MENU -->
 
         <div id="rotary-menu">
-            <a class="menu-item" href>
+            <a href="webtools" class="menu-item">
                 <div class="centered">
-                    Web Tools
+                    Webtools
                 </div>
             </a>
 
-            <a href="./professional/" class="menu-item">
+            <a href="professional" class="menu-item">
                 <div class="centered">
                     Profession
                 </div>
@@ -95,7 +95,7 @@
                 </div>
             </a>
 
-            <a href="./journal" class="menu-item">
+            <a href="journal" class="menu-item">
                 <div class="centered">
                     Journal
                 </div>
@@ -237,7 +237,15 @@
                             <a href="./professional/resume">Resume Webpage</a>
                         </li>
                         <li>
-                            <a href="./professional/self-development/">Self-development Showcase</a>
+                            <a href="./professional/self-development/">Self-Development Showcase</a>
+
+                            <ul>
+                                <li>
+                                    <a href="./professional/self-development/eloquent-javascript-2024/">
+                                        Textbook Self-Study Notes - Eloquent JavaScript, 4th ed. (2024) by Marijn Haverbeke
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
@@ -268,6 +276,23 @@
                     </ul>
                 </li>
             </ul>
+            <div class="sitemap-entry">
+                <a href="webtools" id="sitemap-webtools" class="small-orb">
+                    <div class="centered">
+                        Web Tools
+                    </div>
+                </a>
+                <div>
+                    <div>
+                        Online Tools, Custom Made
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <a href="webtools">Webtools Index</a>
+                </li>
+            </ul>
 
             <hr />
 
@@ -277,7 +302,7 @@
         </div>
 
         <!-- device info -->
-        <input type="radio" name="tabcontent"  id="device-info-tab" />
+        <!-- <input type="radio" name="tabcontent"  id="device-info-tab" />
         <div class="tab-content">
             <h1>
                 Device Info
@@ -305,8 +330,43 @@
                 (page script loading...)
             </p>
     
-            <!-- script content -->
+            
             <script src="scripts/homepage-device-info.js"></script>
+        </div> -->
+
+        <input type="radio" name="tabcontent"  id="sub-sites-tab" />
+        <div class="tab-content">
+            <h1>
+                Device Info
+            </h1>
+            
+            <p>
+                <i>
+                    Here, I will link other sites & subdomains being 
+                    developed by me.
+                </i>
+            </p>
+
+            <hr />
+
+            <h2>
+                Subdomains for this site
+            </h2>
+
+            <fieldset>
+                <legend>
+                    node.nickhz.live
+                </legend>
+
+                <p>
+                    Dynamic subdomain & API being developed as my own 
+                    custom Node.JS server.
+                </p>
+
+                <p>
+                    Not currently live; deployment still pending.
+                </p>
+            </fieldset>
         </div>
 
         <!-- CREDITS FOOTER -->
@@ -363,9 +423,9 @@
                         </div>
                     </label>
 
-                    <label for="device-info-tab" id="device-info-button" class="small-orb foot-nav-button">
+                    <label for="sub-sites-tab" id="sub-sites-button" class="small-orb foot-nav-button">
                         <div class="centered">
-                            DEVICE INFO
+                            SUB-SITES
                         </div>
                     </label>
                 </div>
@@ -410,7 +470,7 @@
                         document.getElementById('sitemap-tab').checked = true;
                         break;
                     case 'device':
-                        document.getElementById('device-info-tab').checked = true;
+                        document.getElementById('sub-sites-tab').checked = true;
                         break;
                     default:
                         break;

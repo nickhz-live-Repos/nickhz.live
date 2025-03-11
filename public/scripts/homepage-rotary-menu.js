@@ -5,7 +5,7 @@
     const menuItems = document.getElementsByClassName('menu-item');
     const transitionFrame = document.getElementById('bg-transition-frame');
     const menuItemBgs = [
-        null,
+        'hsl(0, 0%, 40%)',
         '#2c3c54',
         null,
         null,
