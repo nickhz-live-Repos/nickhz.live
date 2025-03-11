@@ -31,3 +31,5 @@ const anonymize = () => {
         node.textContent = str;
     }
 }
+
+anonymize();
