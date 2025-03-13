@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
         <!-- Page properties -->
-        <title>House of Quality Maker for QFD, by Nick Hernandez</title>
+        <title>House of Quality Maker, by Nick Hernandez</title>
 
         <!-- Opengraph properties, for giving a site preview if the link is posted anywhere. Makes the link look less sketchy. -->
         <meta property="og:title" content="QFD House of Quality Maker" />
@@ -19,40 +19,146 @@
         <meta property="og:site_name" content="The Personal Site of Nick Hernandez" />
         
         <!-- Style properties -->
-        <link href="../css/style.css" rel="stylesheet" />
+        <!-- <link href="../css/style.css" rel="stylesheet" /> -->
         <style>
+            :root {
+                --primary-bg-color: hsl(60, 50%, 60%);
+            }
+
             body {
-                background-color: hsl(60, 50%, 60%);
+                margin: 0;
+                background-color: var(--primary-bg-color);
                 font-family: Arial, Helvetica, sans-serif;
             }
 
             #page-header {
+                position: fixed;
+                width: 100%;
+                z-index: 100;
+                background-color: var(--primary-bg-color);
+
                 text-align: center;
+                font-size: 1.7rem;
+                font-weight: bold;
+                padding: 1rem 0;
+                box-sizing: border-box;
+                height: 4.4rem;
+                border-bottom: 0.4rem solid black;
+                box-shadow: 0 -4px 4px -2px black inset;
+            }
+
+            #page-content {
+                position: relative;
+                width: 100%;
+                height: 100dvh;
+            }
+
+            #head-spacer {
+                height: 4.4rem;
+            }
+
+            #house-of-quality-tool {
+                position: relative;
+                height: calc(100% - 4.4rem);
+            }
+
+            #control-bar {
+                height: 2.2rem;
+                display: flex;
+            }
+
+            #control-bar > * {
+                display: inline-block;
+                padding: 0.5rem 1rem;
+                box-sizing: border-box;
+                border: 1px solid black;
+                border-radius: 5px;
+                box-shadow: -3px 3px 4px 0 hsl(60, 50%, 40%) inset, 3px -3px 4px 0 hsl(60, 50%, 80%) inset;
+                font-size: 1rem;
+                background: var(--primary-bg-color);
+            }
+
+            #control-bar > *:hover {
+                filter: brightness(1.2);
+                cursor: pointer;
+            }
+
+            #house-of-quality-editor {
+                position: relative;
+                height: calc(100% - 2.2rem);
+                text-wrap: nowrap;
+            }
+
+            #house-of-quality-editor > * {
+                display: inline-block;
+                box-sizing: border-box;
+                height: 100%;
+                vertical-align: top;
+            }
+
+            #palette {
+                position: relative;
+                height: 100%;
+                border-right: 1px solid black;
+                width: 10vw;
+                padding: 1rem;
+                text-align: center;
+            }
+
+            #canvas-holder {
+                background: hsl(60, 50%, 40%);
+                width: 90vw;
+                margin: 0;
+                border-top: 1px solid black;
+            }
+
+            #house-of-quality-canvas {
+                position: absolute;
             }
         </style>
     </head>
     <body>
         <header id="page-header">
-            <h2>
-                House of Quality Maker (Pending)
-            </h2>
-            <br />
-            <br />
-            <a href="../">
-                Webtools Index
-            </a>
+            House of Quality Maker (Work in Progress)
         </header>
 
-        <main id="controller">
-            <noscript>
-                This page requires JavaScript to be enabled.
-            </noscript>
+        <main id="page-content">
+            <section id="head-spacer"></section>
+            
+            <section id="house-of-quality-tool">
+                <nav id="control-bar">
+                    <a href="../">
+                        Webtools Index
+                    </a>
+                    <button>
+                        (Placeholder)
+                    </button>
+                </nav>
+
+                <section id="house-of-quality-editor">
+                    <div id="palette">
+                        <noscript>
+                            This page requires JavaScript to be enabled.
+                            <br />
+                            <br />
+                            <a href="../">
+                                Click here to return to the webtools index.
+                            </a>
+                        </noscript>
+                    </div><div id="canvas-holder">
+                        <canvas id="house-of-quality-canvas"></canvas>
+                    </div>
+                </section>
+            </section>
         </main>
 
-        <canvas id="house-of-quality-output"></canvas>
-
-        <script>
+        <script title="House of Quality Controller">
             {
+                // setup
+                const canvasHolder = document.getElementById('canvas-holder');
+                const canvas = document.getElementById('house-of-quality-canvas');
+                const ctx = canvas.getContext('2d');
+
                 // JSON representation of the house of quality
                 const house = Object.create(null);
 
@@ -200,9 +306,69 @@
                     }
                 ];
 
-                console.log(JSON.stringify(house));
+                house.dimensions = {
+                    total: {
+                        x: window.innerWidth * 0.7,
+                        y: window.innerHeight * 0.7
+                    }
+                };
+
+                house.colors = {
+                    background: 'white',
+                    lines: 'black'
+                };
+
+                house.toggles = {
+
+                };
+
+                // render functionality
+
+                // initial render
+                {
+                    canvas.height = house.dimensions.total.y;
+                    canvas.width = house.dimensions.total.x;
+                };
+
+                const renderHouse = () => {
+                    // background
+                    ctx.fillStyle = house.colors.background;
+                    ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+
+                    // text
+                    ctx.fillStyle = 'black';
+                    ctx.font = '12px Arial';
+                    const boxPadding = 8;
+
+                    // measure where to put the customer requirements on the canvas
+                    for(const requirementCategory of house.customerRequirementCategories) {
+                        let cumulativeHeight = 0;
+                        let maxWidth = 0;
+
+                        for(const requirement of requirementCategory.requirements) {
+                            const name = requirement.name;
+                            const textMeasurement = ctx.measureText(name);
+
+                            cumulativeHeight += textMeasurement.height + 2 * boxPadding;
+                            if(textMeasurement.width > maxWidth) {
+                                maxWidth = textMeasurement.width;
+                            }
+                        }
+                        maxWidth += 2 * boxPadding;
+                    }
+                };
+
+                const downloadHouse = () => {
+                    const dl = document.createElement('a');
+                    dl.href = canvas.toDataURL();
+                    dl.download = `house-of-quality-${Date.now()}.png`;
+                    dl.click();
+                };
+
+                renderHouse();
 
                 // controller functionality
+                // --
             };
         </script>
     </body>
