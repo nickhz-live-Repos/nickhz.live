@@ -201,8 +201,6 @@
             */
 
             /*
-                NEXT STEP: REWRITE THE ABOVE.
-
                 The UI should only be managed by the JSON on page load, 
                 and the user's input should change both the UI and the 
                 JSON. The first page load should store the default HOQ 
@@ -223,248 +221,62 @@
                 const rootSelector = document.querySelector(':root');
                 const houseDom = document.getElementById('house-of-quality-render');
 
-                const domData = Object.create(null);
-                domData.canvas = houseDom;
-
                 let houseData = null;
+                let domData = null;
 
                 const populateDefaultHoq = () => {
-                    // names are kept in arrays instead of purely as object fields to allow browser-agnostic indexing operations
-                    // this format isn't for readability :')
                     houseData = {
-                        technicalRequirementCategories: {
-                            names: [
-                                'Technical Requirements'
-                            ],
-                            'Technical Requirements': {
-                                requirements: [
-                                    'Technical Requirement 1',
-                                    'Technical Requirement 2',
-                                    'Technical Requirement 3',
-                                    'Technical Requirement 4',
-                                    'Technical Requirement 5'
-                                ]
+                        correlationMatrix: [
+                            [0, -1, 0, 2],
+                            [0, 2, -2],
+                            [0, 0],
+                            [1]
+                        ],
+                        technicalRequirementCategories: [
+                            {
+                                name: 'Technical Requirements',
+                                requirementCount: 5
                             }
-                        },
-                        customerRequirementCategories: {
-                            names: [
-                                'Customer Requirements'
-                            ],
-                            'Customer Requirements': {
-                                requirements: [
-                                    'Customer Requirement 1',
-                                    'Customer Requirement 2',
-                                    'Customer Requirement 3',
-                                    'Customer Requirement 4',
-                                    'Customer Requirement 5',
-                                    'Customer Requirement 6',
-                                    'Customer Requirement 7'
-                                ]
+                        ],
+                        technicalRequirements: [
+                            'Technical Requirement 1',
+                            'Technical Requirement 2',
+                            'Technical Requirement 3',
+                            'Technical Requirement 4',
+                            'Technical Requirement 5'
+                        ],
+                        directionsOfImprovement: [1, -1, 0, 1, 0],
+                        customerRequirementCategories: [
+                            {
+                                name: 'Customer Requirements',
+                                requirementCount: 7
                             }
-                        },
-                        technicalRequirements: {
-                            names: [
-                                'Technical Requirement 1',
-                                'Technical Requirement 2',
-                                'Technical Requirement 3',
-                                'Technical Requirement 4',
-                                'Technical Requirement 5'
-                            ],
-                            'Technical Requirement 1': {
-                                directionOfImprovement: 1,
-                                importanceScore: 51,
-                                importanceWeight: 26
-                            },
-                            'Technical Requirement 2': {
-                                directionOfImprovement: -1,
-                                importanceScore: 43,
-                                importanceWeight: 22
-                            },
-                            'Technical Requirement 3': {
-                                directionOfImprovement: 0,
-                                importanceScore: 32,
-                                importanceWeight: 16
-                            },
-                            'Technical Requirement 4': {
-                                directionOfImprovement: 1,
-                                importanceScore: 20,
-                                importanceWeight: 10
-                            },
-                            'Technical Requirement 5': {
-                                directionOfImprovement: 0,
-                                importanceScore: 51,
-                                importanceWeight: 26
-                            }
-                        },
-                        customerRequirements: {
-                            names: [
-                                'Customer Requirement 1',
-                                'Customer Requirement 2',
-                                'Customer Requirement 3',
-                                'Customer Requirement 4',
-                                'Customer Requirement 5',
-                                'Customer Requirement 6',
-                                'Customer Requirement 7'
-                            ],
-                            'Customer Requirement 1': {
-                                importance: 3
-                            },
-                            'Customer Requirement 2': {
-                                importance: 2
-                            },
-                            'Customer Requirement 3': {
-                                importance: 4
-                            },
-                            'Customer Requirement 4': {
-                                importance: 1
-                            },
-                            'Customer Requirement 5': {
-                                importance: 5
-                            },
-                            'Customer Requirement 6': {
-                                importance: 2
-                            },
-                            'Customer Requirement 7': {
-                                importance: 5
-                            }
-                        },
-                        relationshipMatrix: {
-                            customerRequirementIndexed: {
-                                'Customer Requirement 1': {
-                                    'Technical Requirement 1': 0,
-                                    'Technical Requirement 2': 1,
-                                    'Technical Requirement 3': 0,
-                                    'Technical Requirement 4': 0,
-                                    'Technical Requirement 5': 1
-                                },
-                                'Customer Requirement 2': {
-                                    'Technical Requirement 1': 5,
-                                    'Technical Requirement 2': 3,
-                                    'Technical Requirement 3': 0,
-                                    'Technical Requirement 4': 3,
-                                    'Technical Requirement 5': 0
-                                },
-                                'Customer Requirement 3': {
-                                    'Technical Requirement 1': 5,
-                                    'Technical Requirement 2': 1,
-                                    'Technical Requirement 3': 5,
-                                    'Technical Requirement 4': 0,
-                                    'Technical Requirement 5': 3
-                                },
-                                'Customer Requirement 4': {
-                                    'Technical Requirement 1': 0,
-                                    'Technical Requirement 2': 0,
-                                    'Technical Requirement 3': 5,
-                                    'Technical Requirement 4': 3,
-                                    'Technical Requirement 5': 0
-                                },
-                                'Customer Requirement 5': {
-                                    'Technical Requirement 1': 3,
-                                    'Technical Requirement 2': 3,
-                                    'Technical Requirement 3': 0,
-                                    'Technical Requirement 4': 0,
-                                    'Technical Requirement 5': 5
-                                },
-                                'Customer Requirement 6': {
-                                    'Technical Requirement 1': 3,
-                                    'Technical Requirement 2': 0,
-                                    'Technical Requirement 3': 1,
-                                    'Technical Requirement 4': 3,
-                                    'Technical Requirement 5': 3
-                                },
-                                'Customer Requirement 7': {
-                                    'Technical Requirement 1': 0,
-                                    'Technical Requirement 2': 3,
-                                    'Technical Requirement 3': 1,
-                                    'Technical Requirement 4': 1,
-                                    'Technical Requirement 5': 1
-                                }
-                            },
-                            technicalRequirementIndexed: {
-                                'Technical Requirement 1': {
-                                    'Customer Requirement 1': 0,
-                                    'Customer Requirement 2': 5,
-                                    'Customer Requirement 3': 5,
-                                    'Customer Requirement 4': 0,
-                                    'Customer Requirement 5': 3,
-                                    'Customer Requirement 6': 3,
-                                    'Customer Requirement 7': 0
-                                },
-                                'Technical Requirement 2': {
-                                    'Customer Requirement 1': 1,
-                                    'Customer Requirement 2': 3,
-                                    'Customer Requirement 3': 1,
-                                    'Customer Requirement 4': 0,
-                                    'Customer Requirement 5': 3,
-                                    'Customer Requirement 6': 0,
-                                    'Customer Requirement 7': 3
-                                },
-                                'Technical Requirement 3': {
-                                    'Customer Requirement 1': 0,
-                                    'Customer Requirement 2': 0,
-                                    'Customer Requirement 3': 5,
-                                    'Customer Requirement 4': 5,
-                                    'Customer Requirement 5': 0,
-                                    'Customer Requirement 6': 1,
-                                    'Customer Requirement 7': 1
-                                },
-                                'Technical Requirement 4': {
-                                    'Customer Requirement 1': 0,
-                                    'Customer Requirement 2': 3,
-                                    'Customer Requirement 3': 0,
-                                    'Customer Requirement 4': 3,
-                                    'Customer Requirement 5': 0,
-                                    'Customer Requirement 6': 3,
-                                    'Customer Requirement 7': 1
-                                },
-                                'Technical Requirement 5': {
-                                    'Customer Requirement 1': 1,
-                                    'Customer Requirement 2': 0,
-                                    'Customer Requirement 3': 3,
-                                    'Customer Requirement 4': 0,
-                                    'Customer Requirement 5': 5,
-                                    'Customer Requirement 6': 3,
-                                    'Customer Requirement 7': 1
-                                }
-                            }
-                        },
-
-                        correlationMatrix: {
-                            'Technical Requirement 1': {
-                                'Technical Requirement 2': 0,
-                                'Technical Requirement 3': -1,
-                                'Technical Requirement 4': 0,
-                                'Technical Requirement 5': 2
-                            },
-                            'Technical Requirement 2': {
-                                'Technical Requirement 1': 0,
-                                'Technical Requirement 3': 0,
-                                'Technical Requirement 4': 2,
-                                'Technical Requirement 5': -2
-                            },
-                            'Technical Requirement 3': {
-                                'Technical Requirement 1': -1,
-                                'Technical Requirement 2': 0,
-                                'Technical Requirement 4': 0,
-                                'Technical Requirement 5': 0
-                            },
-                            'Technical Requirement 4': {
-                                'Technical Requirement 1': 0,
-                                'Technical Requirement 2': 2,
-                                'Technical Requirement 3': 0,
-                                'Technical Requirement 5': 1
-                            },
-                            'Technical Requirement 5': {
-                                'Technical Requirement 1': 2,
-                                'Technical Requirement 2': -2,
-                                'Technical Requirement 3': 0,
-                                'Technical Requirement 4': 1
-                            }
-                        }
+                        ],
+                        customerRequirements: [
+                            'Customer Requirement 1',
+                            'Customer Requirement 2',
+                            'Customer Requirement 3',
+                            'Customer Requirement 4',
+                            'Customer Requirement 5',
+                            'Customer Requirement 6',
+                            'Customer Requirement 7'
+                        ],
+                        customerImportances: [3, 2, 4, 1, 5, 2, 5],
+                        relationshipMatrix: [
+                            [0, 1, 0, 0, 1],
+                            [5, 3, 0, 3, 0],
+                            [5, 1, 5, 0, 3],
+                            [0, 0, 5, 3, 0],
+                            [3, 3, 0, 0, 5],
+                            [3, 0, 1, 3, 3],
+                            [0, 3, 1, 1, 1]
+                        ],
+                        technicalImportanceScores: [51, 43, 32, 20, 51],
+                        technicalImportanceWeights: [26, 22, 16, 10, 26]
                     };
 
                     localStorage.setItem('house-of-quality-data', JSON.stringify(houseData));
-                    
+
                     return houseData;
                 };
 
@@ -478,9 +290,11 @@
                     } catch(e) {
                         houseData = populateDefaultHoq();
                     }
+                    domData = Object.create(null);
 
                     rootSelector.style.setProperty('--hoq-bg-color', 'white');
                     rootSelector.style.setProperty('--hoq-border', '1px solid black');
+
                     houseDom.className = 'hoq-has-bg';
 
                     const houseTable = document.createElement('table');
@@ -488,7 +302,6 @@
                     houseTable.style.position = 'relative';
                     houseTable.style.zIndex = 2;
                     houseDom.appendChild(houseTable);
-                    domData.house = houseTable;
 
                     const houseTop = document.createElement('tr');
                     houseTable.appendChild(houseTop);
@@ -498,7 +311,7 @@
                     houseTop.appendChild(topLeftBlankCell);
 
                     const roofCell = document.createElement('td');
-                    roofCell.colSpan = houseData.technicalRequirements.names.length;
+                    roofCell.colSpan = houseData.technicalRequirements.length;
                     roofCell.style.position = 'relative';
                     roofCell.style.textAlign = 'center';
                     houseTop.appendChild(roofCell);
@@ -508,39 +321,41 @@
                     correlationTable.style.borderCollapse = 'collapse';
                     correlationTable.style.position = 'relative';
                     correlationTable.style.zIndex = -1;
-                    correlationTable.style.width = '70%';
+                    correlationTable.style.width = '100%';
                     correlationTable.style.margin = 'auto';
+                    // correlationTable.style.tableLayout = 'fixed';
                     correlationTable.style.transformOrigin = 'center';
-                    correlationTable.style.transform = 'rotate(-45deg) translateY(50%)';
+                    // correlationTable.style.transform = 'rotate(-45deg) translateY(50%)';
 
-                    let requirementsArray = houseData.technicalRequirements.names.slice();
-                    for(let i = 0; i < houseData.technicalRequirements.names.length; i++) {
-                        const row = document.createElement('tr');
-                        const technicalRequirement = houseData.technicalRequirements.names[i];
-                        requirementsArray = requirementsArray.slice(1);
+                    domData.correlationMatrix = new Array();
+                    for(let i = 0; i < houseData.technicalRequirements.length; i++) {
+                        const domCells = new Array();
 
-                        let requirementIndex = 0;
-                        for(let j = 0; j < houseData.technicalRequirements.names.length; j++) {
+                        const domRow = document.createElement('tr');
+                        const rowData = houseData.correlationMatrix[i];
+                        
+                        let dataIndex = 0;
+                        for(let j = 0; j < houseData.technicalRequirements.length; j++) {
                             const cell = document.createElement('td');
 
                             if(j >= i) {
                                 cell.className = 'hoq-has-border';
 
                                 if(j != i) {
-                                    const otherRequirement = requirementsArray[requirementIndex];
-                                    cell.innerText = 
-                                        houseData.correlationMatrix[technicalRequirement][otherRequirement]
-                                    ;
-                                    requirementIndex++;
+                                    cell.innerText = rowData[dataIndex++];
+                                    domCells.push(cell);
                                 }
                             }
 
-                            row.appendChild(cell);
+                            domRow.appendChild(cell);
                         }
-                        correlationTable.appendChild(row);
+                        correlationTable.appendChild(domRow);
+                        
+                        if(domCells.length) {
+                            domData.correlationMatrix.push(domCells);
+                        }
                     }
                     roofCell.appendChild(correlationTable);
-                    domData.correlationMatrix = correlationTable;
 
                     // technical requirements rows
                     const technicalRequirementCategoriesRow = document.createElement('tr');
@@ -551,13 +366,15 @@
                     houseTable.appendChild(technicalRequirementsRow);
                     houseTable.appendChild(directionOfImprovementRow);
 
-                    for(const technicalCategory of houseData.technicalRequirementCategories.names) {
+                    domData.technicalRequirementCategories = new Array();
+                    for(let i = 0; i < houseData.technicalRequirementCategories.length; i++) {
                         const cell = document.createElement('td');
                         cell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
-                        cell.colSpan = houseData.technicalRequirementCategories[technicalCategory].requirements.length;
-                        cell.innerText = technicalCategory;
+                        cell.colSpan = houseData.technicalRequirementCategories[i].requirementCount;
+                        cell.innerText = houseData.technicalRequirementCategories[i].name;
 
                         technicalRequirementCategoriesRow.appendChild(cell);
+                        domData.technicalRequirementCategories.push(cell);
                     }
 
                     const middleLeftBlankCell = document.createElement('td');
@@ -571,57 +388,77 @@
                     importanceLabel.innerText = '< Importance';
                     technicalRequirementsRow.appendChild(importanceLabel);
 
-                    for(const technicalRequirement of houseData.technicalRequirements.names) {
+                    domData.technicalRequirements = new Array();
+                    domData.directionsOfImprovement = new Array();
+                    for(let i = 0; i < houseData.technicalRequirements.length; i++) {
                         const technicalRequirementCell = document.createElement('td');
                         technicalRequirementCell.className = 'hoq-has-border hoq-is-sideways hoq-has-bg hoq-in-front';
-                        technicalRequirementCell.innerText = technicalRequirement;
+                        technicalRequirementCell.innerText = houseData.technicalRequirements[i];
 
                         technicalRequirementsRow.appendChild(technicalRequirementCell);
+                        domData.technicalRequirements.push(technicalRequirementCell);
 
                         const directionOfImprovementCell = document.createElement('td');
                         directionOfImprovementCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
+                        directionOfImprovementCell.innerText = houseData.directionsOfImprovement[i];
 
-                        const directionOfImprovement = houseData.technicalRequirements[technicalRequirement].directionOfImprovement;
-                        directionOfImprovementCell.innerText = directionOfImprovement;
                         directionOfImprovementRow.appendChild(directionOfImprovementCell);
+                        domData.directionsOfImprovement.push(directionOfImprovementCell);
                     }
 
                     // middle rows; customer requirements and relationship matrix
-                    let rowsToNextCategory = 0;
-                    for(const customerCategory of houseData.customerRequirementCategories.names) {
-                        const requirements = houseData.customerRequirementCategories[customerCategory].requirements;
+                    const middleRows = new Array();
+                    for(let i = 0; i < houseData.customerRequirements.length; i++) {
+                        const row = document.createElement('tr');
 
-                        const categoryCell = document.createElement('td');
-                        categoryCell.className = 'hoq-has-border hoq-is-sideways';
-                        categoryCell.innerText = customerCategory;
-                        categoryCell.rowSpan = requirements.length;
+                        houseTable.appendChild(row);
+                        middleRows.push(row);
+                    }
 
-                        let customerRequirementRow = document.createElement('tr');
-                        customerRequirementRow.appendChild(categoryCell);
+                    domData.customerRequirementCategories = new Array();
+                    for(let i = 0, rowIndex = 0; i < houseData.customerRequirementCategories.length; i++) {
+                        const category = houseData.customerRequirementCategories[i];
+                        const row = middleRows[rowIndex];
+                        const cell = document.createElement('td');
 
-                        for(const requirement of requirements) {
-                            const customerRequirementCell = document.createElement('td');
-                            customerRequirementCell.className = 'hoq-has-border';
-                            customerRequirementCell.innerText = requirement;
-                            customerRequirementRow.appendChild(customerRequirementCell);
+                        cell.className = 'hoq-is-sideways';
+                        cell.innerText = category.name;
+                        cell.rowSpan = category.requirementCount;
 
-                            const importanceCell = document.createElement('td');
-                            importanceCell.className = 'hoq-has-border';
-                            importanceCell.innerText = houseData.customerRequirements[requirement].importance;
-                            customerRequirementRow.appendChild(importanceCell);
+                        row.appendChild(cell);
+                        domData.customerRequirementCategories.push(cell);
 
-                            const relationships = houseData.relationshipMatrix.customerRequirementIndexed[requirement];
-                            for(const technicalRequirement of houseData.technicalRequirements.names) {
-                                const relationshipMatrixCell = document.createElement('td');
-                                relationshipMatrixCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
-                                relationshipMatrixCell.innerText = relationships[technicalRequirement];
-                                customerRequirementRow.appendChild(relationshipMatrixCell);
-                            }
+                        rowIndex += category.requirementCount;
+                    }
 
-                            houseTable.appendChild(customerRequirementRow);
+                    domData.customerRequirements = new Array();
+                    domData.customerImportances = new Array();
+                    domData.relationshipMatrix = new Array();
+                    for(let i = 0; i < houseData.customerRequirements.length; i++) {
+                        const row = middleRows[i];
 
-                            customerRequirementRow = document.createElement('tr');
+                        const customerRequirementCell = document.createElement('td');
+                        customerRequirementCell.className = 'hoq-has-border';
+                        customerRequirementCell.innerText = houseData.customerRequirements[i];
+                        row.appendChild(customerRequirementCell);
+                        domData.customerRequirements.push(customerRequirementCell);
+
+                        const importanceCell = document.createElement('td');
+                        importanceCell.className = 'hoq-has-border';
+                        importanceCell.innerText = houseData.customerImportances[i];
+                        row.appendChild(importanceCell);
+                        domData.customerImportances.push(importanceCell);
+
+                        const relationships = houseData.relationshipMatrix[i];
+                        const relationshipDomCells = new Array();
+                        for(const relationship of relationships) {
+                            const relationshipMatrixCell = document.createElement('td');
+                            relationshipMatrixCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
+                            relationshipMatrixCell.innerText = relationship;
+                            row.appendChild(relationshipMatrixCell);
+                            relationshipDomCells.push(relationshipMatrixCell);
                         }
+                        domData.relationshipMatrix.push(relationshipDomCells);
                     }
 
                     // third section of rows; importance metrics
@@ -633,24 +470,29 @@
                     bottomLeftBlankCell.colSpan = 3;
                     importanceScoresRow.appendChild(bottomLeftBlankCell);
 
-                    for(const technicalRequirement of houseData.technicalRequirements.names) {
+                    domData.technicalImportanceScores = new Array();
+                    domData.technicalImportanceWeights = new Array();
+                    for(let i = 0; i < houseData.technicalRequirements.length; i++) {
                         const importanceScoreCell = document.createElement('td');
                         importanceScoreCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
-                        importanceScoreCell.innerText = houseData.technicalRequirements[technicalRequirement].importanceScore;
+                        importanceScoreCell.innerText = houseData.technicalImportanceScores[i];
                         importanceScoresRow.appendChild(importanceScoreCell);
+                        domData.technicalImportanceScores.push(importanceScoreCell);
 
                         const importanceWeightCell = document.createElement('td');
                         importanceWeightCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
-                        importanceWeightCell.innerText = houseData.technicalRequirements[technicalRequirement].importanceWeight;
+                        importanceWeightCell.innerText = houseData.technicalImportanceWeights[i];
                         importanceWeightsRow.appendChild(importanceWeightCell);
+                        domData.technicalImportanceWeights.push(importanceWeightCell);
                     }
 
                     houseTable.appendChild(importanceScoresRow);
                     houseTable.appendChild(importanceWeightsRow);
                 };
 
+                populateDefaultHoq();
                 runInitialRender();
-            };
+            }
         </script>
     </body>
 </html>
