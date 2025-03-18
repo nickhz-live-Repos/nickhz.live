@@ -280,6 +280,12 @@
                     return houseData;
                 };
 
+                const contentDivOf = (stringContent) => {
+                    const result = document.createElement('div');
+                    result.innerHTML = stringContent;
+                    return result;
+                }
+
                 const runInitialRender = () => {
                     try {
                         houseData = JSON.parse(localStorage.getItem('house-of-quality-data'));
@@ -291,12 +297,21 @@
                         houseData = populateDefaultHoq();
                     }
                     domData = Object.create(null);
-                    domData.domOnly = Object.create(null);
+
+                    /* 
+                        Each of these has the same keys and structure as 
+                        houseData. The content property has the editable 
+                        elements displayed to the DOM, and the ui property has 
+                        the table cells which contain those elements.
+                    */
+                    domData.content = Object.create(null);
+                    domData.ui = Object.create(null)
 
                     rootSelector.style.setProperty('--hoq-bg-color', 'white');
                     rootSelector.style.setProperty('--hoq-border', '1px solid black');
 
                     houseDom.className = 'hoq-has-bg';
+                    domData.ui.container = houseDom;
 
                     const houseTable = document.createElement('table');
                     houseTable.style.borderCollapse = 'collapse';
@@ -304,6 +319,7 @@
                     houseTable.style.zIndex = 2;
                     houseTable.style.textAlign = 'center';
                     houseDom.appendChild(houseTable);
+                    domData.ui.house = houseTable;
 
                     const houseTop = document.createElement('tr');
                     houseTable.appendChild(houseTop);
@@ -328,10 +344,11 @@
                     correlationTable.style.transformOrigin = 'center';
                     // correlationTable.style.transform = 'rotate(-45deg) translateY(50%)';
 
-                    domData.correlationMatrix = new Array();
-                    domData.domOnly.correlationMatrixTable = correlationTable;
+                    domData.ui.correlationMatrix = new Array();
+                    domData.content.correlationMatrix = new Array();
                     for(let i = 0; i < houseData.technicalRequirements.length; i++) {
                         const domCells = new Array();
+                        const contentCells = new Array();
 
                         const domRow = document.createElement('tr');
                         const rowData = houseData.correlationMatrix[i];
@@ -344,20 +361,24 @@
                                 cell.className = 'hoq-has-border';
 
                                 if(j != i) {
-                                    cell.innerText = rowData[dataIndex++];
-                                    domCells.push(cell);
+                                    const cellContent = contentDivOf(rowData[dataIndex++]);
+                                    cell.appendChild(cellContent);
+                                    contentCells.push(cell);
                                 }
                             }
 
                             domRow.appendChild(cell);
+                            domCells.push(cell);
                         }
                         correlationTable.appendChild(domRow);
+                        domData.ui.correlationMatrix.push(domCells);
                         
-                        if(domCells.length) {
-                            domData.correlationMatrix.push(domCells);
+                        if(contentCells.length) {
+                            domData.content.correlationMatrix.push(contentCells);
                         }
                     }
                     roofCell.appendChild(correlationTable);
+                    domData.ui.correlationMatrixTable = correlationTable;
 
                     // technical requirements rows
                     const technicalRequirementCategoriesRow = document.createElement('tr');
@@ -368,15 +389,19 @@
                     houseTable.appendChild(technicalRequirementsRow);
                     houseTable.appendChild(directionOfImprovementRow);
 
-                    domData.technicalRequirementCategories = new Array();
+                    domData.ui.technicalRequirementCategories = new Array();
+                    domData.content.technicalRequirementCategories = new Array();
                     for(let i = 0; i < houseData.technicalRequirementCategories.length; i++) {
                         const cell = document.createElement('td');
                         cell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
                         cell.colSpan = houseData.technicalRequirementCategories[i].requirementCount;
-                        cell.innerText = houseData.technicalRequirementCategories[i].name;
+
+                        const cellContent = contentDivOf(houseData.technicalRequirementCategories[i].name);
+                        cell.appendChild(cellContent);
+                        domData.content.technicalRequirementCategories.push(cellContent);
 
                         technicalRequirementCategoriesRow.appendChild(cell);
-                        domData.technicalRequirementCategories.push(cell);
+                        domData.ui.technicalRequirementCategories.push(cell);
                     }
 
                     const middleLeftBlankCell = document.createElement('td');
@@ -388,29 +413,36 @@
                     importanceLabel.className = 'hoq-is-sideways';
                     importanceLabel.rowSpan = 2;
                     importanceLabel.style.verticalAlign = 'bottom';
-                    const importanceLabelText = document.createElement('div');
-                    importanceLabelText.innerText = '< Importance';
+                    const importanceLabelText = contentDivOf('&lt; Importance');
                     importanceLabel.appendChild(importanceLabelText);
                     technicalRequirementsRow.appendChild(importanceLabel);
                     
                     importanceLabel.style.minWidth = getComputedStyle(importanceLabelText).width;
 
-                    domData.technicalRequirements = new Array();
-                    domData.directionsOfImprovement = new Array();
+                    domData.ui.technicalRequirements = new Array();
+                    domData.ui.directionsOfImprovement = new Array();
+                    domData.content.technicalRequirements = new Array();
+                    domData.content.directionsOfImprovement = new Array();
                     for(let i = 0; i < houseData.technicalRequirements.length; i++) {
                         const technicalRequirementCell = document.createElement('td');
                         technicalRequirementCell.className = 'hoq-has-border hoq-is-sideways hoq-has-bg hoq-in-front';
-                        technicalRequirementCell.innerText = houseData.technicalRequirements[i];
+
+                        const technicalRequirementContent = contentDivOf(houseData.technicalRequirements[i]);
+                        technicalRequirementCell.appendChild(technicalRequirementContent);
+                        domData.content.technicalRequirements.push(technicalRequirementContent);
 
                         technicalRequirementsRow.appendChild(technicalRequirementCell);
-                        domData.technicalRequirements.push(technicalRequirementCell);
+                        domData.ui.technicalRequirements.push(technicalRequirementCell);
 
                         const directionOfImprovementCell = document.createElement('td');
                         directionOfImprovementCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
-                        directionOfImprovementCell.innerText = houseData.directionsOfImprovement[i];
+
+                        const directionOfImprovementContent = contentDivOf(houseData.directionsOfImprovement[i]);
+                        directionOfImprovementCell.appendChild(directionOfImprovementContent);
+                        domData.content.directionsOfImprovement.push(directionOfImprovementContent);
 
                         directionOfImprovementRow.appendChild(directionOfImprovementCell);
-                        domData.directionsOfImprovement.push(directionOfImprovementCell);
+                        domData.ui.directionsOfImprovement.push(directionOfImprovementCell);
                     }
 
                     // middle rows; customer requirements and relationship matrix
@@ -422,54 +454,73 @@
                         middleRows.push(row);
                     }
 
-                    domData.customerRequirementCategories = new Array();
+                    domData.ui.customerRequirementCategories = new Array();
+                    domData.content.customerRequirementCategories = new Array();
                     for(let i = 0, rowIndex = 0; i < houseData.customerRequirementCategories.length; i++) {
                         const category = houseData.customerRequirementCategories[i];
                         const row = middleRows[rowIndex];
                         const cell = document.createElement('td');
-
+                        
                         cell.className = 'hoq-is-sideways hoq-has-border';
-                        const cellText = document.createElement('div');
-                        cellText.innerText = category.name;
-                        cell.appendChild(cellText);
+
+                        const cellContent = contentDivOf(category.name);
+                        cell.appendChild(cellContent);
+                        domData.content.customerRequirementCategories.push(cellContent);
+                        
                         cell.rowSpan = category.requirementCount;
 
                         row.appendChild(cell);
-                        domData.customerRequirementCategories.push(cell);
+                        domData.ui.customerRequirementCategories.push(cell);
 
-                        cell.style.minWidth = getComputedStyle(cellText).width;
-
+                        cell.style.minWidth = getComputedStyle(cellContent).width;
                         rowIndex += category.requirementCount;
                     }
 
-                    domData.customerRequirements = new Array();
-                    domData.customerImportances = new Array();
-                    domData.relationshipMatrix = new Array();
+                    domData.ui.customerRequirements = new Array();
+                    domData.ui.customerImportances = new Array();
+                    domData.ui.relationshipMatrix = new Array();
+                    domData.content.customerRequirements = new Array();
+                    domData.content.customerImportances = new Array();
+                    domData.content.relationshipMatrix = new Array();
                     for(let i = 0; i < houseData.customerRequirements.length; i++) {
                         const row = middleRows[i];
 
                         const customerRequirementCell = document.createElement('td');
                         customerRequirementCell.className = 'hoq-has-border';
-                        customerRequirementCell.innerText = houseData.customerRequirements[i];
+
+                        const customerRequirementCellContent = contentDivOf(houseData.customerRequirements[i]);
+                        customerRequirementCell.appendChild(customerRequirementCellContent);
+                        domData.content.customerRequirements.push(customerRequirementCellContent);
+
                         row.appendChild(customerRequirementCell);
-                        domData.customerRequirements.push(customerRequirementCell);
+                        domData.ui.customerRequirements.push(customerRequirementCell);
 
                         const importanceCell = document.createElement('td');
                         importanceCell.className = 'hoq-has-border';
-                        importanceCell.innerText = houseData.customerImportances[i];
+
+                        const importanceCellContent = contentDivOf(houseData.customerImportances[i]);
+                        importanceCell.appendChild(importanceCellContent);
+                        domData.content.customerImportances.push(importanceCellContent);
+
                         row.appendChild(importanceCell);
-                        domData.customerImportances.push(importanceCell);
+                        domData.ui.customerImportances.push(importanceCell);
 
                         const relationships = houseData.relationshipMatrix[i];
                         const relationshipDomCells = new Array();
+                        const relationshipDomContents = new Array();
                         for(const relationship of relationships) {
                             const relationshipMatrixCell = document.createElement('td');
                             relationshipMatrixCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
-                            relationshipMatrixCell.innerText = relationship;
+
+                            const relationshipMatrixContent = contentDivOf(relationship);
+                            relationshipMatrixCell.appendChild(relationshipMatrixContent);
+                            relationshipDomContents.push(relationshipMatrixContent);
+
                             row.appendChild(relationshipMatrixCell);
                             relationshipDomCells.push(relationshipMatrixCell);
                         }
-                        domData.relationshipMatrix.push(relationshipDomCells);
+                        domData.ui.relationshipMatrix.push(relationshipDomContents);
+                        domData.content.relationshipMatrix.push(relationshipDomCells);
                     }
 
                     // third section of rows; importance metrics
@@ -481,20 +532,30 @@
                     bottomLeftBlankCell.colSpan = 3;
                     importanceScoresRow.appendChild(bottomLeftBlankCell);
 
-                    domData.technicalImportanceScores = new Array();
-                    domData.technicalImportanceWeights = new Array();
+                    domData.ui.technicalImportanceScores = new Array();
+                    domData.ui.technicalImportanceWeights = new Array();
+                    domData.content.technicalImportanceScores = new Array();
+                    domData.content.technicalImportanceWeights = new Array();
                     for(let i = 0; i < houseData.technicalRequirements.length; i++) {
                         const importanceScoreCell = document.createElement('td');
                         importanceScoreCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
-                        importanceScoreCell.innerText = houseData.technicalImportanceScores[i];
+
+                        const importanceScoreContent = contentDivOf(houseData.technicalImportanceScores[i]);
+                        importanceScoreCell.appendChild(importanceScoreContent);
+                        domData.content.technicalImportanceScores.push(importanceScoreContent);
+                        
                         importanceScoresRow.appendChild(importanceScoreCell);
-                        domData.technicalImportanceScores.push(importanceScoreCell);
+                        domData.ui.technicalImportanceScores.push(importanceScoreCell);
 
                         const importanceWeightCell = document.createElement('td');
                         importanceWeightCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
-                        importanceWeightCell.innerText = houseData.technicalImportanceWeights[i];
+
+                        const importanceWeightContent = contentDivOf(houseData.technicalImportanceWeights[i]);
+                        importanceWeightCell.appendChild(importanceWeightContent);
+                        domData.content.technicalImportanceWeights.push(importanceWeightContent);
+                        
                         importanceWeightsRow.appendChild(importanceWeightCell);
-                        domData.technicalImportanceWeights.push(importanceWeightCell);
+                        domData.ui.technicalImportanceWeights.push(importanceWeightCell);
                     }
 
                     houseTable.appendChild(importanceScoresRow);
@@ -502,7 +563,7 @@
 
                     // normalize dimensions for the correlation matrix
                     let technicalRequirementMaxWidth = 0;
-                    for(const technicalRequirementElement of domData.technicalRequirements) {
+                    for(const technicalRequirementElement of domData.ui.technicalRequirements) {
                         const width = parseFloat(getComputedStyle(technicalRequirementElement).width);
 
                         if(width > technicalRequirementMaxWidth) {
@@ -510,20 +571,21 @@
                         }
                     }
 
-                    for(const technicalRequirementElement of domData.technicalRequirements) {
+                    for(const technicalRequirementElement of domData.ui.technicalRequirements) {
                         technicalRequirementElement.style.width = `${technicalRequirementMaxWidth}px`;
                     }
 
-                    technicalRequirementMaxWidth = `${((technicalRequirementMaxWidth - 1) / Math.SQRT2)}px`;
-                    for(const correlationMatrixRow of domData.domOnly.correlationMatrixTable.children) {
-                        correlationMatrixRow.firstChild.style.height = technicalRequirementMaxWidth;
+                    // side length of a correlation matrix cell
+                    correlationMatrixSideLength = `${((technicalRequirementMaxWidth - 1) / Math.SQRT2)}px`;
+                    for(const correlationMatrixRow of domData.ui.correlationMatrixTable.children) {
+                        correlationMatrixRow.firstChild.style.height = correlationMatrixSideLength;
                     }
 
-                    for(const correlationMatrixCell of domData.domOnly.correlationMatrixTable.firstChild.children) {
-                        correlationMatrixCell.style.width = technicalRequirementMaxWidth;
+                    for(const correlationMatrixCell of domData.ui.correlationMatrix[0]) {
+                        correlationMatrixCell.style.width = correlationMatrixSideLength;
                     }
 
-                    domData.domOnly.correlationMatrixTable.style.transform = 'translateY(calc(50% + 1px)) rotate(-44deg)';
+                    domData.ui.correlationMatrixTable.style.transform = 'translateY(calc(50% + 1px)) rotate(-44deg)';
                 };
 
                 populateDefaultHoq();
