@@ -128,6 +128,7 @@
 
             #house-of-quality-render {
                 position: absolute;
+                padding: 2.5rem;
             }
         </style>
         <style title="House of Quality Styles">
@@ -177,10 +178,40 @@
                                 Click here to return to the webtools index.
                             </a>
                         </noscript>
-                    </div><div id="render-box">
-                        <div id="house-of-quality-render"></div>
 
-                        <!-- <canvas id="house-of-quality-canvas"></canvas> -->
+                        <fieldset>
+                            <legend>
+                                Load / Save
+                            </legend>
+
+                            <button id="save-as-image">
+                                Save as Image
+                            </button>
+                            <!-- <br />
+                            <br />
+                            <button>
+                                Export shareable JSON
+                            </button>
+                            <br />
+                            <br />
+                            <button>
+                                Import shareable JSON
+                            </button>
+                            <br />
+                            <br />
+                            <details>
+                                <summary>Using JSONs</summary>
+                                <br />
+                                JSONs exported from this page on one system 
+                                may be imported to this page on another 
+                                system, or they may be stored as snapshots or 
+                                backups of your house of quality. The JSON's 
+                                file size is very small, and it may be opened 
+                                with any text editor.
+                            </details> -->
+                        </fieldset>
+                    </div><div id="render-box">
+                        <div id="house-of-quality-render" xmlns="http://www.w3.org/1999/xhtml"></div>
                     </div>
                 </section>
             </section>
@@ -209,12 +240,7 @@
                 
                 This means the table values need not be calculated from 
                 the JSON; all data can just be stored there instead of 
-                re-calculating everything when the JSON changes.
-
-                ADDITIONALLY, the correlation matrix can be a sub-table 
-                above the main table. The overall House of Quality can be 
-                a 2-cell table, where the upper cell has the correlation 
-                matrix and the lower cell has the main table.
+                re-calculating everything that's not explicitly in the JSON.
             */
 
             {
@@ -585,11 +611,98 @@
                         correlationMatrixCell.style.width = correlationMatrixSideLength;
                     }
 
-                    domData.ui.correlationMatrixTable.style.transform = 'translateY(calc(50% + 1px)) rotate(-44deg)';
+                    domData.ui.correlationMatrixTable.style.transform = 'translateY(calc(50% + 2px)) rotate(-45deg)';
                 };
 
                 populateDefaultHoq();
                 runInitialRender();
+
+                // TODO: the image export is sizing incorrectly when converted to image URL; investigate & fix this
+                // TODO: re-render the house from JSON before converting to SVG
+                document.getElementById('save-as-image').addEventListener('click', () => {
+                    const [width, height] = [parseInt(houseDom.clientWidth), parseInt(houseDom.clientHeight)];
+                    
+
+                    // create an SVG representation of the House of Quality HTML
+                    const virtualDom = document.createElement('div');
+                    virtualDom.innerHTML = 
+                        `<svg 
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="${width}" height="${height}" 
+                        >
+                            <foreignObject width="100%" height="100%">
+                                ${document.getElementById('render-box').innerHTML}
+                            </foreignObject>
+                        </svg>`
+                    ;
+                    const svgElement = virtualDom.firstElementChild;
+
+                    // apply styles from the document in the SVG
+                    // necessary to keep styles from de-coupling from the document when the SVG is converted to an Image source
+                    const docStyles = document.getElementsByTagName('style');
+                    
+                    console.log(docStyles);
+
+                    for(let i = docStyles.length - 1; i >= 0; i--) {
+                        svgElement.prepend(docStyles[i].cloneNode(true));
+                    }
+                    const rootStyles = document.createElement('style');
+                    rootStyles.innerHTML = 
+                        `:root {
+                            ${rootSelector.style.cssText}
+                        }`
+                    ;
+                    svgElement.prepend(rootStyles);
+
+                    console.log(svgElement);
+                    console.log(svgElement.innerHTML);
+
+                    // document.getElementById('palette').appendChild(svgElement);
+
+                    // create an Image source representation of the House of Quality HTML, by embedding it in an SVG blob
+                    const imageUrl = "data:image/svg+xml;base64," + btoa(virtualDom.innerHTML);
+                    // URL.createObjectURL(
+                    //     new Blob(
+                    //         [ // does putting the raw code here apply the proper CSS?
+                    //             virtualDom.innerHTML
+                    //         ], 
+                    //         { type:'image/svg+xml' }
+                    //     )
+                    // );
+
+                    // canvas element to draw the SVG onto
+                    virtualDom.innerHTML = 
+                        `<canvas width="${width}" height="${height}"></canvas> `
+                    ;
+                    const canvasElement = virtualDom.firstElementChild;
+                    const ctx = canvasElement.getContext('2d');
+
+                    // apply the image URL, draw that image to the canvas, and download the canvas content as an image file
+                    const image = document.createElement('img');
+                    image.addEventListener('load', () => {
+                        // document.getElementById('palette').appendChild(image);
+
+                        ctx.drawImage(image, 0, 0);
+
+                        const dl = document.createElement('a');
+                        dl.href = canvasElement.toDataURL();
+                        dl.download = `house-of-quality-${Date.now()}.png`;
+                        dl.click();
+
+                        // const dl = document.createElement('a');
+                        // dl.href = imageUrl;
+                        // dl.download = `house-of-quality-svg-${Date.now()}.svg`;
+                        // dl.click();
+
+                        URL.revokeObjectURL(imageUrl);
+                    });
+
+                    // makes it load
+                    // image.width = width;
+                    // image.height = height;
+                    image.src = imageUrl;
+                });
             }
         </script>
     </body>
