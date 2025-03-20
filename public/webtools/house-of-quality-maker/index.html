@@ -602,7 +602,7 @@
                     }
 
                     // side length of a correlation matrix cell
-                    correlationMatrixSideLength = `${((technicalRequirementMaxWidth - 1) / Math.SQRT2)}px`;
+                    let correlationMatrixSideLength = `${((technicalRequirementMaxWidth - 1) / Math.SQRT2)}px`;
                     for(const correlationMatrixRow of domData.ui.correlationMatrixTable.children) {
                         correlationMatrixRow.firstChild.style.height = correlationMatrixSideLength;
                     }
@@ -616,6 +616,57 @@
 
                 populateDefaultHoq();
                 runInitialRender();
+
+                // re-render function for when a data field's content is changed
+                const updateRenderForChangedField = (changedField) => {
+                    switch(changedField) {
+                        case 'technicalRequirementCategories':
+                        case 'technicalRequirements':
+                        case 'directionsOfImprovement':
+                        case 'relationshipMatrix':
+                        case 'technicalImportanceScores':
+                        case 'technicalImportanceWeights':
+                            // remove dimension constraint on technical requirement widths & correlation matrix side lengths
+                            const technicalRequirementCells = domData.ui.technicalRequirements;
+                            const correlationMatrix = domData.ui.correlationMatrix;
+                            
+                            for(const technicalRequirementCell of technicalRequirementCells) {
+                                technicalRequirementCell.style.removeProperty('width');
+                            }
+                            for(const correlationMatrixFirstRowCell of correlationMatrix[0]) {
+                                correlationMatrixFirstRowCell.style.removeProperty('width');
+                            }
+                            for(const correlationMatrixRow of correlationMatrix.children) {
+                                correlationMatrixRow.firstChild.style.removeProperty('height');
+                            }
+
+                            // now with constraints removed, the DOM will have calculated new element widths, which are to be normalized to the new max width
+                            let technicalRequirementMaxWidth = 0;
+                            for(const technicalRequirementCell of technicalRequirementCells) {
+                                const width = parseFloat(getComputedStyle(technicalRequirementCell).width);
+
+                                if(width > technicalRequirementMaxWidth) {
+                                    technicalRequirementMaxWidth = width;
+                                }
+                            }
+                            for(const technicalRequirementCell of technicalRequirementCells) {
+                                technicalRequirementCell.style.width = `${technicalRequirementMaxWidth}px`;
+                            }
+
+                            // new side length of a correlation matrix cell
+                            let correlationMatrixSideLength = `${((technicalRequirementMaxWidth - 1) / Math.SQRT2)}px`;
+                            for(const correlationMatrixFirstRowCell of correlationMatrix[0]) {
+                                correlationMatrixFirstRowCell.style.width = correlationMatrixSideLength;
+                            }
+                            for(const correlationMatrixRow of correlationMatrix.children) {
+                                correlationMatrixRow.firstChild.style.height = correlationMatrixSideLength;
+                            }
+
+                            break;
+                        default:
+                            break;
+                    }
+                };
 
                 // TODO: the image export is sizing incorrectly when converted to image URL; investigate & fix this
                 // TODO: re-render the house from JSON before converting to SVG
