@@ -709,6 +709,20 @@
                     console.log(svgElement);
                     console.log(svgElement.innerHTML);
 
+                    // chrome-based browsers don't properly render the SVG when it's used as an image...
+                    // traverse DOM tree in the table to identify cells and lock their dimensions...
+                    const cells = virtualDom.querySelectorAll('td');
+                    for(const cell of cells) {
+                        const cellStyle = getComputedStyle(cell);
+                        if(!cell.style.width) {
+                            cell.style.width = parseFloat(cellStyle.width)
+                        }
+
+                        if(!cell.style.height) {
+                            cell.style.height = parseFloat(cellStyle.height);
+                        }
+                    }
+
                     // document.getElementById('palette').appendChild(svgElement);
 
                     // create an Image source representation of the House of Quality HTML, by embedding it in an SVG blob
@@ -734,7 +748,10 @@
                     image.addEventListener('load', () => {
                         // document.getElementById('palette').appendChild(image);
 
-                        ctx.drawImage(image, 0, 0);
+                        ctx.drawImage(image, 
+                            0, 0, width, height,
+                            0, 0, width * 1.05, height * 1.05
+                        );
 
                         const dl = document.createElement('a');
                         dl.href = canvasElement.toDataURL();
