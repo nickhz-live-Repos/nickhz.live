@@ -130,6 +130,13 @@
                 position: absolute;
                 padding: 2.5rem;
             }
+
+            /* TESTING PROPERTIES */
+            #test-output {
+                position: relative;
+                z-index: 10;
+                opacity: 0.8;
+            }
         </style>
         <style title="House of Quality Styles">
             .hoq-has-bg {
@@ -181,11 +188,12 @@
 
                         <fieldset>
                             <legend>
-                                Load / Save
+                                TEST
+                                <!-- Load / Save -->
                             </legend>
 
                             <button id="save-as-image">
-                                Save as Image
+                                Generate Image
                             </button>
                             <!-- <br />
                             <br />
@@ -210,6 +218,11 @@
                                 with any text editor.
                             </details> -->
                         </fieldset>
+
+                        <br />
+                        <br />
+
+                        <img id="test-output" />
                     </div><div id="render-box">
                         <div id="house-of-quality-render" xmlns="http://www.w3.org/1999/xhtml"></div>
                     </div>
@@ -242,6 +255,8 @@
                 the JSON; all data can just be stored there instead of 
                 re-calculating everything that's not explicitly in the JSON.
             */
+
+            let a;
 
             {
                 const rootSelector = document.querySelector(':root');
@@ -366,9 +381,8 @@
                     correlationTable.style.position = 'relative';
                     correlationTable.style.zIndex = -1;
                     correlationTable.style.margin = 'auto';
-                    // correlationTable.style.tableLayout = 'fixed';
                     correlationTable.style.transformOrigin = 'center';
-                    // correlationTable.style.transform = 'rotate(-45deg) translateY(50%)';
+                    correlationTable.className = 'correlation-matrix';
 
                     domData.ui.correlationMatrix = new Array();
                     domData.content.correlationMatrix = new Array();
@@ -671,105 +685,173 @@
                 // TODO: the image export is sizing incorrectly when converted to image URL; investigate & fix this
                 // TODO: re-render the house from JSON before converting to SVG
                 document.getElementById('save-as-image').addEventListener('click', () => {
-                    const [width, height] = [parseInt(houseDom.clientWidth), parseInt(houseDom.clientHeight)];
+                    const [totalWidth, totalHeight] = [parseInt(houseDom.clientWidth), parseInt(houseDom.clientHeight)];
                     
 
                     // create an SVG representation of the House of Quality HTML
-                    const virtualDom = document.createElement('div');
-                    virtualDom.innerHTML = 
-                        `<svg 
-                            version="1.1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="${width}" height="${height}" 
-                        >
-                            <foreignObject width="100%" height="100%">
-                                ${document.getElementById('render-box').innerHTML}
-                            </foreignObject>
-                        </svg>`
-                    ;
-                    const svgElement = virtualDom.firstElementChild;
+                    /*
+                        CANNOT USE <foreignObject> EMBEDDED HTML, DUE TO 
+                        BROWSER INCOMPATIBILITIES BETWEEN 
+                        <img src="data:image/svg+xml;base64,..."> AND THE CSS 
+                        PROPERTY "writing-mode: sideways-lr" WHEN USED IN AN 
+                        SVG-EMBEDDED DOCUMENT
 
-                    // apply styles from the document in the SVG
-                    // necessary to keep styles from de-coupling from the document when the SVG is converted to an Image source
-                    const docStyles = document.getElementsByTagName('style');
+                        THIS PROPERTY CANNOT BE REPLACED BY 
+                        "transform: rotate(-90deg)", AS THIS CAUSES MAJOR 
+                        INTERFERENCE WITH THE LAYOUT OF THE SURROUNDING TABLE
+                    */
+                    const svgElement = document.createElement('svg');
+                    svgElement.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                    svgElement.setAttribute('width', totalWidth);
+                    svgElement.setAttribute('height', totalHeight);
                     
-                    console.log(docStyles);
+                    const bgColor = rootSelector.style.getPropertyValue('--hoq-bg-color');
+                    const bg = document.createElement('rect');
+                    bg.setAttribute('width', '100%');
+                    bg.setAttribute('height', '100%');
+                    bg.setAttribute('fill', bgColor);
+                    svgElement.appendChild(bg, bgColor);
 
-                    for(let i = docStyles.length - 1; i >= 0; i--) {
-                        svgElement.prepend(docStyles[i].cloneNode(true));
+                    // draw cell borders
+                    const cellGroup = document.createElement('g');
+                    cellGroup.setAttribute('fill', bgColor);
+                    cellGroup.setAttribute('stroke', 'black');
+
+                    // correlation matrix cells first, as other cells are to draw over part of these
+                    const correlationMatrixGroup = document.createElement('g');
+                    correlationMatrixGroup.setAttribute('stroke-width', '1.5');
+
+                    let uiCellsWithBorders = houseDom.querySelectorAll('.hoq-has-border:is(.correlation-matrix *)');
+                    for(const cell of uiCellsWithBorders) {
+                        const houseBoundingRect = houseDom.getBoundingClientRect();
+                        const cellBoundingRect = cell.getBoundingClientRect();
+                        const cellComputedStyle = getComputedStyle(cell);
+
+                        const cellRect = document.createElement('rect');
+                        cellRect.setAttribute('x', (cellBoundingRect.x - houseBoundingRect.x));
+                        cellRect.setAttribute('y', (cellBoundingRect.y - houseBoundingRect.y));
+                        cellRect.setAttribute('width', (cellBoundingRect.width));
+                        cellRect.setAttribute('height', (cellBoundingRect.height));
+                        cellRect.setAttribute('style', 'transform-box: fill-box');
+                        cellRect.setAttribute('transform-origin', 'center');
+                        cellRect.setAttribute('transform', 'rotate(-45) scale(0.7)');
+
+                        correlationMatrixGroup.appendChild(cellRect);
                     }
-                    const rootStyles = document.createElement('style');
-                    rootStyles.innerHTML = 
-                        `:root {
-                            ${rootSelector.style.cssText}
-                        }`
-                    ;
-                    svgElement.prepend(rootStyles);
+                    cellGroup.appendChild(correlationMatrixGroup);
+                    
+                    uiCellsWithBorders = houseDom.querySelectorAll('.hoq-has-border:not(.correlation-matrix *)');
+                    for(const cell of uiCellsWithBorders) {
+                        const houseBoundingRect = houseDom.getBoundingClientRect();
+                        const cellBoundingRect = cell.getBoundingClientRect();
 
-                    console.log(svgElement);
-                    console.log(svgElement.innerHTML);
+                        const cellRect = document.createElement('rect');
+                        cellRect.setAttribute('x', (cellBoundingRect.x - houseBoundingRect.x));
+                        cellRect.setAttribute('y', (cellBoundingRect.y - houseBoundingRect.y));
+                        cellRect.setAttribute('width', (cellBoundingRect.width));
+                        cellRect.setAttribute('height', (cellBoundingRect.height));
 
-                    // chrome-based browsers don't properly render the SVG when it's used as an image...
-                    // traverse DOM tree in the table to identify cells and lock their dimensions...
-                    const cells = virtualDom.querySelectorAll('td');
-                    for(const cell of cells) {
-                        const cellStyle = getComputedStyle(cell);
-                        if(!cell.style.width) {
-                            cell.style.width = parseFloat(cellStyle.width)
-                        }
-
-                        if(!cell.style.height) {
-                            cell.style.height = parseFloat(cellStyle.height);
-                        }
+                        cellGroup.appendChild(cellRect);
                     }
-
-                    // document.getElementById('palette').appendChild(svgElement);
-
-                    // create an Image source representation of the House of Quality HTML, by embedding it in an SVG blob
+                    svgElement.appendChild(cellGroup);
+                    
+                    // svgElement.innerHTML = 
+                    //     `<rect width="100%" height="100%" fillStyle="green" />`
+                    // ;
+                    
+                    const virtualDom = document.createElement('div');
+                    virtualDom.appendChild(svgElement);
+                    const image = document.getElementById('test-output');
                     const imageUrl = "data:image/svg+xml;base64," + btoa(virtualDom.innerHTML);
-                    // URL.createObjectURL(
-                    //     new Blob(
-                    //         [ // does putting the raw code here apply the proper CSS?
-                    //             virtualDom.innerHTML
-                    //         ], 
-                    //         { type:'image/svg+xml' }
-                    //     )
-                    // );
 
-                    // canvas element to draw the SVG onto
-                    virtualDom.innerHTML = 
-                        `<canvas width="${width}" height="${height}"></canvas> `
-                    ;
-                    const canvasElement = virtualDom.firstElementChild;
-                    const ctx = canvasElement.getContext('2d');
+                    image.onload = () => {
+                        a = svgElement;
+                        console.log(svgElement);
+                    };
 
-                    // apply the image URL, draw that image to the canvas, and download the canvas content as an image file
-                    const image = document.createElement('img');
-                    image.addEventListener('load', () => {
-                        // document.getElementById('palette').appendChild(image);
-
-                        ctx.drawImage(image, 
-                            0, 0, width, height,
-                            0, 0, width * 1.05, height * 1.05
-                        );
-
-                        const dl = document.createElement('a');
-                        dl.href = canvasElement.toDataURL();
-                        dl.download = `house-of-quality-${Date.now()}.png`;
-                        dl.click();
-
-                        // const dl = document.createElement('a');
-                        // dl.href = imageUrl;
-                        // dl.download = `house-of-quality-svg-${Date.now()}.svg`;
-                        // dl.click();
-
-                        URL.revokeObjectURL(imageUrl);
-                    });
-
-                    // makes it load
-                    // image.width = width;
-                    // image.height = height;
                     image.src = imageUrl;
+
+                    // // apply styles from the document in the SVG
+                    // // necessary to keep styles from de-coupling from the document when the SVG is converted to an Image source
+                    // const docStyles = document.getElementsByTagName('style');
+                    
+                    // console.log(docStyles);
+
+                    // for(let i = docStyles.length - 1; i >= 0; i--) {
+                    //     svgElement.prepend(docStyles[i].cloneNode(true));
+                    // }
+                    // const rootStyles = document.createElement('style');
+                    // rootStyles.innerHTML = 
+                    //     `:root {
+                    //         ${rootSelector.style.cssText}
+                    //     }`
+                    // ;
+                    // svgElement.prepend(rootStyles);
+
+                    // console.log(svgElement);
+                    // console.log(svgElement.innerHTML);
+
+                    // // chrome-based browsers don't properly render the SVG when it's used as an image...
+                    // // traverse DOM tree in the table to identify cells and lock their dimensions...
+                    // const cells = virtualDom.querySelectorAll('td');
+                    // for(const cell of cells) {
+                    //     const cellStyle = getComputedStyle(cell);
+                    //     if(!cell.style.width) {
+                    //         cell.style.width = parseFloat(cellStyle.width)
+                    //     }
+
+                    //     if(!cell.style.height) {
+                    //         cell.style.height = parseFloat(cellStyle.height);
+                    //     }
+                    // }
+
+                    // // document.getElementById('palette').appendChild(svgElement);
+
+                    // // create an Image source representation of the House of Quality HTML, by embedding it in an SVG blob
+                    // const imageUrl = "data:image/svg+xml;base64," + btoa(virtualDom.innerHTML);
+                    // // URL.createObjectURL(
+                    // //     new Blob(
+                    // //         [ // does putting the raw code here apply the proper CSS?
+                    // //             virtualDom.innerHTML
+                    // //         ], 
+                    // //         { type:'image/svg+xml' }
+                    // //     )
+                    // // );
+
+                    // // canvas element to draw the SVG onto
+                    // virtualDom.innerHTML = 
+                    //     `<canvas width="${width}" height="${height}"></canvas> `
+                    // ;
+                    // const canvasElement = virtualDom.firstElementChild;
+                    // const ctx = canvasElement.getContext('2d');
+
+                    // // apply the image URL, draw that image to the canvas, and download the canvas content as an image file
+                    // const image = document.createElement('img');
+                    // image.addEventListener('load', () => {
+                    //     // document.getElementById('palette').appendChild(image);
+
+                    //     ctx.drawImage(image, 
+                    //         0, 0, width, height,
+                    //         0, 0, width * 1.05, height * 1.05
+                    //     );
+
+                    //     const dl = document.createElement('a');
+                    //     dl.href = canvasElement.toDataURL();
+                    //     dl.download = `house-of-quality-${Date.now()}.png`;
+                    //     dl.click();
+
+                    //     // const dl = document.createElement('a');
+                    //     // dl.href = imageUrl;
+                    //     // dl.download = `house-of-quality-svg-${Date.now()}.svg`;
+                    //     // dl.click();
+
+                    //     URL.revokeObjectURL(imageUrl);
+                    // });
+
+                    // // makes it load
+                    // // image.width = width;
+                    // // image.height = height;
+                    // image.src = imageUrl;
                 });
             }
         </script>
