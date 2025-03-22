@@ -698,7 +698,13 @@
 
                         THIS PROPERTY CANNOT BE REPLACED BY 
                         "transform: rotate(-90deg)", AS THIS CAUSES MAJOR 
-                        INTERFERENCE WITH THE LAYOUT OF THE SURROUNDING TABLE
+                        INTERFERENCE WITH THE LAYOUT OF THE SURROUNDING TABLE 
+                        AND PREVENTS TABLE CELLS FROM ADAPTING TO THEIR 
+                        CONTENTS AUTOMATICALLY. MANUALLY DRAWING THE CONTENT 
+                        TO SVG FROM THE DOM WILL BE SIMPLER THAN MANUALLY 
+                        MANAGING THE DOM UI ELEMENT LAYOUTS (AND IS GUARANTEED
+                        TO BE CROSS-BROWSER COMPATIBLE), SO MANUAL SVG DRAWING 
+                        IS DONE HERE.
                     */
                     const svgElement = document.createElement('svg');
                     svgElement.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
