@@ -760,6 +760,47 @@
                         cellGroup.appendChild(cellRect);
                     }
                     svgElement.appendChild(cellGroup);
+
+                    // draw cell content
+                    const contentGroup = document.createElement('g');
+                    contentGroup.setAttribute('stroke', 'none');
+                    contentGroup.setAttribute('fill', 'black');
+                    contentGroup.setAttribute('font', '16px sans-serif');
+
+                    let uiContentElements = houseDom.querySelectorAll('td:not(.hoq-is-sideways):has( > div)');
+                    for(const contentElement of uiContentElements) {
+                        const houseBoundingRect = houseDom.getBoundingClientRect();
+                        const contentBoundingRect = contentElement.getBoundingClientRect();
+
+                        const textContent = document.createElement('text');
+                        textContent.setAttribute('text-anchor', 'middle');
+                        textContent.setAttribute('x', (contentBoundingRect.x - houseBoundingRect.x) + contentBoundingRect.width / 2);
+                        textContent.setAttribute('y', (contentBoundingRect.y - houseBoundingRect.y) + contentBoundingRect.height * 3 / 4);
+                        textContent.innerHTML = contentElement.firstElementChild.innerHTML;
+
+                        contentGroup.appendChild(textContent);
+                    }
+
+                    uiContentElements = houseDom.querySelectorAll('td:is(.hoq-is-sideways):has( > div)');
+                    for(const sidewaysElement of uiContentElements) {
+                        const houseBoundingRect = houseDom.getBoundingClientRect();
+                        const contentBoundingRect = sidewaysElement.getBoundingClientRect();
+
+                        const x = (contentBoundingRect.x - houseBoundingRect.x) + contentBoundingRect.width * 3 / 4;
+                        const y = (contentBoundingRect.y - houseBoundingRect.y) + contentBoundingRect.height - 4;
+
+                        const sidewaysContent = document.createElement('text');
+                        // sidewaysContent.setAttribute('text-anchor', 'end');
+                        sidewaysContent.setAttribute('x', x);
+                        sidewaysContent.setAttribute('y', y);
+                        // sidewaysContent.setAttribute('transform-box', 'fill-box');
+                        sidewaysContent.setAttribute('transform-origin', `${x} ${y}`);
+                        sidewaysContent.setAttribute('transform', 'rotate(-90)');
+                        sidewaysContent.innerHTML = sidewaysElement.firstElementChild.innerHTML;
+
+                        contentGroup.appendChild(sidewaysContent);
+                    }
+                    svgElement.appendChild(contentGroup);
                     
                     // svgElement.innerHTML = 
                     //     `<rect width="100%" height="100%" fillStyle="green" />`
