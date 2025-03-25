@@ -321,8 +321,8 @@
                     return houseData;
                 };
 
-                const contentDivOf = (stringContent) => {
-                    const result = document.createElement('div');
+                const contentSpanOf = (stringContent) => {
+                    const result = document.createElement('span');
                     result.innerHTML = stringContent;
                     return result;
                 }
@@ -401,7 +401,7 @@
                                 cell.className = 'hoq-has-border';
 
                                 if(j != i) {
-                                    const cellContent = contentDivOf(rowData[dataIndex++]);
+                                    const cellContent = contentSpanOf(rowData[dataIndex++]);
                                     cell.appendChild(cellContent);
                                     contentCells.push(cell);
                                 }
@@ -436,7 +436,7 @@
                         cell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
                         cell.colSpan = houseData.technicalRequirementCategories[i].requirementCount;
 
-                        const cellContent = contentDivOf(houseData.technicalRequirementCategories[i].name);
+                        const cellContent = contentSpanOf(houseData.technicalRequirementCategories[i].name);
                         cell.appendChild(cellContent);
                         domData.content.technicalRequirementCategories.push(cellContent);
 
@@ -453,7 +453,7 @@
                     importanceLabel.className = 'hoq-is-sideways';
                     importanceLabel.rowSpan = 2;
                     importanceLabel.style.verticalAlign = 'bottom';
-                    const importanceLabelText = contentDivOf('&lt; Importance');
+                    const importanceLabelText = contentSpanOf('&lt; Importance');
                     importanceLabel.appendChild(importanceLabelText);
                     technicalRequirementsRow.appendChild(importanceLabel);
                     
@@ -467,7 +467,7 @@
                         const technicalRequirementCell = document.createElement('td');
                         technicalRequirementCell.className = 'hoq-has-border hoq-is-sideways hoq-has-bg hoq-in-front';
 
-                        const technicalRequirementContent = contentDivOf(houseData.technicalRequirements[i]);
+                        const technicalRequirementContent = contentSpanOf(houseData.technicalRequirements[i]);
                         technicalRequirementCell.appendChild(technicalRequirementContent);
                         domData.content.technicalRequirements.push(technicalRequirementContent);
 
@@ -477,7 +477,7 @@
                         const directionOfImprovementCell = document.createElement('td');
                         directionOfImprovementCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
 
-                        const directionOfImprovementContent = contentDivOf(houseData.directionsOfImprovement[i]);
+                        const directionOfImprovementContent = contentSpanOf(houseData.directionsOfImprovement[i]);
                         directionOfImprovementCell.appendChild(directionOfImprovementContent);
                         domData.content.directionsOfImprovement.push(directionOfImprovementContent);
 
@@ -503,7 +503,7 @@
                         
                         cell.className = 'hoq-is-sideways hoq-has-border';
 
-                        const cellContent = contentDivOf(category.name);
+                        const cellContent = contentSpanOf(category.name);
                         cell.appendChild(cellContent);
                         domData.content.customerRequirementCategories.push(cellContent);
                         
@@ -528,7 +528,7 @@
                         const customerRequirementCell = document.createElement('td');
                         customerRequirementCell.className = 'hoq-has-border';
 
-                        const customerRequirementCellContent = contentDivOf(houseData.customerRequirements[i]);
+                        const customerRequirementCellContent = contentSpanOf(houseData.customerRequirements[i]);
                         customerRequirementCell.appendChild(customerRequirementCellContent);
                         domData.content.customerRequirements.push(customerRequirementCellContent);
 
@@ -538,7 +538,7 @@
                         const importanceCell = document.createElement('td');
                         importanceCell.className = 'hoq-has-border';
 
-                        const importanceCellContent = contentDivOf(houseData.customerImportances[i]);
+                        const importanceCellContent = contentSpanOf(houseData.customerImportances[i]);
                         importanceCell.appendChild(importanceCellContent);
                         domData.content.customerImportances.push(importanceCellContent);
 
@@ -552,7 +552,7 @@
                             const relationshipMatrixCell = document.createElement('td');
                             relationshipMatrixCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
 
-                            const relationshipMatrixContent = contentDivOf(relationship);
+                            const relationshipMatrixContent = contentSpanOf(relationship);
                             relationshipMatrixCell.appendChild(relationshipMatrixContent);
                             relationshipDomContents.push(relationshipMatrixContent);
 
@@ -580,7 +580,7 @@
                         const importanceScoreCell = document.createElement('td');
                         importanceScoreCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
 
-                        const importanceScoreContent = contentDivOf(houseData.technicalImportanceScores[i]);
+                        const importanceScoreContent = contentSpanOf(houseData.technicalImportanceScores[i]);
                         importanceScoreCell.appendChild(importanceScoreContent);
                         domData.content.technicalImportanceScores.push(importanceScoreContent);
                         
@@ -590,7 +590,7 @@
                         const importanceWeightCell = document.createElement('td');
                         importanceWeightCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
 
-                        const importanceWeightContent = contentDivOf(houseData.technicalImportanceWeights[i]);
+                        const importanceWeightContent = contentSpanOf(houseData.technicalImportanceWeights[i]);
                         importanceWeightCell.appendChild(importanceWeightContent);
                         domData.content.technicalImportanceWeights.push(importanceWeightContent);
                         
@@ -682,141 +682,251 @@
                     }
                 };
 
-                // TODO: the image export is sizing incorrectly when converted to image URL; investigate & fix this
-                // TODO: re-render the house from JSON before converting to SVG
                 document.getElementById('save-as-image').addEventListener('click', () => {
                     const [totalWidth, totalHeight] = [parseInt(houseDom.clientWidth), parseInt(houseDom.clientHeight)];
-                    
 
-                    // create an SVG representation of the House of Quality HTML
-                    /*
-                        CANNOT USE <foreignObject> EMBEDDED HTML, DUE TO 
-                        BROWSER INCOMPATIBILITIES BETWEEN 
-                        <img src="data:image/svg+xml;base64,..."> AND THE CSS 
-                        PROPERTY "writing-mode: sideways-lr" WHEN USED IN AN 
-                        SVG-EMBEDDED DOCUMENT
+                    // ... skipping the SVG step; just drawing to a canvas this time
+                    const canvas = document.createElement('canvas');
+                    canvas.width = totalWidth;
+                    canvas.height = totalHeight;
+                    const ctx = canvas.getContext('2d');
 
-                        THIS PROPERTY CANNOT BE REPLACED BY 
-                        "transform: rotate(-90deg)", AS THIS CAUSES MAJOR 
-                        INTERFERENCE WITH THE LAYOUT OF THE SURROUNDING TABLE 
-                        AND PREVENTS TABLE CELLS FROM ADAPTING TO THEIR 
-                        CONTENTS AUTOMATICALLY. MANUALLY DRAWING THE CONTENT 
-                        TO SVG FROM THE DOM WILL BE SIMPLER THAN MANUALLY 
-                        MANAGING THE DOM UI ELEMENT LAYOUTS (AND IS GUARANTEED
-                        TO BE CROSS-BROWSER COMPATIBLE), SO MANUAL SVG DRAWING 
-                        IS DONE HERE.
-                    */
-                    const svgElement = document.createElement('svg');
-                    svgElement.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-                    svgElement.setAttribute('width', totalWidth);
-                    svgElement.setAttribute('height', totalHeight);
-                    
-                    const bgColor = rootSelector.style.getPropertyValue('--hoq-bg-color');
-                    const bg = document.createElement('rect');
-                    bg.setAttribute('width', '100%');
-                    bg.setAttribute('height', '100%');
-                    bg.setAttribute('fill', bgColor);
-                    svgElement.appendChild(bg, bgColor);
+                    // draw the background
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(0, 0, totalWidth, totalHeight);
 
-                    // draw cell borders
-                    const cellGroup = document.createElement('g');
-                    cellGroup.setAttribute('fill', bgColor);
-                    cellGroup.setAttribute('stroke', 'black');
+                    // draw the correlation matrix
+                    ctx.strokeStyle = 'black';
+                    let houseBoundingRect = houseDom.getBoundingClientRect();
+                    let cellBoundingRect = houseDom.querySelector('td:has( > .correlation-matrix)').getBoundingClientRect();
 
-                    // correlation matrix cells first, as other cells are to draw over part of these
-                    const correlationMatrixGroup = document.createElement('g');
-                    correlationMatrixGroup.setAttribute('stroke-width', '1.5');
+                    // transform the context to the lower left corner of the correlation matrix parent, tilted 45 degrees ccw
+                    ctx.translate(
+                        cellBoundingRect.left - houseBoundingRect.left,
+                        cellBoundingRect.bottom - houseBoundingRect.top
+                    );
+                    ctx.rotate(-Math.PI / 4);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = 'black';
+                    ctx.font = '16px Arial, Helvetica, sans-serif';
 
-                    let uiCellsWithBorders = houseDom.querySelectorAll('.hoq-has-border:is(.correlation-matrix *)');
-                    for(const cell of uiCellsWithBorders) {
-                        const houseBoundingRect = houseDom.getBoundingClientRect();
-                        const cellBoundingRect = cell.getBoundingClientRect();
-                        const cellComputedStyle = getComputedStyle(cell);
+                    // draw the correlation matrix cells
+                    const correlationMatrixCellDimension = parseFloat(domData.ui.correlationMatrix[0][0].style.width) + 3;
+                    for(let i = 0; i < domData.ui.correlationMatrixTable.children.length; i++) {
+                        const correlationMatrixRow = domData.ui.correlationMatrixTable.children[i];
+                        for(let j = 0; j < correlationMatrixRow.children.length; j++) {
+                            ctx.strokeRect(
+                                i * correlationMatrixCellDimension,
+                                j * correlationMatrixCellDimension,
+                                correlationMatrixCellDimension,
+                                correlationMatrixCellDimension
+                            );
 
-                        const cellRect = document.createElement('rect');
-                        cellRect.setAttribute('x', (cellBoundingRect.x - houseBoundingRect.x));
-                        cellRect.setAttribute('y', (cellBoundingRect.y - houseBoundingRect.y));
-                        cellRect.setAttribute('width', (cellBoundingRect.width));
-                        cellRect.setAttribute('height', (cellBoundingRect.height));
-                        cellRect.setAttribute('style', 'transform-box: fill-box');
-                        cellRect.setAttribute('transform-origin', 'center');
-                        cellRect.setAttribute('transform', 'rotate(-45) scale(0.7)');
+                            // if the cell has content, draw that content in the middle of the cell
+                            const cellContent = correlationMatrixRow.children[j].firstElementChild;
+                            if(cellContent) {
+                                ctx.save();
 
-                        correlationMatrixGroup.appendChild(cellRect);
-                    }
-                    cellGroup.appendChild(correlationMatrixGroup);
-                    
-                    uiCellsWithBorders = houseDom.querySelectorAll('.hoq-has-border:not(.correlation-matrix *)');
-                    for(const cell of uiCellsWithBorders) {
-                        const houseBoundingRect = houseDom.getBoundingClientRect();
-                        const cellBoundingRect = cell.getBoundingClientRect();
+                                ctx.translate(
+                                    j * correlationMatrixCellDimension + correlationMatrixCellDimension / 2,
+                                    i * correlationMatrixCellDimension + correlationMatrixCellDimension / 2
+                                );
+                                ctx.rotate(Math.PI / 4);
+                                ctx.fillText(cellContent.innerHTML, 0, 0);
 
-                        const cellRect = document.createElement('rect');
-                        cellRect.setAttribute('x', (cellBoundingRect.x - houseBoundingRect.x));
-                        cellRect.setAttribute('y', (cellBoundingRect.y - houseBoundingRect.y));
-                        cellRect.setAttribute('width', (cellBoundingRect.width));
-                        cellRect.setAttribute('height', (cellBoundingRect.height));
-
-                        cellGroup.appendChild(cellRect);
-                    }
-                    svgElement.appendChild(cellGroup);
-
-                    // draw cell content
-                    const contentGroup = document.createElement('g');
-                    contentGroup.setAttribute('stroke', 'none');
-                    contentGroup.setAttribute('fill', 'black');
-                    contentGroup.setAttribute('font', '16px sans-serif');
-
-                    let uiContentElements = houseDom.querySelectorAll('td:not(.hoq-is-sideways):has( > div)');
-                    for(const contentElement of uiContentElements) {
-                        const houseBoundingRect = houseDom.getBoundingClientRect();
-                        const contentBoundingRect = contentElement.getBoundingClientRect();
-
-                        const textContent = document.createElement('text');
-                        textContent.setAttribute('text-anchor', 'middle');
-                        textContent.setAttribute('x', (contentBoundingRect.x - houseBoundingRect.x) + contentBoundingRect.width / 2);
-                        textContent.setAttribute('y', (contentBoundingRect.y - houseBoundingRect.y) + contentBoundingRect.height * 3 / 4);
-                        textContent.innerHTML = contentElement.firstElementChild.innerHTML;
-
-                        contentGroup.appendChild(textContent);
+                                ctx.restore();
+                            }
+                        }
                     }
 
-                    uiContentElements = houseDom.querySelectorAll('td:is(.hoq-is-sideways):has( > div)');
-                    for(const sidewaysElement of uiContentElements) {
-                        const houseBoundingRect = houseDom.getBoundingClientRect();
-                        const contentBoundingRect = sidewaysElement.getBoundingClientRect();
+                    // draw the rest of the cells
+                    ctx.resetTransform();
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'bottom';
 
-                        const x = (contentBoundingRect.x - houseBoundingRect.x) + contentBoundingRect.width * 3 / 4;
-                        const y = (contentBoundingRect.y - houseBoundingRect.y) + contentBoundingRect.height - 4;
+                    const uiCells = houseDom.querySelectorAll('td:not(.correlation-matrix *, td:has(.correlation-matrix))');
+                    for(const cell of uiCells) {
+                        houseBoundingRect = houseDom.getBoundingClientRect();
+                        cellBoundingRect = cell.getBoundingClientRect();
+                        const cellStyles = getComputedStyle(cell);
+                        
+                        // borders
+                        const borderWidth = parseFloat(cellStyles.borderWidth);
+                        if(borderWidth) {
+                            ctx.fillStyle = 'white';
+                            ctx.beginPath();
+                            ctx.rect(
+                                cellBoundingRect.x - houseBoundingRect.x,
+                                cellBoundingRect.y - houseBoundingRect.y,
+                                cellBoundingRect.width,
+                                cellBoundingRect.height
+                            );
+                            ctx.fill();
+                            ctx.stroke();
+                        }
 
-                        const sidewaysContent = document.createElement('text');
-                        // sidewaysContent.setAttribute('text-anchor', 'end');
-                        sidewaysContent.setAttribute('x', x);
-                        sidewaysContent.setAttribute('y', y);
-                        // sidewaysContent.setAttribute('transform-box', 'fill-box');
-                        sidewaysContent.setAttribute('transform-origin', `${x} ${y}`);
-                        sidewaysContent.setAttribute('transform', 'rotate(-90)');
-                        sidewaysContent.innerHTML = sidewaysElement.firstElementChild.innerHTML;
+                        // cell contents
+                        const content = cell.firstElementChild;
+                        if(content) {
+                            ctx.fillStyle = 'black';
 
-                        contentGroup.appendChild(sidewaysContent);
+                            const contentBoundingRect = content.getBoundingClientRect();
+                            ctx.save();
+                            if(cellStyles.writingMode === 'sideways-lr') {
+                                ctx.translate(
+                                    contentBoundingRect.right - houseBoundingRect.left,
+                                    contentBoundingRect.bottom - houseBoundingRect.top
+                                );
+                                ctx.rotate(-Math.PI / 2);
+                            } else {
+                                ctx.translate(
+                                    contentBoundingRect.left - houseBoundingRect.left,
+                                    contentBoundingRect.bottom - houseBoundingRect.top
+                                );
+                            }
+
+                            ctx.fillText(content.innerText, 0, 0);
+                            ctx.restore();
+                        }
                     }
-                    svgElement.appendChild(contentGroup);
-                    
-                    // svgElement.innerHTML = 
-                    //     `<rect width="100%" height="100%" fillStyle="green" />`
-                    // ;
-                    
-                    const virtualDom = document.createElement('div');
-                    virtualDom.appendChild(svgElement);
+
                     const image = document.getElementById('test-output');
-                    const imageUrl = "data:image/svg+xml;base64," + btoa(virtualDom.innerHTML);
-
                     image.onload = () => {
-                        a = svgElement;
-                        console.log(svgElement);
-                    };
+                        a = canvas;
+                        console.log(a);
+                    }
+                    image.src = canvas.toDataURL();
 
-                    image.src = imageUrl;
+                    // // create an SVG representation of the House of Quality HTML
+                    // /*
+                    //     CANNOT USE <foreignObject> EMBEDDED HTML, DUE TO 
+                    //     BROWSER INCOMPATIBILITIES BETWEEN 
+                    //     <img src="data:image/svg+xml;base64,..."> AND THE CSS 
+                    //     PROPERTY "writing-mode: sideways-lr" WHEN USED IN AN 
+                    //     SVG-EMBEDDED DOCUMENT
+
+                    //     THIS PROPERTY CANNOT BE REPLACED BY 
+                    //     "transform: rotate(-90deg)", AS THIS CAUSES MAJOR 
+                    //     INTERFERENCE WITH THE LAYOUT OF THE SURROUNDING TABLE 
+                    //     AND PREVENTS TABLE CELLS FROM ADAPTING TO THEIR 
+                    //     CONTENTS AUTOMATICALLY. MANUALLY DRAWING THE CONTENT 
+                    //     TO SVG FROM THE DOM WILL BE SIMPLER THAN MANUALLY 
+                    //     MANAGING THE DOM UI ELEMENT LAYOUTS (AND IS GUARANTEED
+                    //     TO BE CROSS-BROWSER COMPATIBLE), SO MANUAL SVG DRAWING 
+                    //     IS DONE HERE.
+                    // */
+                    // const svgElement = document.createElement('svg');
+                    // svgElement.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                    // svgElement.setAttribute('width', totalWidth);
+                    // svgElement.setAttribute('height', totalHeight);
+                    
+                    // const bgColor = rootSelector.style.getPropertyValue('--hoq-bg-color');
+                    // const bg = document.createElement('rect');
+                    // bg.setAttribute('width', '100%');
+                    // bg.setAttribute('height', '100%');
+                    // bg.setAttribute('fill', bgColor);
+                    // svgElement.appendChild(bg, bgColor);
+
+                    // // draw cell borders
+                    // const cellGroup = document.createElement('g');
+                    // cellGroup.setAttribute('fill', bgColor);
+                    // cellGroup.setAttribute('stroke', 'black');
+
+                    // // correlation matrix cells first, as other cells are to draw over part of these
+                    // const correlationMatrixGroup = document.createElement('g');
+                    // correlationMatrixGroup.setAttribute('stroke-width', '1.5');
+
+                    // let uiCellsWithBorders = houseDom.querySelectorAll('.hoq-has-border:is(.correlation-matrix *)');
+                    // for(const cell of uiCellsWithBorders) {
+                    //     const houseBoundingRect = houseDom.getBoundingClientRect();
+                    //     const cellBoundingRect = cell.getBoundingClientRect();
+                    //     const cellComputedStyle = getComputedStyle(cell);
+
+                    //     const cellRect = document.createElement('rect');
+                    //     cellRect.setAttribute('x', (cellBoundingRect.x - houseBoundingRect.x));
+                    //     cellRect.setAttribute('y', (cellBoundingRect.y - houseBoundingRect.y));
+                    //     cellRect.setAttribute('width', (cellBoundingRect.width));
+                    //     cellRect.setAttribute('height', (cellBoundingRect.height));
+                    //     cellRect.setAttribute('style', 'transform-box: fill-box');
+                    //     cellRect.setAttribute('transform-origin', 'center');
+                    //     cellRect.setAttribute('transform', 'rotate(-45) scale(0.7)');
+
+                    //     correlationMatrixGroup.appendChild(cellRect);
+                    // }
+                    // cellGroup.appendChild(correlationMatrixGroup);
+                    
+                    // uiCellsWithBorders = houseDom.querySelectorAll('.hoq-has-border:not(.correlation-matrix *)');
+                    // for(const cell of uiCellsWithBorders) {
+                    //     const houseBoundingRect = houseDom.getBoundingClientRect();
+                    //     const cellBoundingRect = cell.getBoundingClientRect();
+
+                    //     const cellRect = document.createElement('rect');
+                    //     cellRect.setAttribute('x', (cellBoundingRect.x - houseBoundingRect.x));
+                    //     cellRect.setAttribute('y', (cellBoundingRect.y - houseBoundingRect.y));
+                    //     cellRect.setAttribute('width', (cellBoundingRect.width));
+                    //     cellRect.setAttribute('height', (cellBoundingRect.height));
+
+                    //     cellGroup.appendChild(cellRect);
+                    // }
+                    // svgElement.appendChild(cellGroup);
+
+                    // // draw cell content
+                    // const contentGroup = document.createElement('g');
+                    // contentGroup.setAttribute('stroke', 'none');
+                    // contentGroup.setAttribute('fill', 'black');
+                    // contentGroup.setAttribute('font', '16px sans-serif');
+
+                    // let uiContentElements = houseDom.querySelectorAll('td:not(.hoq-is-sideways):has( > div)');
+                    // for(const contentElement of uiContentElements) {
+                    //     const houseBoundingRect = houseDom.getBoundingClientRect();
+                    //     const contentBoundingRect = contentElement.getBoundingClientRect();
+
+                    //     const textContent = document.createElement('text');
+                    //     textContent.setAttribute('text-anchor', 'middle');
+                    //     textContent.setAttribute('x', (contentBoundingRect.x - houseBoundingRect.x) + contentBoundingRect.width / 2);
+                    //     textContent.setAttribute('y', (contentBoundingRect.y - houseBoundingRect.y) + contentBoundingRect.height * 3 / 4);
+                    //     textContent.innerHTML = contentElement.firstElementChild.innerHTML;
+
+                    //     contentGroup.appendChild(textContent);
+                    // }
+
+                    // uiContentElements = houseDom.querySelectorAll('td:is(.hoq-is-sideways):has( > div)');
+                    // for(const sidewaysElement of uiContentElements) {
+                    //     const houseBoundingRect = houseDom.getBoundingClientRect();
+                    //     const contentBoundingRect = sidewaysElement.getBoundingClientRect();
+
+                    //     const x = (contentBoundingRect.x - houseBoundingRect.x) + contentBoundingRect.width * 3 / 4;
+                    //     const y = (contentBoundingRect.y - houseBoundingRect.y) + contentBoundingRect.height - 4;
+
+                    //     const sidewaysContent = document.createElement('text');
+                    //     // sidewaysContent.setAttribute('text-anchor', 'end');
+                    //     sidewaysContent.setAttribute('x', x);
+                    //     sidewaysContent.setAttribute('y', y);
+                    //     // sidewaysContent.setAttribute('transform-box', 'fill-box');
+                    //     sidewaysContent.setAttribute('transform-origin', `${x} ${y}`);
+                    //     sidewaysContent.setAttribute('transform', 'rotate(-90)');
+                    //     sidewaysContent.innerHTML = sidewaysElement.firstElementChild.innerHTML;
+
+                    //     contentGroup.appendChild(sidewaysContent);
+                    // }
+                    // svgElement.appendChild(contentGroup);
+                    
+                    // // svgElement.innerHTML = 
+                    // //     `<rect width="100%" height="100%" fillStyle="green" />`
+                    // // ;
+                    
+                    // const virtualDom = document.createElement('div');
+                    // virtualDom.appendChild(svgElement);
+                    // const image = document.getElementById('test-output');
+                    // const imageUrl = "data:image/svg+xml;base64," + btoa(virtualDom.innerHTML);
+
+                    // image.onload = () => {
+                    //     a = svgElement;
+                    //     console.log(svgElement);
+                    // };
+
+                    // image.src = imageUrl;
 
                     // // apply styles from the document in the SVG
                     // // necessary to keep styles from de-coupling from the document when the SVG is converted to an Image source
