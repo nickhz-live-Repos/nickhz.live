@@ -402,6 +402,8 @@
 
                                 if(j != i) {
                                     const cellContent = contentSpanOf(rowData[dataIndex++]);
+                                    cellContent.style.display = 'inline-block';
+                                    cellContent.style.transform = 'rotate(45deg)';
                                     cell.appendChild(cellContent);
                                     contentCells.push(cell);
                                 }
