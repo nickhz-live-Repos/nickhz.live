@@ -195,6 +195,14 @@
                             <button id="save-as-image">
                                 Generate Image
                             </button>
+
+                            <br />
+                            <br />
+
+                            <button id="reset-button">
+                                Reset House of Quality Data
+                            </button>
+
                             <!-- <br />
                             <br />
                             <button>
@@ -256,7 +264,7 @@
                 re-calculating everything that's not explicitly in the JSON.
             */
 
-            let a;
+            let a, reset;
 
             {
                 const rootSelector = document.querySelector(':root');
@@ -325,6 +333,32 @@
                     const result = document.createElement('span');
                     result.innerHTML = stringContent;
                     return result;
+                };
+
+                // the whole cell should activate the content edit
+                const applyCellEditListener = (uiCell) => {
+                    const elementToEdit = uiCell.firstElementChild;
+                    elementToEdit.contentEditable = true;
+
+                    const editAction = (event) => {
+                        elementToEdit.focus();
+                    };
+
+                    uiCell.addEventListener('click', editAction);
+                    uiCell.addEventListener('touch', editAction);
+                };
+
+                const linkUiToJson = (uiContentElement, houseDataObject, houseDataObjectIndex, isNumeric) => {
+                    const updateHouseData = isNumeric ?
+                        () => { houseDataObject[houseDataObjectIndex] = parseInt(uiContentElement.innerText); }
+                        :
+                        () => { houseDataObject[houseDataObjectIndex] = uiContentElement.innerText; }
+                    ;
+
+                    uiContentElement.addEventListener('input', () => {
+                        updateHouseData();
+                        localStorage.setItem('house-of-quality-data', JSON.stringify(houseData));
+                    });
                 }
 
                 const runInitialRender = () => {
@@ -431,6 +465,7 @@
                     houseTable.appendChild(technicalRequirementsRow);
                     houseTable.appendChild(directionOfImprovementRow);
 
+                    // technical requirement categories
                     domData.ui.technicalRequirementCategories = new Array();
                     domData.content.technicalRequirementCategories = new Array();
                     for(let i = 0; i < houseData.technicalRequirementCategories.length; i++) {
@@ -441,9 +476,11 @@
                         const cellContent = contentSpanOf(houseData.technicalRequirementCategories[i].name);
                         cell.appendChild(cellContent);
                         domData.content.technicalRequirementCategories.push(cellContent);
+                        linkUiToJson(cellContent, houseData.technicalRequirementCategories[i], 'name');
 
                         technicalRequirementCategoriesRow.appendChild(cell);
                         domData.ui.technicalRequirementCategories.push(cell);
+                        applyCellEditListener(cell);
                     }
 
                     const middleLeftBlankCell = document.createElement('td');
@@ -461,6 +498,7 @@
                     
                     importanceLabel.style.minWidth = getComputedStyle(importanceLabelText).width;
 
+                    // technical requirements & directions of improvement
                     domData.ui.technicalRequirements = new Array();
                     domData.ui.directionsOfImprovement = new Array();
                     domData.content.technicalRequirements = new Array();
@@ -472,9 +510,11 @@
                         const technicalRequirementContent = contentSpanOf(houseData.technicalRequirements[i]);
                         technicalRequirementCell.appendChild(technicalRequirementContent);
                         domData.content.technicalRequirements.push(technicalRequirementContent);
+                        linkUiToJson(technicalRequirementContent, houseData.technicalRequirements, i);
 
                         technicalRequirementsRow.appendChild(technicalRequirementCell);
                         domData.ui.technicalRequirements.push(technicalRequirementCell);
+                        applyCellEditListener(technicalRequirementCell);
 
                         const directionOfImprovementCell = document.createElement('td');
                         directionOfImprovementCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
@@ -482,9 +522,11 @@
                         const directionOfImprovementContent = contentSpanOf(houseData.directionsOfImprovement[i]);
                         directionOfImprovementCell.appendChild(directionOfImprovementContent);
                         domData.content.directionsOfImprovement.push(directionOfImprovementContent);
+                        linkUiToJson(directionOfImprovementContent, houseData.directionsOfImprovement, i, true);
 
                         directionOfImprovementRow.appendChild(directionOfImprovementCell);
                         domData.ui.directionsOfImprovement.push(directionOfImprovementCell);
+                        applyCellEditListener(directionOfImprovementCell);
                     }
 
                     // middle rows; customer requirements and relationship matrix
@@ -496,6 +538,7 @@
                         middleRows.push(row);
                     }
 
+                    // customer requirement categories
                     domData.ui.customerRequirementCategories = new Array();
                     domData.content.customerRequirementCategories = new Array();
                     for(let i = 0, rowIndex = 0; i < houseData.customerRequirementCategories.length; i++) {
@@ -508,16 +551,19 @@
                         const cellContent = contentSpanOf(category.name);
                         cell.appendChild(cellContent);
                         domData.content.customerRequirementCategories.push(cellContent);
+                        linkUiToJson(cellContent, houseData.customerRequirementCategories[i], name);
                         
                         cell.rowSpan = category.requirementCount;
 
                         row.appendChild(cell);
                         domData.ui.customerRequirementCategories.push(cell);
+                        applyCellEditListener(cell);
 
                         cell.style.minWidth = getComputedStyle(cellContent).width;
                         rowIndex += category.requirementCount;
                     }
 
+                    // customer requirements, customer importances, relationship matrix
                     domData.ui.customerRequirements = new Array();
                     domData.ui.customerImportances = new Array();
                     domData.ui.relationshipMatrix = new Array();
@@ -533,9 +579,11 @@
                         const customerRequirementCellContent = contentSpanOf(houseData.customerRequirements[i]);
                         customerRequirementCell.appendChild(customerRequirementCellContent);
                         domData.content.customerRequirements.push(customerRequirementCellContent);
+                        linkUiToJson(customerRequirementCellContent, houseData.customerRequirements, i);
 
                         row.appendChild(customerRequirementCell);
                         domData.ui.customerRequirements.push(customerRequirementCell);
+                        applyCellEditListener(customerRequirementCell);
 
                         const importanceCell = document.createElement('td');
                         importanceCell.className = 'hoq-has-border';
@@ -543,9 +591,11 @@
                         const importanceCellContent = contentSpanOf(houseData.customerImportances[i]);
                         importanceCell.appendChild(importanceCellContent);
                         domData.content.customerImportances.push(importanceCellContent);
+                        linkUiToJson(importanceCellContent, houseData.customerImportances, i);
 
                         row.appendChild(importanceCell);
                         domData.ui.customerImportances.push(importanceCell);
+                        applyCellEditListener(importanceCell);
 
                         const relationships = houseData.relationshipMatrix[i];
                         const relationshipDomCells = new Array();
@@ -557,12 +607,14 @@
                             const relationshipMatrixContent = contentSpanOf(relationship);
                             relationshipMatrixCell.appendChild(relationshipMatrixContent);
                             relationshipDomContents.push(relationshipMatrixContent);
+                            linkUiToJson(relationshipMatrixContent, relationships, relationshipDomContents.length - 1);
 
                             row.appendChild(relationshipMatrixCell);
                             relationshipDomCells.push(relationshipMatrixCell);
+                            applyCellEditListener(relationshipMatrixCell);
                         }
-                        domData.ui.relationshipMatrix.push(relationshipDomContents);
-                        domData.content.relationshipMatrix.push(relationshipDomCells);
+                        domData.ui.relationshipMatrix.push(relationshipDomCells);
+                        domData.content.relationshipMatrix.push(relationshipDomContents);
                     }
 
                     // third section of rows; importance metrics
@@ -574,6 +626,7 @@
                     bottomLeftBlankCell.colSpan = 3;
                     importanceScoresRow.appendChild(bottomLeftBlankCell);
 
+                    // technical importance scores & weights
                     domData.ui.technicalImportanceScores = new Array();
                     domData.ui.technicalImportanceWeights = new Array();
                     domData.content.technicalImportanceScores = new Array();
@@ -588,6 +641,7 @@
                         
                         importanceScoresRow.appendChild(importanceScoreCell);
                         domData.ui.technicalImportanceScores.push(importanceScoreCell);
+                        applyCellEditListener(importanceScoreCell);
 
                         const importanceWeightCell = document.createElement('td');
                         importanceWeightCell.className = 'hoq-has-border hoq-has-bg hoq-in-front';
@@ -598,6 +652,7 @@
                         
                         importanceWeightsRow.appendChild(importanceWeightCell);
                         domData.ui.technicalImportanceWeights.push(importanceWeightCell);
+                        applyCellEditListener(importanceWeightCell);
                     }
 
                     houseTable.appendChild(importanceScoresRow);
@@ -630,7 +685,7 @@
                     domData.ui.correlationMatrixTable.style.transform = 'translateY(calc(50% + 2px)) rotate(-45deg)';
                 };
 
-                populateDefaultHoq();
+                // populateDefaultHoq();
                 runInitialRender();
 
                 // re-render function for when a data field's content is changed
@@ -804,6 +859,14 @@
                         // dl.click();
                     };
                     image.src = canvas.toDataURL();
+                });
+            
+                
+
+                document.getElementById('reset-button').addEventListener('click', () => {
+                    console.log('resetting!');
+                    populateDefaultHoq();
+                    window.location.reload();
                 });
             }
         </script>
