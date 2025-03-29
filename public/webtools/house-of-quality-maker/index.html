@@ -336,7 +336,7 @@
                 };
 
                 // the whole cell should activate the content edit
-                const applyCellEditListener = (uiCell) => {
+                const applyCellEditListener = (uiCell, isNumeric) => {
                     const elementToEdit = uiCell.firstElementChild;
                     elementToEdit.contentEditable = true;
 
@@ -346,6 +346,23 @@
 
                     uiCell.addEventListener('click', editAction);
                     uiCell.addEventListener('touch', editAction);
+
+                    if(isNumeric) {
+                        let numericContent = parseFloat(elementToEdit.innerText);
+                        elementToEdit.addEventListener('focus', () => {
+                            numericContent = parseFloat(elementToEdit.innerText);
+                        });
+
+                        elementToEdit.addEventListener('blur', () => {
+                            const inputContent = parseFloat(elementToEdit.innerText);
+
+                            if(isNaN(inputContent)) {
+                                elementToEdit.innerText = numericContent
+                            } else {
+                                elementToEdit.innerText = inputContent;
+                            }
+                        });
+                    }
                 };
 
                 const linkUiToJson = (uiContentElement, houseDataObject, houseDataObjectIndex, isNumeric) => {
@@ -522,11 +539,11 @@
                         const directionOfImprovementContent = contentSpanOf(houseData.directionsOfImprovement[i]);
                         directionOfImprovementCell.appendChild(directionOfImprovementContent);
                         domData.content.directionsOfImprovement.push(directionOfImprovementContent);
-                        linkUiToJson(directionOfImprovementContent, houseData.directionsOfImprovement, i, true);
 
                         directionOfImprovementRow.appendChild(directionOfImprovementCell);
                         domData.ui.directionsOfImprovement.push(directionOfImprovementCell);
-                        applyCellEditListener(directionOfImprovementCell);
+                        applyCellEditListener(directionOfImprovementCell, true);
+                        linkUiToJson(directionOfImprovementContent, houseData.directionsOfImprovement, i, true);
                     }
 
                     // middle rows; customer requirements and relationship matrix
@@ -591,11 +608,11 @@
                         const importanceCellContent = contentSpanOf(houseData.customerImportances[i]);
                         importanceCell.appendChild(importanceCellContent);
                         domData.content.customerImportances.push(importanceCellContent);
-                        linkUiToJson(importanceCellContent, houseData.customerImportances, i);
 
                         row.appendChild(importanceCell);
                         domData.ui.customerImportances.push(importanceCell);
-                        applyCellEditListener(importanceCell);
+                        applyCellEditListener(importanceCell, true);
+                        linkUiToJson(importanceCellContent, houseData.customerImportances, i);
 
                         const relationships = houseData.relationshipMatrix[i];
                         const relationshipDomCells = new Array();
@@ -607,11 +624,11 @@
                             const relationshipMatrixContent = contentSpanOf(relationship);
                             relationshipMatrixCell.appendChild(relationshipMatrixContent);
                             relationshipDomContents.push(relationshipMatrixContent);
-                            linkUiToJson(relationshipMatrixContent, relationships, relationshipDomContents.length - 1);
 
                             row.appendChild(relationshipMatrixCell);
                             relationshipDomCells.push(relationshipMatrixCell);
-                            applyCellEditListener(relationshipMatrixCell);
+                            applyCellEditListener(relationshipMatrixCell, true);
+                            linkUiToJson(relationshipMatrixContent, relationships, relationshipDomContents.length - 1);
                         }
                         domData.ui.relationshipMatrix.push(relationshipDomCells);
                         domData.content.relationshipMatrix.push(relationshipDomContents);
