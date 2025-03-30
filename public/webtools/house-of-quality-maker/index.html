@@ -349,7 +349,7 @@
 
                     if(isNumeric) {
                         let numericContent = parseFloat(elementToEdit.innerText);
-                        elementToEdit.addEventListener('focus', () => {
+                        elementToEdit.addEventListener('input', () => {
                             numericContent = parseFloat(elementToEdit.innerText);
                         });
 
