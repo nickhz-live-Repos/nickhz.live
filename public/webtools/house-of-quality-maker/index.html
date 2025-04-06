@@ -324,14 +324,28 @@
                         technicalImportanceWeights: [26, 22, 16, 10, 26]
                     };
 
+                    houseData.correlationMatrix.mapping = {
+                        '-2': '--',
+                        '-1': '-',
+                        0: '',
+                        1: '+',
+                        2: '++'
+                    };
+
+                    houseData.directionsOfImprovement.mapping = {
+                        '-1': '↓',
+                        0: 'O',
+                        1: '↑'
+                    };
+
                     localStorage.setItem('house-of-quality-data', JSON.stringify(houseData));
 
                     return houseData;
                 };
 
-                const contentSpanOf = (stringContent) => {
+                const contentSpanOf = (htmlContent) => {
                     const result = document.createElement('span');
-                    result.innerHTML = stringContent;
+                    result.innerHTML = htmlContent;
                     return result;
                 };
 
@@ -376,7 +390,7 @@
                         updateHouseData();
                         localStorage.setItem('house-of-quality-data', JSON.stringify(houseData));
                     });
-                }
+                };
 
                 const runInitialRender = () => {
                     try {
@@ -397,7 +411,7 @@
                         the table cells which contain those elements.
                     */
                     domData.content = Object.create(null);
-                    domData.ui = Object.create(null)
+                    domData.ui = Object.create(null);
 
                     rootSelector.style.setProperty('--hoq-bg-color', 'white');
                     rootSelector.style.setProperty('--hoq-border', '1px solid black');
