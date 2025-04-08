@@ -266,6 +266,89 @@
 
             let a, reset;
 
+            const _new1 = () =>
+            {
+                const rootSelector = document.querySelector(':root');
+                const houseDom = document.getElementById('house-of-quality-render');
+
+                let houseData = null;
+                let domData = null;
+
+                const resetHouseData = () => {
+                    houseData = {
+                        raw: {
+                            correlationMatrix: [
+                                [0, -1, 0, 2],
+                                [0, 2, -2],
+                                [0, 0],
+                                [1]
+                            ],
+                            technicalRequirementCategories: [
+                                {
+                                    name: 'Technical Requirements',
+                                    requirementCount: 5
+                                }
+                            ],
+                            technicalRequirements: [
+                                'Technical Requirement 1',
+                                'Technical Requirement 2',
+                                'Technical Requirement 3',
+                                'Technical Requirement 4',
+                                'Technical Requirement 5'
+                            ],
+                            directionsOfImprovement: [1, -1, 0, 1, 0],
+                            customerRequirementCategories: [
+                                {
+                                    name: 'Customer Requirements',
+                                    requirementCount: 7
+                                }
+                            ],
+                            customerRequirements: [
+                                'Customer Requirement 1',
+                                'Customer Requirement 2',
+                                'Customer Requirement 3',
+                                'Customer Requirement 4',
+                                'Customer Requirement 5',
+                                'Customer Requirement 6',
+                                'Customer Requirement 7'
+                            ],
+                            customerImportances: [3, 2, 4, 1, 5, 2, 5],
+                            relationshipMatrix: [
+                                [0, 1, 0, 0, 1],
+                                [5, 3, 0, 3, 0],
+                                [5, 1, 5, 0, 3],
+                                [0, 0, 5, 3, 0],
+                                [3, 3, 0, 0, 5],
+                                [3, 0, 1, 3, 3],
+                                [0, 3, 1, 1, 1]
+                            ],
+                            technicalImportanceScores: [51, 43, 32, 20, 51],
+                            technicalImportanceWeights: [26, 22, 16, 10, 26]
+                        },
+                        mappings: {
+                            correlationMatrix: {
+                                '-2': '--',
+                                '-1': '-',
+                                0: '',
+                                1: '+',
+                                2: '++'
+                            },
+                            directionsOfImprovement: {
+                                '-1': '↓',
+                                0: 'O',
+                                1: '↑'
+                            },
+                            relationshipMatrix: {}
+                        },
+                        styles: {
+                            outerPadding: '2.5rem',
+                            cellPadding: '0',
+                            fontSize: '1rem'
+                        }
+                    };
+                };
+            };
+
             {
                 const rootSelector = document.querySelector(':root');
                 const houseDom = document.getElementById('house-of-quality-render');
