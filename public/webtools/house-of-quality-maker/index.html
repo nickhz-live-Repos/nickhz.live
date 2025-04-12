@@ -353,7 +353,15 @@
                 };
 
                 const runInitialRender = () => {
+                    try {
+                        houseData = JSON.parse(localStorage.getItem('house-of-quality-data'));
 
+                        if(!houseData) {
+                            houseData = resetHouseData();
+                        }
+                    } catch(e) {
+                        houseData = resetHouseData();
+                    }
                 };
             };
 
