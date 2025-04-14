@@ -353,6 +353,7 @@
                 };
 
                 const runInitialRender = () => {
+                    // attempt to load house of quality data from local storage
                     try {
                         houseData = JSON.parse(localStorage.getItem('house-of-quality-data'));
 
