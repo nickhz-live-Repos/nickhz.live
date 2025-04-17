@@ -363,10 +363,15 @@
                     } catch(e) {
                         houseData = resetHouseData();
                     }
-                    
+
                     domData = Object.create(null);
                     domData.content = Object.create(null);
                     domData.ui = Object.create(null);
+
+                    domData.ui.correlationMatrix = new Array();
+                    for(const arr of houseData.raw.correlationMatrix) {
+                        domData.ui.correlationMatrix.push(arr.map(() => document.createElement('td')));
+                    }
                 };
             };
 
