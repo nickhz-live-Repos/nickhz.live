@@ -372,6 +372,13 @@
                     for(const arr of houseData.raw.correlationMatrix) {
                         domData.ui.correlationMatrix.push(arr.map(() => document.createElement('td')));
                     }
+                    domData.ui.technicalRequirementCategories = houseData.raw.technicalRequirementCategories.map(
+                        category => {
+                            const element = document.createElement('td');
+                            element.colspan = category.requirementCount;
+                            return element;
+                        }
+                    );
                 };
             };
 
