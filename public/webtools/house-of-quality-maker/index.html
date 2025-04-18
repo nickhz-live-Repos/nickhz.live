@@ -379,6 +379,11 @@
                             return element;
                         }
                     );
+                    domData.ui.technicalRequirements = houseData.raw.technicalRequirements.map(() => {
+                        const element = document.createElement('td');
+                        element.writingMode = 'sideways-lr';
+                        return element;
+                    });
                 };
             };
 
