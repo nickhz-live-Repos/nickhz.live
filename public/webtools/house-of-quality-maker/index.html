@@ -385,6 +385,13 @@
                         return element;
                     });
                     domData.ui.directionsOfImprovement = houseData.raw.directionsofImprovement.map(() => document.createElement('td'));
+                    domData.ui.customerRequirementCategories = houseData.raw.customerRequirementCategories.map(
+                        category => {
+                            const element = document.createElement('td');
+                            element.rowspan = category.requirementCount;
+                            return element;
+                        }
+                    );
                 };
             };
 
