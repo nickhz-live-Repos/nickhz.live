@@ -389,6 +389,7 @@
                         category => {
                             const element = document.createElement('td');
                             element.rowspan = category.requirementCount;
+                            element.writingMode = 'sideways-lr';
                             return element;
                         }
                     );
