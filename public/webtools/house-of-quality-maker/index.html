@@ -395,6 +395,10 @@
                     );
                     domData.ui.customerRequirements = houseData.raw.customerRequirements.map(() => document.createElement('td'));
                     domData.ui.customerImportances = houseData.raw.customerImportances.map(() => document.createElement('td'));
+                    domData.ui.relationshipMatrix = new Array();
+                    for(const arr of houseData.raw.relationshipMatrix) {
+                        domData.ui.relationshipMatrix.push(arr.map(() => document.createElement('td')));
+                    }
                 };
             };
 
