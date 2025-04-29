@@ -367,6 +367,10 @@
                     domData = Object.create(null);
                     domData.content = Object.create(null);
                     domData.ui = Object.create(null);
+                    
+                    let setSimpleKeyTds = (key) => {
+                        domData.ui[key] = houseData.raw[key].map(() => document.createElement('td'));
+                    };
 
                     domData.ui.correlationMatrix = new Array();
                     for(const arr of houseData.raw.correlationMatrix) {
