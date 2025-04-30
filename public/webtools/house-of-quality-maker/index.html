@@ -367,7 +367,7 @@
                     domData = Object.create(null);
                     domData.content = Object.create(null);
                     domData.ui = Object.create(null);
-                    
+
                     let setSimpleKeyTds = (key) => {
                         domData.ui[key] = houseData.raw[key].map(() => document.createElement('td'));
                     };
@@ -388,7 +388,7 @@
                         element.writingMode = 'sideways-lr';
                         return element;
                     });
-                    domData.ui.directionsOfImprovement = houseData.raw.directionsofImprovement.map(() => document.createElement('td'));
+                    setSimpleKeyTds('directionsOfImprovement');
                     domData.ui.customerRequirementCategories = houseData.raw.customerRequirementCategories.map(
                         category => {
                             const element = document.createElement('td');
