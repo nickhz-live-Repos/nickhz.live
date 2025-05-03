@@ -398,7 +398,7 @@
                         }
                     );
                     setSimpleKeyTds('customerRequirements');
-                    domData.ui.customerImportances = houseData.raw.customerImportances.map(() => document.createElement('td'));
+                    setSimpleKeyTds('customerImportances');
                     domData.ui.relationshipMatrix = new Array();
                     for(const arr of houseData.raw.relationshipMatrix) {
                         domData.ui.relationshipMatrix.push(arr.map(() => document.createElement('td')));
