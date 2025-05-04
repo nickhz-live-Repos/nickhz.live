@@ -403,7 +403,7 @@
                     for(const arr of houseData.raw.relationshipMatrix) {
                         domData.ui.relationshipMatrix.push(arr.map(() => document.createElement('td')));
                     }
-                    domData.ui.technicalImportanceScores = houseData.raw.technicalImportanceScores.map(() => document.createElement('td'));
+                    setSimpleKeyTds('technicalImportanceScores');
                     domData.ui.technicalImportanceWeights = houseData.raw.technicalImportanceWeights.map(() => document.createElement('td'));
                 };
             };
