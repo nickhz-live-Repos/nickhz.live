@@ -368,7 +368,7 @@
                     domData.content = Object.create(null);
                     domData.ui = Object.create(null);
 
-                    const setSimpleKeyTds = (key) => {
+                    let setSimpleKeyTds = (key) => {
                         domData.ui[key] = houseData.raw[key].map(() => document.createElement('td'));
                     };
 
