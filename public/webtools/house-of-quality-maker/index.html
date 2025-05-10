@@ -405,6 +405,18 @@
                     }
                     setSimpleKeyTds('technicalImportanceScores');
                     setSimpleKeyTds('technicalImportanceWeights');
+
+                    let setSimpleKeySpans = (key) => {
+                        domData.content[key] = houseData.raw[key].map(entry => {
+                            const contentSpan = document.createElement('span');
+                            contentSpan.innerHTML = entry;
+                            return contentSpan;
+                        });
+
+                        for(let i = 0; i < domData.content[key].length; i++) {
+                            domData.ui[key][i].append(domData.content[key][i])
+                        }
+                    };
                 };
             };
 
