@@ -419,6 +419,9 @@
                     };
 
                     domData.content.correlationMatrix = new Array();
+                    for(const arr of houseData.raw.correlationMatrix) {
+                        domData.content.correlationMatrix.push(arr.map(() => document.createElement('span')));
+                    }
                 };
             };
 
