@@ -420,7 +420,11 @@
 
                     domData.content.correlationMatrix = new Array();
                     for(const arr of houseData.raw.correlationMatrix) {
-                        domData.content.correlationMatrix.push(arr.map(() => document.createElement('span')));
+                        domData.content.correlationMatrix.push(arr.map(entry => {
+                            const contentSpan = document.createElement('span');
+                            contentSpan.innerHTML = entry;
+                            return contentSpan;
+                        }));
                     }
                 };
             };
