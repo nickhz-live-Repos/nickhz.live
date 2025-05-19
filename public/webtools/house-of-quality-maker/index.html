@@ -430,6 +430,14 @@
                     domData.content.technicalRequirementCategories = houseData.raw.technicalRequirementCategories.map(entry => entry.name);
                     setSimpleKeySpans('technicalRequirements');
                     setSimpleKeySpans('directionsOfImprovement');
+                    domData.content.relationshipMatrix = new Array();
+                    for(const arr of houseData.raw.relationshipMatrix) {
+                        domData.content.relationshipMatrix.push(arr.map(entry => {
+                            const contentSpan = document.createElement('span');
+                            contentSpan.innerHTML = entry;
+                            return contentSpan;
+                        }));
+                    }
                 };
             };
 
