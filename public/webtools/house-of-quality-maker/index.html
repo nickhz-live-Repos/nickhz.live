@@ -430,6 +430,12 @@
                     domData.content.technicalRequirementCategories = houseData.raw.technicalRequirementCategories.map(entry => entry.name);
                     setSimpleKeySpans('technicalRequirements');
                     setSimpleKeySpans('directionsOfImprovement');
+                    domData.content.customerRequirementCategories = houseData.raw.customerRequirementCategories.map(entry => {
+                        const element = document.createElement('span');
+                        element.innerHTML = entry.name;
+                        return element;
+                    });
+
                     domData.content.relationshipMatrix = new Array();
                     for(const arr of houseData.raw.relationshipMatrix) {
                         domData.content.relationshipMatrix.push(arr.map(entry => {
@@ -438,6 +444,7 @@
                             return contentSpan;
                         }));
                     }
+
                 };
             };
 
