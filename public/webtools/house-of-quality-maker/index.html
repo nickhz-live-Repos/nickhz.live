@@ -435,6 +435,7 @@
                         element.innerHTML = entry.name;
                         return element;
                     });
+                    setSimpleKeySpans('customerRequirements');
 
                     domData.content.relationshipMatrix = new Array();
                     for(const arr of houseData.raw.relationshipMatrix) {
