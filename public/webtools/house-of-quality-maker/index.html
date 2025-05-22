@@ -427,7 +427,11 @@
                         }));
                     }
 
-                    domData.content.technicalRequirementCategories = houseData.raw.technicalRequirementCategories.map(entry => entry.name);
+                    domData.content.technicalRequirementCategories = houseData.raw.technicalRequirementCategories.map(entry => {
+                        const element = document.createElement('span');
+                        element.innerHTML = entry.name;
+                        return element;
+                    });
                     setSimpleKeySpans('technicalRequirements');
                     setSimpleKeySpans('directionsOfImprovement');
                     domData.content.customerRequirementCategories = houseData.raw.customerRequirementCategories.map(entry => {
