@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="shortcut icon" type="image/x-icon" href="./img/nh-cursive-icon.png" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+        <!-- Page properties -->
+        <title>Nick Hernandez - Main Page</title>
+
+        <!-- Opengraph properties, for giving a site preview if the link is posted anywhere. Makes the link look less sketchy. -->
+        <meta property="og:title" content="Nick Hernandez - Main Page" />
+        <meta property="og:description" content="The Web is an open canvas. Here will be my creations." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://nickhz.live/img/built-from-scratch.png" />
+        <meta property="og:image:alt" content="built from scratch" />
+        <meta property="og:url" content="https://nickhz.live/" />
+        <meta property="og:site_name" content="The Personal Site of Nick Hernandez" />
+        
+        <!-- Style properties -->
+        <link href="css/style.css" rel="stylesheet" />
+        <link href="css/old-home.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="bg-transition-frame"></div>
+
+        <div id="bg-pane"></div>
+
+        <div id="overhead-rays"></div>
+
+        <!-- HEADER -->
+        <h1 id="name">
+            Nick Hernandez
+        </h1>
+
+        <h3>
+            built from scratch
+        </h3>
+
+        <div id="motd-container">
+            <div id="left-wiper" class="wiper"></div>
+            <div id="right-wiper" class="wiper"></div>
+            
+            <div id="motd">
+                <!-- Hackneyed for now, since doing it another way messes with the opening animation. -->
+                <p>
+                    Every experience begets knowledge,<span class="desktop-only"> and curiosity is my constant.</span>
+                </p>
+
+                <p class="mobile-only">
+                    and curiosity is my constant.
+                </p>
+
+                <p>
+                    The Web is an open canvas.<span class="desktop-only"> Here will be my creations.</span>
+                </p>
+
+                <p class="mobile-only">
+                    Here will be my creations.
+                </p>
+            </div>
+        </div>
+
+        <!-- ROTARY MENU -->
+
+        <div id="rotary-menu">
+            <a href="webtools" class="menu-item">
+                <div class="centered">
+                    Webtools
+                </div>
+            </a>
+
+            <a href="professional" class="menu-item">
+                <div class="centered">
+                    Profession
+                </div>
+            </a>
+
+            <a class="menu-item" href>
+                <div class="centered">
+                    Experiments
+                </div>
+            </a>
+
+            <a class="menu-item" href>
+                <div class="centered">
+                    Fun
+                </div>
+            </a>
+
+            <a href="archive" class="menu-item">
+                <div class="centered">
+                    Archive
+                </div>
+            </a>
+
+            <a href="journal" class="menu-item">
+                <div class="centered">
+                    Journal
+                </div>
+            </a>
+
+            <a class="menu-item" href>
+                <div class="centered">
+                    Links
+                </div>
+            </a>
+
+            <a class="menu-item" href>
+                <div class="centered">
+                    Files
+                </div>
+            </a>
+
+            <br />
+
+            <div id="menu-upper-bracket" class="menu-bracket menu-frame-item"></div>
+
+            <div id="menu-spacer" class="menu-frame-item"></div>
+
+            <div id="menu-lower-bracket" class="menu-bracket menu-frame-item"></div>
+
+            <br />
+        </div>
+
+        <!-- CONTENT AREA -->
+
+        <!-- about -->
+        <input type="radio" name="tabcontent"  id="about-tab" checked />
+        <div class="tab-content">
+            <!-- <p style="text-align: center;">
+                SITE STATUS: new
+            </p> -->
+    
+            <h1>
+                About
+            </h1>
+    
+            <p>
+                I'm Nick, and this is a space of my own creation.
+            </p>
+    
+            <p>
+                The Web can be whatever you want it to be, and I'll make this 
+                into my collection of examples.
+            </p>
+    
+            <p>
+                I am an American lifelong learner, a mechanical engineering 
+                graduate from the Georgia Institute of Technology, who has 
+                worn many hats & explored many interests. As the tagline says, 
+                I'm building this from scratch. It may look like nothing else 
+                and provide things that don't exist elsewhere, as this is 
+                a product of my own mind.
+            </p>
+    
+            <p>
+                I've begun this while employed full-time, making this with 
+                some of my free time. The desire to learn and the desire to 
+                create drive me. It's the love of the craft. Of many crafts. 
+                I'm lucky enough to have passion for it, and this site will be 
+                a growing proof of that. My capabilities will grow a little 
+                more with each creation, and each new creation may be a little 
+                better done than the last.
+            </p>
+    
+            <p>
+                There is still much to learn. Much to explore. And much to 
+                create.
+            </p>
+        </div>
+
+        <!-- sitemap -->
+        <input type="radio" name="tabcontent" id="sitemap-tab" />
+        <div class="tab-content">
+            <h1 style="text-align: center">
+                Sitemap
+            </h1>
+
+            <!-- layer 0 -->
+            <div style="text-align: center">
+                <div class="small-orb" style="margin: auto;">
+                    <div class="centered">
+                        Home
+                    </div>
+                </div>
+                You are here :)
+            </div>
+
+            <br />
+
+            <!-- layer n -->
+            <div class="sitemap-entry">
+                <a href="./archive" id="sitemap-archive" class="small-orb">
+                    <div class="centered">
+                        Archive
+                    </div>
+                </a>
+                <div>
+                    <div>
+                        Archived Pages
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <a href="./archive">Archive Index</a>
+                    
+                    <ul>
+                        <li>
+                            <a href="./archive/wip">
+                                The WIP Page
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sitemap-entry">
+                <a href="./professional/" id="sitemap-career" class="small-orb">
+                    <div class="centered">
+                        Profession
+                    </div>
+                </a>
+                <div>
+                    <div>
+                        Professional Development
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <a href="./professional/">Professional Development Index</a>
+                    
+                    <ul>
+                        <li>
+                            <a href="./professional/resume">Resume Webpage</a>
+                        </li>
+                        <li>
+                            <a href="./professional/self-development/">Self-Development Showcase</a>
+
+                            <ul>
+                                <li>
+                                    <a href="./professional/self-development/eloquent-javascript-2024/">
+                                        Textbook Self-Study Notes - Eloquent JavaScript, 4th ed. (2024) by Marijn Haverbeke
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sitemap-entry">
+                <a href="./journal" id="sitemap-journal" class="small-orb">
+                    <div class="centered">
+                        Journal
+                    </div>
+                </a>
+                <div>
+                    <div>
+                        My Journal/Blog Pages
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <a href="./journal">Journal Index</a>
+
+                    <ul>
+                        <li>
+                            <a href="./journal/diary">My Diary</a>
+                        </li>
+                        <li>
+                            <a href="./journal/devlog/1">Development Log 1 - The Beginning of the Site</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sitemap-entry">
+                <a href="webtools" id="sitemap-webtools" class="small-orb">
+                    <div class="centered">
+                        Web Tools
+                    </div>
+                </a>
+                <div>
+                    <div>
+                        Online Tools, Custom Made
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <a href="webtools">Webtools Index</a>
+
+                    <ul>
+                        <li>
+                            <a href="webtools/house-of-quality-maker">House of Quality Maker (Work in Progress)</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <hr />
+
+            <p class="yellow">
+                More pages will be in the works!
+            </p>
+        </div>
+
+        <input type="radio" name="tabcontent"  id="sub-sites-tab" />
+        <div class="tab-content">
+            <h1>
+                Sub-sites
+            </h1>
+            
+            <p>
+                <i>
+                    Here, I will link other sites & subdomains being 
+                    developed by me.
+                </i>
+            </p>
+
+            <hr />
+
+            <h2>
+                Subdomains for this site
+            </h2>
+
+            <fieldset>
+                <legend>
+                    node.nickhz.live
+                </legend>
+
+                <p>
+                    Dynamic subdomain & API being developed as my own 
+                    custom Node.JS server.
+                </p>
+
+                <p>
+                    Not currently live; deployment still pending.
+                </p>
+            </fieldset>
+        </div>
+
+        <!-- CREDITS FOOTER -->
+
+        <footer>
+            <p>
+                © Copyright 2024+ Nicolas Hernandez
+            </p>
+    
+            <p>
+                Hosting services provided by AWS.
+            </p>
+    
+            <p>
+                This root-domain site is created WITHOUT the use of any 
+                site-building tool, design firm, AI, frontend 
+                library/framework, site template, pre-made component, or 
+                outside script. Subdomains will be built with such external 
+                tools as exercises or proofs of concept, and when they are, 
+                they'll be noted as such.
+            </p>
+
+            <p>
+                This site's source code is in <a href="https://github.com/Hernandezn/nickhz.live" target="_blank">this GitHub repo</a>!
+            </p>
+        </footer>
+
+        <div id="foot-spacer"></div>
+
+        <!-- FOOT NAV -->
+        <div id="foot-nav">
+            <div id="foot-nav-bg">
+
+            </div>
+
+            <div id="foot-nav-content">
+                <div id="foot-nav-overground">
+
+                    <button id="rotary-menu-stop" class="small-orb foot-nav-button">
+                        STOP
+                    </button>
+
+                    <div id="nav-divider"></div>
+
+                    <label for="about-tab" id="about-button" class="small-orb foot-nav-button">
+                        <div class="centered">
+                            ABOUT
+                        </div>
+                    </label>
+
+                    <label for="sitemap-tab" id="sitemap-button" class="small-orb foot-nav-button">
+                        <div class="centered">
+                            SITEMAP
+                        </div>
+                    </label>
+
+                    <label for="sub-sites-tab" id="sub-sites-button" class="small-orb foot-nav-button">
+                        <div class="centered">
+                            SUB-SITES
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <script src="scripts/homepage-rotary-menu.js"></script>
+        <script src="scripts/virtual-particles.js"></script>
+        <script title="virtual particles runner & configuration">
+            virtualParticles(
+                {
+                    spawnResistance: // in seconds per particle per megapixel
+                        {
+                            min: 0.01,
+                            max: 0.1
+                        },
+                    initialParticleSpeed: // in pixels per second
+                        {
+                            min: 100,
+                            max: 1000
+                        },
+                    lifetime: // in seconds
+                        {
+                            min: 0.2,
+                            max: 1
+                        }
+                }
+            );
+        </script>
+        <script title="homepage link script">
+            // allows the homepage to be addressed by a specific page, using url parameters
+            {
+                const pageSelection = 
+                    new URLSearchParams(window.location.search).get('page')
+                ;
+
+                switch(pageSelection) {
+                    case 'about':
+                        document.getElementById('about-tab').checked = true;
+                        break;
+                    case 'sitemap':
+                        document.getElementById('sitemap-tab').checked = true;
+                        break;
+                    case 'device':
+                        document.getElementById('sub-sites-tab').checked = true;
+                        break;
+                    default:
+                        break;
+                }
+            };
+        </script>
+    </body>
+</html>
