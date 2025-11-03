@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+
+<!--
+    workbench page, made without a web framework as an exercise before diving 
+    into said frameworks
+-->
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+        <!-- Page properties -->
+        <title>Cyber Test</title>
+
+        <!-- Opengraph -->
+        <meta property="og:title" content="Nick Hernandez - Main Page" />
+        <meta property="og:description" content="The Web is an open canvas. Here will be my creations." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://nickhz.live/img/built-from-scratch.png" />
+        <meta property="og:image:alt" content="built from scratch" />
+        <meta property="og:url" content="https://nickhz.live/" />
+        <meta property="og:site_name" content="The Personal Site of Nick Hernandez" />
+
+        <style>
+            :root {
+                margin: 0;
+
+                --bg-accent: black;
+
+                --primary-accent: #00ffff;
+                --secondary-accent: hsl(180, 100%, 92%);
+                --tertiary-accent: hsl(300, 100%, 50%);
+
+                /* --primary-accent: lime;
+                --bg-accent: navy; */
+
+                /* box-shadow: 
+                    10dvh 0 2dvh -10dvh cyan inset,
+                    -10dvh 0 2dvh -10dvh cyan inset
+                ; */
+            }
+
+            body {
+                margin: 0;
+                color: var(--primary-accent);
+                background-color: var(--bg-accent);
+                font-family: 'Courier New', Courier, monospace;
+            }
+
+            * {
+                scrollbar-color: var(--primary-accent) var(--bg-accent);
+            }
+
+            ::-webkit-scrollbar {
+                width: 1rem;
+                height: 1rem;
+            }
+
+            ::-webkit-scrollbar-track {
+                background-color: var(--bg-accent);
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background-color: var(--primary-accent);
+            }
+
+            /*
+                HEADER BAR
+            */
+
+            #header-bar {
+                display: flex;
+                align-items: stretch;
+                border-top: 1px solid transparent;
+                border-bottom: 1px solid var(--primary-accent);
+                box-shadow: 
+                    0 0px 8px 1px var(--primary-accent),
+                    inset 0 -8px 8px -8px var(--primary-accent)
+                ;
+                overflow: hidden;
+            }
+
+            #header-bar > aside {
+                flex: 1;
+                z-index: -1;
+                position: relative;
+            }
+
+            #header-bar > a {
+                display: block;
+
+                color: var(--primary-accent);
+                font-size: 2rem;
+                font-weight: bold;
+                text-decoration: none;
+
+                padding: 2rem 2rem;
+                flex: 0 0 auto;
+                border-radius: 3rem;
+                border-left: 3px solid var(--primary-accent);
+                border-right: 3px solid var(--primary-accent);
+                margin: 0;
+
+                background-color: var(--bg-accent);
+                text-shadow: 0 0 4px var(--primary-accent);
+            }
+
+            #header-left {
+                margin-right: -3rem;
+                background: radial-gradient(closest-corner circle at right, var(--primary-accent) 50%, transparent 150%);
+            }
+
+            #header-right {
+                margin-left: -3rem;
+                background: radial-gradient(closest-corner circle at left, var(--primary-accent) 50%, transparent 150%);
+            }
+
+            #header-bar > aside > * {
+                position: absolute;
+                height: 100%;
+            }
+
+            #header-left > * {
+                right: 0;
+            }
+
+            #left-pcb-anim,
+            #right-pcb-anim {
+                width: 100%;
+            }
+
+            #left-pcb-anim {
+                right: 120px;
+
+                mask-image: linear-gradient(to left, transparent 0, var(--bg-accent) 150px);
+            }
+
+            #right-pcb-anim {
+                left: 120px;
+
+                mask-image: linear-gradient(to right, transparent 0, var(--bg-accent) 150px);
+            }
+
+            /*
+                MISSION STATEMENT PANEL
+            */
+
+            .corner-bound-box {
+                padding: 0 0.5rem;
+            }
+
+            .holo-panel {
+                background: repeating-linear-gradient(transparent 0, color-mix(in srgb, var(--primary-accent), transparent 85%) 2px, transparent 4px);
+            }
+
+            #mission-statement,
+            #home-options {
+                max-width: 90%;
+                margin: auto;
+            }
+
+            .blinker {
+                animation-name: blink;
+                animation-timing-function: steps(2, jump-none);
+                animation-duration: 1.5s;
+                animation-iteration-count: infinite;
+            }
+
+            @keyframes blink {
+                from {
+                    opacity: 1;
+                }
+
+                to {
+                    opacity: 0;
+                }
+            }
+
+            /*
+                MAIN CONTENT AREA OVERALL LAYOUT
+            */
+
+            #home-options {
+                margin-top: 2rem;
+                min-height: 60dvh;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .home-option-arrow {
+                flex: 0 0 10%;
+                position: relative;
+                background-color: var(--primary-accent);
+                cursor: pointer;
+            }
+
+            .home-option-arrow > svg {
+                position: absolute;
+                width: 0;
+                height: 0;
+            }
+
+            #home-option-left-arrow {
+                clip-path: url(#left-arrow-panel-shape);
+            }
+
+            #home-option-right-arrow {
+                clip-path: url(#right-arrow-panel-shape);
+            }
+
+            .home-option-arrow > div {
+                position: absolute;
+                clip-path: inherit;
+                top: 2px;
+                height: calc(100% - 4px);
+                width: calc(100% - 8px);
+                background-color: var(--bg-accent);
+
+                transition-duration: 0.5s;
+            }
+            #home-option-left-arrow > div {
+                left: 2px;
+            }
+            #home-option-right-arrow > div {
+                right: 2px;
+            }
+
+            .home-option-arrow > div > div {
+                position: absolute;
+                background-color: var(--primary-accent);
+                top: 48.5%;
+                width: 25%;
+                height: 5%;
+
+                transition-duration: 0.5s;
+            }
+            #home-option-left-arrow > div > div {
+                left: 5%;
+                clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+            }
+            #home-option-right-arrow > div > div {
+                right: 5%;
+                clip-path: polygon(100% 50%, 0% 0%, 0% 100%);
+            }
+
+            .home-option-arrow:hover > div {
+                background-color: var(--primary-accent);
+            }
+            .home-option-arrow:hover > div > div {
+                background-color: var(--bg-accent);
+            }
+            
+            /*
+                CENTERPIECE DISPLAY
+            */
+
+            #home-option-display {
+                flex: 0 0 75%;
+                position: relative;
+                padding: 1rem;
+            }
+
+            /* .vert-line {
+                position: absolute;
+                width: 1px;
+                height: 90%;
+                top: 5%;
+                background-color: var(--primary-accent);
+                box-shadow: 0 0 1rem var(--primary-accent), 0 0 1rem var(--primary-accent);
+            }
+            #left-vert-line {
+                left: 0;
+            }
+            #right-vert-line {
+                right: 0;
+            } */
+
+            footer {
+                text-align: center;
+            }
+
+            a {
+                color: white;
+            }
+
+            hr {
+                border-color: var(--primary-accent);
+                margin: 1rem 0;
+            }
+
+            /*
+                INITIAL DEMO
+            */
+
+            #clip-path-polygon-demo {
+                width: 100%;
+                text-align: left;
+                border-collapse: collapse;
+                table-layout: fixed;
+                color: var(--secondary-accent);
+                box-shadow: 0 0 10px var(--primary-accent);
+            }
+            #clip-path-polygon-demo > tbody > tr > td,
+            #clip-path-polygon-demo > thead > tr > th {
+                border: 1px solid var(--primary-accent);
+                padding: 8px;
+            }
+
+            #clip-path-polygon-demo summary {
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+
+            #clip-path-polygon-demo details {
+                font-size: 1rem;
+                font-weight: normal;
+            }
+
+            #polygon-box {
+                background-color: var(--primary-accent);
+                width: 300px;
+                height: 200px;
+                margin: auto;
+            }
+
+            /*
+                COLOR PANEL
+            */
+
+            #color-panel {
+                width: fit-content;
+                margin: auto;
+                border-spacing: 8px;
+                text-align: center;
+            }
+
+            #primary-color-input {
+                background-color: var(--bg-accent);
+            }
+            #bg-color-input {
+                background-color: var(--primary-accent);
+            }
+
+            #color-reset-button {
+                background-color: black;
+                color: cyan;
+                border: 2px outset cyan;
+                padding: 8px;
+            }
+            #color-reset-button:active {
+                background-color: cyan;
+                color: black;
+                border: 2px inset black;
+            }
+
+            /* 
+
+            desktop css overrides 
+
+            */
+            @media only screen and (min-width: 768px) {
+                #mission-statement {
+                    max-width: 50%;
+                }
+
+                .home-option-arrow {
+                    flex: 0 0 5%;
+                }
+
+                #home-option-display {
+                    flex: 0 0 90%;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id="header-bar">
+            <aside id="header-left">
+                <svg
+                    version="1.1"
+                    viewBox="0 0 200 140"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <defs>
+                        <linearGradient id="left-lines-gradient" x1="200" x2="0" y1="0" y2="0"  gradientUnits="userSpaceOnUse">
+                            <stop offset="50%" stop-color="var(--primary-accent)" />
+                            <stop offset="100%" stop-opacity="0%" />
+                        </linearGradient>
+                    </defs>
+
+                    <g
+                        stroke="url(#left-lines-gradient)"
+                        stroke-width="2"
+                        fill="none"
+                    >
+                        <path d="
+                                M 200 40
+                                h -80
+                                l -20 -20
+                                h -100
+                            "
+                        />
+
+                        <path d="
+                                M 200 60
+                                h -200
+                            "
+                        />
+
+                        <path d="
+                                M 200 80
+                                h -110
+                                l -20 20
+                                h -70
+                            "
+                        />
+
+                        <path d="
+                                M 200 120
+                                h -200
+                            "
+                        />
+                    </g>
+                </svg>
+                <div id="left-pcb-anim"></div>
+            </aside>
+
+            <!-- this is an anchor tag in anticipation of using this page for a bigger project -->
+            <a>
+                Cyber Workbench
+            </a>
+
+            <aside id="header-right">
+                <svg
+                    version="1.1"
+                    viewBox="0 0 200 140"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <defs>
+                        <linearGradient id="right-lines-gradient" x1="0" x2="200" y1="0" y2="0"  gradientUnits="userSpaceOnUse">
+                            <stop offset="50%" stop-color="var(--primary-accent)" />
+                            <stop offset="100%" stop-opacity="0%" />
+                        </linearGradient>
+                    </defs>
+
+                    <g
+                        stroke="url(#right-lines-gradient)"
+                        stroke-width="2"
+                        fill="none"
+                    >
+                        <path d="
+                                M 0 20
+                                h 200
+                            "
+                        />
+
+                        <path d="
+                                M 0 60
+                                h 100
+                                l 20 -20
+                                h 80
+                            "
+                        />
+
+                        <path d="
+                                M 0 80
+                                h 120
+                                l 20 20
+                                h 60
+                            "
+                        />
+
+                        <path d="
+                                M 0 100
+                                h 80
+                                l 20 20
+                                h 100
+                            "
+                        />
+                    </g>
+                </svg>
+                <div id="right-pcb-anim"></div>
+            </aside>
+        </header>
+
+        <p style="text-align: center">
+            <a href="../">&lt;&lt;&lt; Home</a>
+        </p>
+
+        <article id="mission-statement" class="corner-bound-box holo-panel">
+            <p>
+                This page is an experiment & live workbench, and it's a precursor for future development<span class="blinker">|</span>
+            </p>
+        </article>
+
+        <main id="home-options" class="holo-panel">
+            <div id="home-option-left-arrow" class="home-option-arrow">
+                <div>
+                    <div></div>
+                </div>
+
+                <svg>
+                    <clipPath id="left-arrow-panel-shape" clipPathUnits="objectBoundingBox">
+                        <path
+                            d="
+                                M 0 0 
+                                h 1
+                                a 0.5 0.5 0 0 0 0 1
+                                h -1
+                                Z
+                            "
+                        />
+                    </clipPath>
+                </svg>
+            </div>
+            <div id="home-option-display">
+                <!-- <div id="left-vert-line" class="vert-line"></div> -->
+                <h2 style="text-align: center">
+                    [Sample]
+                </h2>
+
+                <p style="text-align: center;">
+                    Below is an example of an interactive widget I'm workshopping as a learning mini-project & proof of concept.
+                </p>
+
+                <hr />
+                <br />
+
+                <table id="clip-path-polygon-demo">
+                    <thead>
+                        <tr>
+                            <th>
+                                <details>
+                                    <summary>
+                                        CSS - clip-path - polygon()
+                                    </summary>
+
+                                    <p>
+                                        Clips an HTML element to the shape of a polygon, as seen below.
+                                    </p>
+                                </details>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center">
+                                <h4 style="color: white; text-shadow: 0 0 4px black;">
+                                    ...
+                                    <!-- Press this div box in at least 3 different spots to make a polygon: -->
+                                </h4>
+
+                                <div id="polygon-box"></div>
+
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Code:</b>
+                                <br />
+                                <pre style="background: var(--bg-accent); color: var(--primary-accent); border: 1px solid var(--secondary-accent); border-radius: 3px; padding: 8px; margin: 0;" contenteditable="true">clip-path: polygon(
+    
+);
+</pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Presets:</b>
+
+                                [...]
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>References & Further Reading:</b>
+
+                                [...]
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <div id="right-vert-line" class="vert-line"></div> -->
+
+                <!--
+                    <pre style="background: var(--bg-accent); color: var(--primary-accent); border: 1px solid var(--secondary-accent); border-radius: 3px; padding: 8px; margin: 0;" contenteditable="true">clip-path: polygon(
+    
+);
+</pre>
+                -->
+            </div>
+            <div id="home-option-right-arrow" class="home-option-arrow">
+                <div>
+                    <div></div>
+                </div>
+
+                <svg>
+                    <clipPath id="right-arrow-panel-shape" clipPathUnits="objectBoundingBox">
+                        <path
+                            d="
+                                M 1 0 
+                                h -1
+                                a 0.5 0.5 0 0 1 0 1
+                                h 1
+                                Z
+                            "
+                        />
+                    </clipPath>
+                </svg>
+            </div>
+        </main>
+
+        <br />
+        <br />
+
+        <table id="color-panel" class="corner-bound-box holo-panel">
+            <thead>
+                <tr>
+                    <th>
+                        Color Theme Selection
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Main color: <input id="primary-color-input" type="color" oninput="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Background: <input id="bg-color-input" type="color" oninput="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="color-reset-button" ondblclick="">
+                            Double Tap to Reset Colors
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <footer>
+            <p>
+                Made entirely by real human hands.
+            </p>
+
+            <p>
+                &copy; Nick Hernandez 2025+
+            </p>
+        </footer>
+
+        <script title="Color Functions">
+            {
+                // color retrieval from local storage
+                let primaryAccent = localStorage.getItem('primaryAccent');
+                let bgAccent = localStorage.getItem('bgAccent');
+
+                if(!primaryAccent) {
+                    primaryAccent = '#00ffff';
+                    localStorage.setItem('primaryAccent', primaryAccent);
+                }
+                if(!bgAccent) {
+                    bgAccent = '#000000';
+                    localStorage.setItem('bgAccent', bgAccent);
+                }
+
+                document.documentElement.style.setProperty('--primary-accent', primaryAccent);
+                document.documentElement.style.setProperty('--bg-accent', bgAccent);
+
+                // color panel multi-way binding
+                const primaryInput = document.getElementById('primary-color-input');
+                const bgInput = document.getElementById('bg-color-input');
+
+                primaryInput.value = primaryAccent;
+                bgInput.value = bgAccent;
+
+                const bindColors = (colorInput, cssVarName, localStorageVarName) => {
+                    colorInput.addEventListener('input', () => {
+                        const newColor = colorInput.value;
+
+                        document.documentElement.style.setProperty(cssVarName, newColor);
+                        localStorage.setItem(localStorageVarName, newColor);
+
+                        window.dispatchEvent(new Event('resize'));
+                    });
+                };
+
+                bindColors(primaryInput, '--primary-accent', 'primaryAccent');
+                bindColors(bgInput, '--bg-accent', 'bgAccent');
+
+                document.getElementById('color-reset-button').addEventListener('dblclick', () => {
+                    primaryAccent = '#00ffff';
+                    localStorage.setItem('primaryAccent', primaryAccent);
+                    document.documentElement.style.setProperty('--primary-accent', primaryAccent);
+                    primaryInput.value = primaryAccent;
+
+                    bgAccent = '#000000';
+                    localStorage.setItem('bgAccent', bgAccent);
+                    document.documentElement.style.setProperty('--bg-accent', bgAccent);
+                    bgInput.value = bgAccent;
+
+                    window.dispatchEvent(new Event('resize'));
+                });
+            };
+        </script>
+        <script src="header-bar-pcb-lines.js" title="Header Bar PCB Lines Animation Script"></script>
+        <script src="corner-bound-box-borders.js" title="Custom Corner Borders"></script>
+        <script title="Interactive Polygon Demonstration">
+            {
+                const polygonBox = document.getElementById('polygon-box');
+                // const polygonBoxOuterStyle = document.createElement('style');
+                // polygonBoxOuterStyle.innerHTML = `#polygonBox { height: ${polygonBox.offsetWidth}px }`;
+
+                // polygonBox.style.height = polygonBox.offsetWidth + 'px';
+                // console.log(polygonBox.style.width);
+            }
+        </script>
+    </body>
+</html>
