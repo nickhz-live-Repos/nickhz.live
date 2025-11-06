@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
         <!-- Page properties -->
-        <title>Cyber Test</title>
+        <title>Cyber Workbench</title>
 
         <!-- Opengraph -->
         <meta property="og:title" content="Nick Hernandez - Main Page" />
@@ -317,11 +317,24 @@
                 font-weight: normal;
             }
 
-            #polygon-box {
-                background-color: var(--primary-accent);
+            #polygon-box-display {
                 width: 300px;
                 height: 200px;
                 margin: auto;
+                border: 1px solid grey;
+            }
+
+            #polygon-box {
+                background-color: var(--primary-accent);
+                width: 100%;
+                height: 100%;
+            }
+
+            #polygon-box-code-interface {
+                background: var(--bg-accent);
+                color: var(--primary-accent);
+                border: 1px solid var(--secondary-accent);
+                border-radius: 3px; padding: 8px; margin: 0;
             }
 
             /*
@@ -552,16 +565,16 @@
                                     <!-- Press this div box in at least 3 different spots to make a polygon: -->
                                 </h4>
 
-                                <div id="polygon-box"></div>
-
-
+                                <div id="polygon-box-display">
+                                    <div id="polygon-box"></div>
+                                </div>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <b>Code:</b>
+                                <b>CSS Code:</b>
                                 <br />
-                                <pre style="background: var(--bg-accent); color: var(--primary-accent); border: 1px solid var(--secondary-accent); border-radius: 3px; padding: 8px; margin: 0;" contenteditable="true">clip-path: polygon(
+                                <pre id="polygon-box-code-interface" contenteditable="true">clip-path: polygon(
     
 );
 </pre>
@@ -714,8 +727,29 @@
         <script title="Interactive Polygon Demonstration">
             {
                 const polygonBox = document.getElementById('polygon-box');
+                const codeInterface = document.getElementById('polygon-box-code-interface');
+
+                codeInterface.innerText = `clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    0 50%
+);
+`
+                ;
+
+                const applyCodeInterfaceStyle = () => {
+                    polygonBox.style = codeInterface.innerText;
+                };
+                codeInterface.addEventListener('input', applyCodeInterfaceStyle);
+                applyCodeInterfaceStyle();
+
+                polygonBox.addEventListener('mousedown', () => {
+
+                });
+
                 // const polygonBoxOuterStyle = document.createElement('style');
-                // polygonBoxOuterStyle.innerHTML = `#polygonBox { height: ${polygonBox.offsetWidth}px }`;
+                // polygonBoxOuterStyle.innerHTML = `#polygon-box { height: ${polygonBox.offsetWidth}px }`;
 
                 // polygonBox.style.height = polygonBox.offsetWidth + 'px';
                 // console.log(polygonBox.style.width);
