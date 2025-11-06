@@ -259,6 +259,8 @@
                 flex: 0 0 75%;
                 position: relative;
                 padding: 1rem;
+                max-height: 90dvh;
+                overflow: scroll;
             }
 
             /* .vert-line {
@@ -287,6 +289,18 @@
             hr {
                 border-color: var(--primary-accent);
                 margin: 1rem 0;
+            }
+
+            button {
+                color: var(--primary-accent);
+                background-color: var(--bg-accent);
+                border: 2px outset var(--primary-accent);
+                padding: 8px;
+            }
+            button:active {
+                background-color: var(--primary-accent);
+                color: var(--bg-accent);
+                border: 2px inset var(--bg-accent);
             }
 
             /*
@@ -318,8 +332,8 @@
             }
 
             #polygon-box-frame {
-                width: 300px;
-                height: 200px;
+                width: 250px;
+                height: 150px;
                 margin: auto;
                 border: 1px solid grey;
             }
@@ -530,12 +544,12 @@
             </div>
             <div id="home-option-display">
                 <!-- <div id="left-vert-line" class="vert-line"></div> -->
-                <h2 style="text-align: center">
+                <!-- <h2 style="text-align: center">
                     [Sample]
-                </h2>
+                </h2> -->
 
                 <p style="text-align: center;">
-                    Below is an example of an interactive widget I'm workshopping as a learning mini-project & proof of concept.
+                    Below is an example of an interactive widget I'm workshopping as a learning exercise & proof of concept.
                 </p>
 
                 <hr />
@@ -561,12 +575,17 @@
                         <tr>
                             <td style="text-align: center">
                                 <h4 style="color: white; text-shadow: 0 0 4px black;">
-                                    Press this div box in at least 3 different spots to make a polygon:
+                                    Press this div box in at least 3 different spots to make & generate code for a CSS polygon:
                                 </h4>
 
                                 <div id="polygon-box-frame">
                                     <div id="polygon-box"></div>
                                 </div>
+
+                                <br />
+
+                                <button id="polygon-reset-button">Reset</button>
+                                <button id="polygon-undo-button">Undo</button>
                             </td>
                         </tr>
                         <tr>
@@ -649,7 +668,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <button id="color-reset-button" ondblclick="">
+                        <button id="color-reset-button">
                             Double Tap to Reset Colors
                         </button>
                     </td>
@@ -727,49 +746,79 @@
             {
                 const polygonBox = document.getElementById('polygon-box');
                 const polygonFrame = document.getElementById('polygon-box-frame');
+                const polygonReset = document.getElementById('polygon-reset-button');
+                const polygonUndo = document.getElementById('polygon-undo-button');
                 const codeInterface = document.getElementById('polygon-box-code-interface');
                 const points = Array();
 
                 codeInterface.innerText = `clip-path: polygon(
-    0 0,
-    100% 0,
+    0% 0%,
+    100% 0%,
     100% 100%,
-    0 50%
+    0% 100%
 );
 `
                 ;
 
+                // to write code into the styles
                 const applyCodeInterfaceStyle = () => {
                     polygonBox.style = codeInterface.innerText;
                 };
                 codeInterface.addEventListener('input', applyCodeInterfaceStyle);
                 applyCodeInterfaceStyle();
 
-                const applyVisualInterfaceStyle = (x, y) => {
-                    points.push({
-                        x: 100 * x / polygonBox.clientWidth,
-                        y: 100 * y / polygonBox.clientHeight
-                    });
-
+                // to click/touch the element for styling it
+                const applyVisualInterfaceStyle = () => {
                     const clipPathArray = ['clip-path: polygon('];
                     for(const point of points) {
                         clipPathArray.push(`,\n    ${Math.round(point.x)}% ${Math.round(point.y)}%`);
                     }
-                    clipPathArray[1] = clipPathArray[1].slice(1); // leading comma removal
+                    clipPathArray[1] ? clipPathArray[1] = clipPathArray[1].slice(1) : false; // leading comma removal
                     clipPathArray.push('\n);');
                     
                     const clipPathString = clipPathArray.join('');
                     codeInterface.innerText = clipPathString;
                     polygonBox.style.cssText = clipPathString;
                 };
+
+                const addPointCoordinates = (x, y) => {
+                    points.push({
+                        x: 100 * x / polygonBox.clientWidth,
+                        y: 100 * y / polygonBox.clientHeight
+                    });
+
+                    applyVisualInterfaceStyle();
+                };
+                const undoLastPoint = () => {
+                    points.pop();
+
+                    applyVisualInterfaceStyle();
+                };
+                const clearPoints = () => {
+                    points.length = 0;
+
+                    applyVisualInterfaceStyle();
+                };
+
                 polygonFrame.addEventListener('mousedown', (mouseDownEvent) => {
                     const framePosition = polygonFrame.getBoundingClientRect();
 
-                    applyVisualInterfaceStyle(
+                    addPointCoordinates(
                         mouseDownEvent.clientX - framePosition.left - polygonFrame.clientLeft, 
                         mouseDownEvent.clientY - framePosition.top - polygonFrame.clientTop
                     );
                 });
+
+                polygonFrame.addEventListener('touchstart', (touchStartEvent) => {
+                    const framePosition = polygonFrame.getBoundingClientRect();
+
+                    addPointCoordinates(
+                        touchStartEvent.touches[0].clientX - framePosition.left - polygonFrame.clientLeft, 
+                        touchStartEvent.touches[0].clientY - framePosition.top - polygonFrame.clientTop
+                    );
+                });
+                polygonReset.addEventListener('click', clearPoints);
+                polygonUndo.addEventListener('click', undoLastPoint);
 
                 // const polygonBoxOuterStyle = document.createElement('style');
                 // polygonBoxOuterStyle.innerHTML = `#polygon-box { height: ${polygonBox.offsetWidth}px }`;
