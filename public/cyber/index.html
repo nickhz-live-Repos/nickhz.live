@@ -333,7 +333,7 @@
 
             #polygon-box-frame {
                 width: 250px;
-                height: 150px;
+                height: 250px;
                 margin: auto;
                 border: 1px solid grey;
             }
@@ -575,7 +575,7 @@
                         <tr>
                             <td style="text-align: center">
                                 <h4 style="color: white; text-shadow: 0 0 4px black;">
-                                    Press this div box in at least 3 different spots to make & generate code for a CSS polygon:
+                                    Press this box in at least 3 different spots to make a CSS polygon & see its code below:
                                 </h4>
 
                                 <div id="polygon-box-frame">
@@ -602,7 +602,14 @@
                             <td>
                                 <b>Presets:</b>
 
-                                [...]
+                                <br />
+
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                    <button class="polygon-preset">5-Pointed Star</button>
+                                    <button class="polygon-preset">Left Arrow</button>
+                                    <button class="polygon-preset">Alternating Pennant</button>
+                                    <button class="polygon-preset">4-Pointed Star</button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -748,14 +755,11 @@
                 const polygonFrame = document.getElementById('polygon-box-frame');
                 const polygonReset = document.getElementById('polygon-reset-button');
                 const polygonUndo = document.getElementById('polygon-undo-button');
+                const polygonPresets = document.getElementsByClassName('polygon-preset')
                 const codeInterface = document.getElementById('polygon-box-code-interface');
                 const points = Array();
 
                 codeInterface.innerText = `clip-path: polygon(
-    0% 0%,
-    100% 0%,
-    100% 100%,
-    0% 100%
 );
 `
                 ;
@@ -808,7 +812,6 @@
                         mouseDownEvent.clientY - framePosition.top - polygonFrame.clientTop
                     );
                 });
-
                 polygonFrame.addEventListener('touchstart', (touchStartEvent) => {
                     const framePosition = polygonFrame.getBoundingClientRect();
 
@@ -820,11 +823,58 @@
                 polygonReset.addEventListener('click', clearPoints);
                 polygonUndo.addEventListener('click', undoLastPoint);
 
-                // const polygonBoxOuterStyle = document.createElement('style');
-                // polygonBoxOuterStyle.innerHTML = `#polygon-box { height: ${polygonBox.offsetWidth}px }`;
+                // to apply presets
+                const presetCoords = {
+                    _5PointedStar: [
+                        {x:  50, y:   0},
+                        {x:  82, y: 100},
+                        {x:   0, y:  37},
+                        {x: 100, y:  37},
+                        {x:  18, y: 100}
+                    ],
+                    _leftArrow: [
+                        {x:   0, y:  50},
+                        {x:  50, y:   0},
+                        {x:  50, y:  25},
+                        {x: 100, y:  25},
+                        {x: 100, y:  75},
+                        {x:  50, y:  75},
+                        {x:  50, y: 100}
+                    ],
+                    _alternatingPennant: [
+                        {x: 100, y:  50},
+                        {x:   0, y:  50},
+                        {x:  12, y:  80},
+                        {x:  37, y:  20},
+                        {x:  63, y:  80},
+                        {x:  88, y:  20}
+                    ],
+                    _4PointedStar: [
+                        {x:  50, y:   0},
+                        {x:  62, y:  38},
+                        {x: 100, y:  50},
+                        {x:  62, y:  62},
+                        {x:  50, y: 100},
+                        {x:  38, y:  62},
+                        {x:   0, y:  50},
+                        {x:  38, y:  38}
+                    ]
+                }
+                const applyPresetButtonListener = (presetButton, coordsArray) => {
+                    presetButton.addEventListener('click', () => {
+                        clearPoints();
 
-                // polygonBox.style.height = polygonBox.offsetWidth + 'px';
-                // console.log(polygonBox.style.width);
+                        points.push(
+                            ...coordsArray
+                        );
+
+                        applyVisualInterfaceStyle();
+                    });
+                };
+                applyPresetButtonListener(polygonPresets[0], presetCoords._5PointedStar);
+                applyPresetButtonListener(polygonPresets[1], presetCoords._leftArrow);
+                applyPresetButtonListener(polygonPresets[2], presetCoords._alternatingPennant);
+                applyPresetButtonListener(polygonPresets[3], presetCoords._4PointedStar);
             };
         </script>
     </body>
