@@ -259,8 +259,8 @@
                 flex: 0 0 75%;
                 position: relative;
                 padding: 1rem;
-                max-height: 90dvh;
-                overflow: scroll;
+                height: 80dvh;
+                overflow-y: scroll;
             }
 
             /* .vert-line {
@@ -321,7 +321,7 @@
                 padding: 8px;
             }
 
-            #clip-path-polygon-demo summary {
+            #polygon-demo-title {
                 font-size: 1.2rem;
                 font-weight: bold;
             }
@@ -560,7 +560,7 @@
                         <tr>
                             <th>
                                 <details>
-                                    <summary>
+                                    <summary id="polygon-demo-title">
                                         CSS - clip-path - polygon()
                                     </summary>
 
@@ -614,9 +614,23 @@
                         </tr>
                         <tr>
                             <td>
-                                <b>References & Further Reading:</b>
+                                <details>
+                                    <summary>
+                                        <b>References & Further Reading:</b>
+                                    </summary>
 
-                                [...]
+                                    <ul style="line-height: 1.5rem;">
+                                        <li>
+                                            <a href="https://www.w3schools.com/cssref/func_polygon.php" target="_blank">W3Schools - CSS polygon() Function</a>
+                                        </li>
+                                        <li>
+                                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/basic-shape/polygon" target="_blank">MDN Web Docs - polygon()</a>
+                                        </li>
+                                        <li>
+                                            <a href="https://drafts.csswg.org/css-shapes-1/#funcdef-basic-shape-polygon" target="_blank">W3C CSS Shapes Specification 3.1</a>
+                                        </li>
+                                    </ul>
+                                </details>
                             </td>
                         </tr>
                     </tbody>
