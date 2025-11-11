@@ -261,7 +261,77 @@
                 position: relative;
                 padding: 1rem;
                 height: 80dvh;
+                overflow: hidden;
+            }
+
+            .home-option {
+                position: absolute;
+                height: calc(100% - 2rem);
+                width: calc(100% - 2rem);
                 overflow-y: scroll;
+                display: none;
+
+                animation-duration: 0.5s;
+                animation-iteration-count: 1;
+                animation-fill-mode: forwards;
+                animation-timing-function: ease-out;
+            }
+
+            .home-option:first-child {
+                display: block;
+            }
+
+            .home-option-from-right {
+                animation-name: move-from-right;
+            }
+            .home-option-to-left {
+                animation-name: move-to-left;
+            }
+            .home-option-from-left {
+                animation-name: move-from-left;
+            }
+            .home-option-to-right {
+                animation-name: move-to-right;
+            }
+
+            @keyframes move-from-right {
+                from {
+                    left: calc(100% + 2rem + 15vw);
+                }
+
+                to {
+                    left: 1rem;
+                }
+            }
+
+            @keyframes move-to-left {
+                from {
+                    left: 1rem;
+                }
+
+                to {
+                    left: calc(-100% - 2rem - 15vw);
+                }
+            }
+
+            @keyframes move-from-left {
+                from {
+                    left: calc(-100% - 2rem - 15vw);
+                }
+
+                to {
+                    left: 1rem;
+                }
+            }
+
+            @keyframes move-to-right {
+                from {
+                    left: 1rem;
+                }
+
+                to {
+                    left: calc(100% + 2rem + 15vw);
+                }
             }
 
             /* .vert-line {
@@ -549,101 +619,144 @@
                     [Sample]
                 </h2> -->
 
-                <p style="text-align: center;">
-                    Below is an example of an interactive widget I'm workshopping as a learning exercise & proof of concept.
-                </p>
+                <section class="home-option">
+                    <p style="text-align: center;">
+                        Below is an example of an interactive widget I'm workshopping as a learning exercise & proof of concept.
+                    </p>
 
-                <hr />
-                <br />
+                    <hr />
+                    <br />
 
-                <table id="clip-path-polygon-demo">
-                    <thead>
-                        <tr>
-                            <th>
-                                <details>
-                                    <summary id="polygon-demo-title">
-                                        CSS - clip-path - polygon()
-                                    </summary>
+                    <table id="clip-path-polygon-demo">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <details>
+                                        <summary id="polygon-demo-title">
+                                            CSS - clip-path - polygon()
+                                        </summary>
 
-                                    <p>
-                                        Clips an HTML element to the shape of a polygon, as seen below.
-                                    </p>
-                                </details>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="text-align: center">
-                                <h4 style="color: white; text-shadow: 0 0 4px black;">
-                                    Press this box in at least 3 different spots to make a CSS polygon & see its code below:
-                                </h4>
+                                        <p>
+                                            Clips an HTML element to the shape of a polygon, as seen below.
+                                        </p>
+                                    </details>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center">
+                                    <h4 style="color: white; text-shadow: 0 0 4px black;">
+                                        Press this box in at least 3 different spots to make a CSS polygon & see its code below:
+                                    </h4>
 
-                                <div id="polygon-box-frame">
-                                    <div id="polygon-box"></div>
-                                </div>
+                                    <div id="polygon-box-frame">
+                                        <div id="polygon-box"></div>
+                                    </div>
 
-                                <br />
+                                    <br />
 
-                                <button id="polygon-reset-button">Reset</button>
-                                <button id="polygon-undo-button">Undo</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <b>CSS Code:</b>
-                                <br />
-                                <pre id="polygon-box-code-interface" contenteditable="true">clip-path: polygon(
+                                    <button id="polygon-reset-button">Reset</button>
+                                    <button id="polygon-undo-button">Undo</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>CSS Code:</b>
+                                    <br />
+                                    <pre id="polygon-box-code-interface" contenteditable="true">clip-path: polygon(
     
 );
 </pre>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <b>Presets:</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Presets:</b>
 
-                                <br />
+                                    <br />
 
-                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                                    <button class="polygon-preset">5-Pointed Star</button>
-                                    <button class="polygon-preset">Left Arrow</button>
-                                    <button class="polygon-preset">Alternating Pennant</button>
-                                    <button class="polygon-preset">4-Pointed Star</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <details>
-                                    <summary>
-                                        <b>References & Further Reading:</b>
-                                    </summary>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                        <button class="polygon-preset">5-Pointed Star</button>
+                                        <button class="polygon-preset">Left Arrow</button>
+                                        <button class="polygon-preset">Alternating Pennant</button>
+                                        <button class="polygon-preset">4-Pointed Star</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <details>
+                                        <summary>
+                                            <b>References & Further Reading:</b>
+                                        </summary>
 
-                                    <ul style="line-height: 1.5rem;">
-                                        <li>
-                                            <a href="https://www.w3schools.com/cssref/func_polygon.php" target="_blank">W3Schools - CSS polygon() Function</a>
-                                        </li>
-                                        <li>
-                                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/basic-shape/polygon" target="_blank">MDN Web Docs - polygon()</a>
-                                        </li>
-                                        <li>
-                                            <a href="https://drafts.csswg.org/css-shapes-1/#funcdef-basic-shape-polygon" target="_blank">W3C CSS Shapes Specification 3.1</a>
-                                        </li>
-                                    </ul>
-                                </details>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                        <ul style="line-height: 1.5rem;">
+                                            <li>
+                                                <a href="https://www.w3schools.com/cssref/func_polygon.php" target="_blank">W3Schools - CSS polygon() Function</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/basic-shape/polygon" target="_blank">MDN Web Docs - polygon()</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://drafts.csswg.org/css-shapes-1/#funcdef-basic-shape-polygon" target="_blank">W3C CSS Shapes Specification 3.1</a>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
                 <!-- <div id="right-vert-line" class="vert-line"></div> -->
 
-                <!--
-                    <pre style="background: var(--bg-accent); color: var(--primary-accent); border: 1px solid var(--secondary-accent); border-radius: 3px; padding: 8px; margin: 0;" contenteditable="true">clip-path: polygon(
-    
-);
-</pre>
-                -->
+                <section class="home-option">
+                    <h2>
+                        Design Notes
+                    </h2>
+
+                    <p>
+                        <i>This is more for my own future reference than for others to read it, so this is just a wall of text.</i>
+                    </p>
+
+                    <br />
+                    
+                    <p>
+                        I hand-drew this page's design on paper before implementing it. Making it look like this has taught me more than if I made it look like other websites.
+                    </p>
+
+                    <p>
+                        The most challenge for the smallest feature was the animated lines on the header of this page, my first JavaScript visual effect that randomizes & 
+                        manipulates SVG.
+                    </p>
+
+                    <p>
+                        The pagination through arrow panels on the left & right was initially inspired by my faint memory of the menu tabs on the left & right of <a href="https://www.youtube.com/watch?v=AZYhri2tsM4" target="_blank">the XBox 360 dashboard</a>. 
+                        I didn't spend much time with that interface, haven't seen it in years, and decided not to look at it while designing this page. 
+                        This helped to keep the design as more of a product of my own mind, and the result is satisfyingly different from the original. 
+                    </p>
+
+                    <p>
+                        The color widget below is nice for me to demo some main color palettes, like lime on navy blue, pink on lavender, gold on burgundy, 
+                        white on turquoise, they all capture different feelings & might even inspire new ideas on their own.
+                    </p>
+
+                    <p>
+                        The borders on the color panel below and the tagline panel above, that also had to be done with SVG & JavaScript. I initially tried doing it with 
+                        CSS border-image & its associated properties, but that caused the areas near the middle of the borders to be stretched undesirably unless I locked 
+                        the size of the element. If I ever wanted to change the text content in one of these elements, I would have to change the border image again, which 
+                        is a pain. So, I just wrote some fast-running JavaScript that generates a border image for each element that I want to have my custom type of border.
+                    </p>
+
+                    <p>
+                        <b>
+                            There's a tagline at the bottom, too. I'm not against AI, but it's... not very good for experimental visual design. Which, that's to be expected, 
+                            it's a massive interpolator between large sets of data points that already exist. If visual design is samey in a lot of places, that's just the 
+                            information it has to work with. That's not terribly helpful if you want a page that looks & acts like this one. Having AI in your toolbox is to 
+                            be well-prepared, but as with any tool, a good toolman knows when to use it and when not to.
+                        </b>
+                    </p>
+                </section>
             </div>
             <div id="home-option-right-arrow" class="home-option-arrow">
                 <div>
@@ -890,6 +1003,79 @@
                 applyPresetButtonListener(polygonPresets[1], presetCoords._leftArrow);
                 applyPresetButtonListener(polygonPresets[2], presetCoords._alternatingPennant);
                 applyPresetButtonListener(polygonPresets[3], presetCoords._4PointedStar);
+            };
+        </script>
+        <script title="Home Option Selector Arrows">
+            {
+                const homeOptions = document.getElementsByClassName('home-option');
+                const [leftArrow, rightArrow] = [
+                    document.getElementById('home-option-left-arrow'),
+                    document.getElementById('home-option-right-arrow')
+                ];
+                let selectedOptionIndex = 0;
+
+                const moveLeft = () => {
+                    const newOptionIndex = selectedOptionIndex ? selectedOptionIndex - 1 : homeOptions.length - 1;
+                    const oldOption = homeOptions[selectedOptionIndex];
+                    const newOption = homeOptions[newOptionIndex];
+
+                    newOption.style.display = 'block';
+
+                    oldOption.classList.add('home-option-to-left');
+                    newOption.classList.add('home-option-from-right');
+
+                    leftArrow.removeEventListener('click', moveLeft);
+                    rightArrow.removeEventListener('click', moveRight);
+
+                    const postAnimAction = (animEvent) => {
+                        oldOption.removeEventListener('animationend', postAnimAction);
+                        selectedOptionIndex = newOptionIndex;
+
+                        oldOption.style.display = 'none';
+                        newOption.style.display = 'block';
+
+                        oldOption.classList.remove('home-option-to-left');
+                        newOption.classList.remove('home-option-from-right');
+
+                        leftArrow.addEventListener('click', moveLeft);
+                        rightArrow.addEventListener('click', moveRight);
+                    };
+
+                    oldOption.addEventListener('animationend', postAnimAction);
+                };
+                leftArrow.addEventListener('click', moveLeft);
+
+                // "function" syntax here lets moveRight be referenced above, before its definition below
+                function moveRight () {
+                    const newOptionIndex = selectedOptionIndex == homeOptions.length - 1 ? 0 : selectedOptionIndex + 1;
+                    const oldOption = homeOptions[selectedOptionIndex];
+                    const newOption = homeOptions[newOptionIndex];
+
+                    newOption.style.display = 'block';
+
+                    oldOption.classList.add('home-option-to-right');
+                    newOption.classList.add('home-option-from-left');
+
+                    leftArrow.removeEventListener('click', moveLeft);
+                    rightArrow.removeEventListener('click', moveRight);
+
+                    const postAnimAction = (animEvent) => {
+                        oldOption.removeEventListener('animationend', postAnimAction);
+                        selectedOptionIndex = newOptionIndex;
+
+                        oldOption.style.display = 'none';
+                        newOption.style.display = 'block';
+
+                        oldOption.classList.remove('home-option-to-right');
+                        newOption.classList.remove('home-option-from-left');
+
+                        leftArrow.addEventListener('click', moveLeft);
+                        rightArrow.addEventListener('click', moveRight);
+                    };
+
+                    oldOption.addEventListener('animationend', postAnimAction);
+                };
+                rightArrow.addEventListener('click', moveRight);
             };
         </script>
     </body>
