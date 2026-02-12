@@ -38,12 +38,13 @@
         <style>
             body::before {
                 content: "";
-                position: absolute;
+                position: fixed;
                 inset: 0;
                 background: linear-gradient(hsl(204, 100%, 15%) 0%, hsl(204, 100%, 30%) 90%, hsl(0, 0%, 80%) 100%);
                 filter: hue-rotate(0deg);
                 pointer-events: none;
                 z-index: -1000;
+                height: 100%;
 
                 animation-name: rotate-hue;
                 animation-timing-function: linear;
@@ -168,6 +169,10 @@
                 list-style-type: '- ';
                 line-height: 1.5rem;
             }
+
+            footer {
+                height: 10dvh;
+            }
         </style>
     </head>
     <body>
@@ -201,32 +206,32 @@
 
         <main>
             <p>
-                This site's content is being moved.
-
-                <!-- Educated at Georgia Tech.
+                Educated at Georgia Tech.
             </p>
 
             <p>
                 My professional webdev experience is fullstack, but mostly Java/Spring.
+            </p>
+
             <p>
                 I've physically wired electrical control systems & programmed PLCs. I've led teams 
-                of floor-level employees and managed project requirements as needed. I've measured, 
-                calculated, and aggregated metrics that I've then used to inform factory process design.
+                of floor-level employees and managed project requirements as needed. I've gathered 
+                & aggregated metrics that I've then used to inform production process design.
             </p>
 
             <p>
                 I am never above doing & learning what's needed to get the job done. Even this hand-coded site 
                 is an example of learning that's happened outside of my formal education in mechanical 
-                engineering. And I remain ever learning. -->
+                engineering. And I remain ever learning.
             </p>
 
             <hr />
             <br />
 
             <nav id="link-btns">
-                <!-- <a href="./files/Nicolas_Hernandez_Engineering_Resume_2020.pdf" target="_blank">Engineering resume & contact info</a>
-                <a href="./files/Nicolas_Hernandez_Software_Resume_2025a.pdf" target="_blank">Webdev resume & contact info</a> -->
-                <a href="./files/Nicolas_Hernandez_Full_Resume_2025.pdf" target="_blank">Full resume & contact info</a>
+                <!-- <a href="./files/Nicolas_Hernandez_Engineering_Resume_2020.pdf" target="_blank">Engineering resume & contact info</a> -->
+                <a href="./files/Nicolas_Hernandez_Software_Resume_2025a.pdf" target="_blank">Webdev resume</a>
+                <a href="./files/Nicolas_Hernandez_Full_Resume_2025.pdf" target="_blank">Full resume</a>
                 <a href="https://github.com/Hernandezn" target="_blank">Github</a>
                 <a href="https://www.linkedin.com/in/nicolas-hernandez-232a6a13a/" target="_blank">LinkedIn</a>
             </nav>
@@ -276,5 +281,7 @@
                 Every page on this site is made by real human hands.
             </p>
         </main>
+
+        <footer></footer>
     </body>
 </html>
