@@ -768,20 +768,75 @@
 
                 <section class="home-option">
                     <h3>
-                        Angular Links
+                        Quick Reference Links
                     </h3>
 
                     <p>
-                        I'm learning Angular now. I'll stash relevant links here.
+                        Some review resources for refreshing or expanding my knowledge on Web technologies.
                     </p>
 
                     <ul>
                         <li>
-                            <a href="https://angular.dev/tutorials" target="_blank">
-                                Angular official tutorials
+                            <a href="https://developer.mozilla.org/en-US/" target="_blank">
+                                MDN Web Docs
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.w3schools.com/" target="_blank">
+                                W3 Schools
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://nickhz.live/old/professional/self-development/eloquent-javascript-2024/" target="_blank">
+                                My Personal Notes from a JavaScript Textbook I Read
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://react.dev/reference/react" target="_blank">
+                                React Reference Overview
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://spring.io/guides" target="_blank">
+                                Java Spring Official Guides
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://angular.dev/overview" target="_blank">
+                                Angular Official Documentation
                             </a>
                         </li>
                     </ul>
+
+                    <h4>
+                        Self-Reminder Note:
+                    </h4>
+
+                    <p>
+                        <i>
+                            I have an issue with Java Spring repo layers that doesn't seem to have a solution built into Spring Boot. 
+                            The use case was closed-source/trade secret, so I would need to re-create the problem in order to illustrate it 
+                            in code. The issue is complex, so I'm writing it here to ensure I don't forget about it before I raise the issue 
+                            with an illustrative use case in the Spring Boot repo on GitHub.
+                        </i>
+                    </p>
+
+                    <p>
+                        <i>
+                            The issue is the attempt to use 
+                            <a href="https://docs.spring.io/spring-data/jpa/reference/repositories/projections.html" target="_blank">Spring Projections</a> 
+                            in tandem with 
+                            <a href="https://docs.spring.io/spring-data/jpa/reference/jpa/specifications.html" target="_blank">Spring Specifications</a> 
+                            to create a dynamic self-constructable querying process that supports dynamic type outputs. Using Specifications in your 
+                            repo layer requires the "findBy" method that takes the Specification of a given type, which can be a Projection. However, if you 
+                            also want to use a Specification of a different Projection, one that has unlike joins or counting/grouping behaviors that are 
+                            structurally unlike the original Projection, the "findBy" method in the repo will only be able to support one of them, not the 
+                            number of them that you might want to support. In the 
+                            <a href="https://docs.spring.io/spring-data/jpa/reference/jpa/specifications.html#specification-fluent" target="_blank">Fluent API section of Specifications</a>, 
+                            it indicates that the findBy method takes a Specification&lt;T&gt;, and the problem is 
+                            what that "T" is. It can be one Projection or the other; it cannot be both.
+                        </i>
+                    </p>
                 </section>
             </div>
             <div id="home-option-right-arrow" class="home-option-arrow">
